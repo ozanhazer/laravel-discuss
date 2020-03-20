@@ -1,0 +1,54 @@
+{
+    "name": "alfatron/discussions",
+    "description": "Discussions for Laravel",
+    "keywords": [
+        "alfatron",
+        "discussions"
+    ],
+    "homepage": "https://github.com/alfatron/discussions",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ozan Hazer",
+            "email": "ozanhazer@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/support": "^6"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Alfatron\\Discussions\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Alfatron\\Discussions\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Alfatron\\Discussions\\DiscussionsServiceProvider"
+            ],
+            "aliases": {
+                "Discussions": "Alfatron\\Discussions\\DiscussionsFacade"
+            }
+        }
+    }
+}
