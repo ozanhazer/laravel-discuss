@@ -1,6 +1,6 @@
 <?php
 Route::middleware('web')
-    ->namespace('Alfatron\Discussions\Controllers')
+    ->namespace('Alfatron\Discussions\Http\Controllers')
     ->prefix(config('discussions.route_prefix', 'discussions'))
     ->group(function () {
 

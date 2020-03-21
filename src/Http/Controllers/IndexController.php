@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Alfatron\Discussions\Controllers;
+namespace Alfatron\Discussions\Http\Controllers;
 
 
 class IndexController
