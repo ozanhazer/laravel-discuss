@@ -9,7 +9,7 @@ class CreateInitialTables extends Migration
     {
         Schema::create(config('discussions.table_prefix') . '_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('order')->default(1);
+            $table->unsignedInteger('order')->default(1);
             $table->string('name');
             $table->string('color', 20);
             $table->string('slug')->unique();
@@ -17,8 +17,8 @@ class CreateInitialTables extends Migration
         });
 
         Schema::create(config('discussions.table_prefix') . '_threads', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedBigInteger('category_id');
+            $table->bigIncrements('id');
+            $table->unsignedInteger('category_id');
             $table->string('title');
             $table->string('slug')->unique();
             $table->unsignedBigInteger('user_id');
@@ -61,7 +61,7 @@ class CreateInitialTables extends Migration
         Schema::create(config('discussions.table_prefix') . '_followed_threads', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('thread_id');
-            $table->primary(['user_id', 'thred_id']);
+            $table->primary(['user_id', 'thread_id']);
 
             $table->foreign('thread_id')->references('id')
                 ->on(config('discussions.table_prefix') . '_threads')

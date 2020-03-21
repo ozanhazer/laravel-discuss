@@ -3,12 +3,12 @@
 @section('content')
   <input type="search" name="q" placeholder="Forum içerisinde ara..." class="form-control">
 
-  @for($i = 0; $i < 10; $i++)
+  @foreach($threads as $thread)
     <div class="media mt-4">
       <img src="https://randomuser.me/api/portraits/men/32.jpg" class="mr-3 rounded-circle" style="width: 50px;"
            alt="...">
       <div class="media-body">
-        <h5 class="mt-0"><a href="{{route('discussion.detail')}}">How can i automatically refresh an included view within a blade template?</a></h5>
+        <h5 class="mt-0"><a href="{{route('discussions.detail')}}">{{$thread->title}}</a></h5>
         <a href="https://laracasts.com/@KangarooMusiQue" class="tw-uppercase tw-font-bold">KangarooMusiQue</a>
         replied
         <span>
@@ -24,15 +24,9 @@
         <a href="#" class="btn btn-outline-info rounded-pill btn-block">Site Hakkında</a>
       </div>
     </div>
-  @endfor
+  @endforeach
 
-  <nav aria-label="Page navigation example" class="mt-5">
-    <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
+  <nav aria-label="Threads navigation" class="mt-5">
+    {{$threads->links()}}
   </nav>
 @endsection

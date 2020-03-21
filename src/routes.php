@@ -4,7 +4,7 @@ Route::middleware('web')
     ->prefix(config('discussions.route_prefix', 'discussions'))
     ->group(function () {
 
-        Route::get('/', 'IndexController')->name('discussion.index');
-        Route::get('/detail', 'DetailController')->name('discussion.detail');
+        Route::get('/', 'IndexController')->name('discussions.index');
+        Route::get('/detail', 'DetailController')->name('discussions.detail');
 
     });
