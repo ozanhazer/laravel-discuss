@@ -18,6 +18,7 @@ class DiscussionsServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'discussions');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->loadFactoriesFrom(__DIR__.'/../database/factories');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
