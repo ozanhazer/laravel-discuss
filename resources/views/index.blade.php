@@ -9,7 +9,7 @@
            style="width: 50px;" alt="...">
       <div class="media-body">
         <h5 class="mt-0"><a href="{{route('discussions.detail', $thread)}}">{{$thread->title}}</a></h5>
-        <a href="https://laracasts.com/@KangarooMusiQue" class="tw-uppercase tw-font-bold">{{$thread->author->name}}</a>
+        <a href="{{route('discussions.user', $thread->author)}}" class="tw-uppercase tw-font-bold">{{$thread->author->name}}</a>
         @if ($thread->last_post_at)
           @lang('discussions::discussions.replied_at', ['last_post_at' => $thread->last_post_at->diffForHumans()])
         @else

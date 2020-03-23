@@ -4,7 +4,6 @@
 
 use Alfatron\Discussions\Models\Category;
 use Faker\Generator as Faker;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Str;
 
 $factory->define(\Alfatron\Discussions\Models\Thread::class, function (Faker $faker) {
@@ -13,7 +12,7 @@ $factory->define(\Alfatron\Discussions\Models\Thread::class, function (Faker $fa
         'title'       => $title,
         'slug'        => Str::slug($title),
         'category_id' => factory(Category::class),
-        'user_id'     => factory(User::class),
+        'user_id'     => factory(config('discussions.user_model')),
         'sticky'      => $faker->boolean,
         'view_count'  => $faker->numberBetween(0, 1000),
     ];
