@@ -23,8 +23,8 @@ class CreateInitialTables extends Migration
             $table->string('slug')->unique();
             $table->unsignedBigInteger('user_id');
             $table->boolean('sticky')->default(false);
-            $table->unsignedInteger('view_count');
-            $table->unsignedInteger('post_count');
+            $table->unsignedInteger('view_count')->default(0);
+            $table->unsignedInteger('post_count')->default(0);
             $table->timestamps();
             $table->timestamp('last_post_at')->nullable();
             $table->softDeletes();
@@ -77,9 +77,9 @@ class CreateInitialTables extends Migration
 
     public function down()
     {
-        Schema::dropIfExists(config('discussions.table_prefix') . '_categories');
-        Schema::dropIfExists(config('discussions.table_prefix') . '_threads');
-        Schema::dropIfExists(config('discussions.table_prefix') . '_posts');
         Schema::dropIfExists(config('discussions.table_prefix') . '_followed_threads');
+        Schema::dropIfExists(config('discussions.table_prefix') . '_posts');
+        Schema::dropIfExists(config('discussions.table_prefix') . '_threads');
+        Schema::dropIfExists(config('discussions.table_prefix') . '_categories');
     }
 }
