@@ -10,7 +10,7 @@ class IndexController
     public function __invoke()
     {
         $threads = Thread::query()
-            ->with('author')
+            ->with('author', 'category')
             ->orderBy('last_post_at', 'desc')
             ->paginate(20);
 
