@@ -2,8 +2,11 @@
 
 namespace Alfatron\Discussions\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Post extends BaseModel
 {
+    use SoftDeletes;
 
     public function thread()
     {

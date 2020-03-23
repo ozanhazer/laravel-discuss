@@ -2,8 +2,11 @@
 
 namespace Alfatron\Discussions\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Thread extends BaseModel
 {
+    use SoftDeletes;
 
     public function category()
     {
@@ -18,5 +21,10 @@ class Thread extends BaseModel
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }
