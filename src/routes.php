@@ -5,6 +5,6 @@ Route::middleware('web')
     ->group(function () {
 
         Route::get('/', 'IndexController')->name('discussions.index');
-        Route::get('/detail', 'DetailController')->name('discussions.detail');
+        Route::get('/detail/{thread}', 'DetailController')->name('discussions.detail');
 
     });
