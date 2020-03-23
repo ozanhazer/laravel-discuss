@@ -31,7 +31,10 @@
     "autoload-dev": {
         "psr-4": {
             "Alfatron\\Discussions\\Tests\\": "tests"
-        }
+        },
+        "classmap": [
+            "tests/models/User.php"
+        ]
     },
     "scripts": {
         "test": "vendor/bin/phpunit",

@@ -9,7 +9,7 @@
            alt="...">
       <div class="media-body">
         <h5 class="mt-0"><a href="{{route('discussions.detail')}}">{{$thread->title}}</a></h5>
-        <a href="https://laracasts.com/@KangarooMusiQue" class="tw-uppercase tw-font-bold">KangarooMusiQue</a>
+        <a href="https://laracasts.com/@KangarooMusiQue" class="tw-uppercase tw-font-bold">{{$thread->author->name}}</a>
         replied
         <span>
         <a href="?">2 minutes ago</a></span>

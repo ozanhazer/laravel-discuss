@@ -34,7 +34,7 @@ class CreateInitialTables extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->foreign('user_id')->references('id')
-                ->on('users')
+                ->on(config('discussions.user_model'))
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -53,7 +53,7 @@ class CreateInitialTables extends Migration
                 ->onUpdate('cascade');
 
             $table->foreign('user_id')->references('id')
-                ->on('users')
+                ->on(config('discussions.user_model'))
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -69,7 +69,7 @@ class CreateInitialTables extends Migration
                 ->onUpdate('cascade');
 
             $table->foreign('user_id')->references('id')
-                ->on('users')
+                ->on(config('discussions.user_model'))
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

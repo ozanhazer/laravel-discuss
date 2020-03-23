@@ -28,6 +28,9 @@ class TestCase extends OrchestraTestCase
            'prefix' => '',
         ]);
         $app['config']->set('app.debug', env('APP_DEBUG', true));
+
+        // Use our dummy class for the tests
+        $app['config']->set('discussions.user_model', \User::class);
     }
 
     public function setUp(): void
