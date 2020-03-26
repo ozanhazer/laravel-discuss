@@ -2,7 +2,10 @@
 
 namespace Alfatron\Discuss;
 
+use Alfatron\Discuss\Models\Category;
+use Alfatron\Discuss\Models\Thread;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class DiscussServiceProvider extends ServiceProvider
 {
@@ -12,35 +15,16 @@ class DiscussServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'discuss');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'discuss');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadRoutesFrom(__DIR__ . '/routes.php');
-        $this->loadFactoriesFrom(__DIR__ . '/../database/factories');
+        $this->loadDefinitions();
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('discuss.php'),
-            ], 'config');
-
-            // Publishing the views.
-            $this->publishes([
-                __DIR__ . '/../resources/views' => resource_path('views/vendor/discuss'),
-            ], 'views');
-
-            // Publishing assets.
-            /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/discuss'),
-            ], 'assets');*/
-
-            // Publishing the translation files.
-            $this->publishes([
-                __DIR__ . '/../resources/lang' => resource_path('lang/vendor/discuss'),
-            ], 'lang');
+            $this->definePublishedFiles();
 
             // Registering package commands.
             // $this->commands([]);
         }
+
+        $this->registerSluggableListeners();
     }
 
     /**
@@ -50,5 +34,47 @@ class DiscussServiceProvider extends ServiceProvider
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'discuss');
+    }
+
+    private function loadDefinitions(): void
+    {
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'discuss');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'discuss');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadRoutesFrom(__DIR__ . '/routes.php');
+        $this->loadFactoriesFrom(__DIR__ . '/../database/factories');
+    }
+
+    private function definePublishedFiles(): void
+    {
+        $this->publishes([
+            __DIR__ . '/../config/config.php' => config_path('discuss.php'),
+        ], 'config');
+
+        // Publishing the views.
+        $this->publishes([
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/discuss'),
+        ], 'views');
+
+        // Publishing assets.
+        /*$this->publishes([
+            __DIR__.'/../resources/assets' => public_path('vendor/discuss'),
+        ], 'assets');*/
+
+        // Publishing the translation files.
+        $this->publishes([
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/discuss'),
+        ], 'lang');
+    }
+
+    private function registerSluggableListeners()
+    {
+        $setSlug = function ($row) {
+            if (!$row->slug) {
+                $row->slug = Str::slug($row->name);
+            }
+        };
+        Category::saving($setSlug);
+        Thread::saving($setSlug);
     }
 }

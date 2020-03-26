@@ -22,7 +22,7 @@ class CreateDiscussTables extends Migration
             $table->increments('id');
             $table->unsignedInteger('order')->default(1);
             $table->string('name');
-            $table->string('color', 20);
+            $table->string('color', 20)->nullable();
             $table->string('slug')->unique();
             $table->timestamps();
         });
