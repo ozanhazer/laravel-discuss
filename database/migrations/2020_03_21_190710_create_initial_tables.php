@@ -7,7 +7,7 @@ class CreateInitialTables extends Migration
 {
     public function up()
     {
-        Schema::create(config('discussions.table_prefix') . '_categories', function (Blueprint $table) {
+        Schema::create(config('discuss.table_prefix') . '_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('order')->default(1);
             $table->string('name');
@@ -16,7 +16,7 @@ class CreateInitialTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create(config('discussions.table_prefix') . '_threads', function (Blueprint $table) {
+        Schema::create(config('discuss.table_prefix') . '_threads', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('category_id');
             $table->string('title');
@@ -30,16 +30,16 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
 
             $table->foreign('category_id')->references('id')
-                ->on(config('discussions.table_prefix') . '_categories')
+                ->on(config('discuss.table_prefix') . '_categories')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->foreign('user_id')->references('id')
-                ->on(config('discussions.user_model'))
+                ->on(config('discuss.user_model'))
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
 
-        Schema::create(config('discussions.table_prefix') . '_posts', function (Blueprint $table) {
+        Schema::create(config('discuss.table_prefix') . '_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('thread_id');
             $table->unsignedBigInteger('user_id');
@@ -48,28 +48,28 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
 
             $table->foreign('thread_id')->references('id')
-                ->on(config('discussions.table_prefix') . '_threads')
+                ->on(config('discuss.table_prefix') . '_threads')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
             $table->foreign('user_id')->references('id')
-                ->on(config('discussions.user_model'))
+                ->on(config('discuss.user_model'))
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
 
-        Schema::create(config('discussions.table_prefix') . '_followed_threads', function (Blueprint $table) {
+        Schema::create(config('discuss.table_prefix') . '_followed_threads', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('thread_id');
             $table->primary(['user_id', 'thread_id']);
 
             $table->foreign('thread_id')->references('id')
-                ->on(config('discussions.table_prefix') . '_threads')
+                ->on(config('discuss.table_prefix') . '_threads')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
             $table->foreign('user_id')->references('id')
-                ->on(config('discussions.user_model'))
+                ->on(config('discuss.user_model'))
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
@@ -77,9 +77,9 @@ class CreateInitialTables extends Migration
 
     public function down()
     {
-        Schema::dropIfExists(config('discussions.table_prefix') . '_followed_threads');
-        Schema::dropIfExists(config('discussions.table_prefix') . '_posts');
-        Schema::dropIfExists(config('discussions.table_prefix') . '_threads');
-        Schema::dropIfExists(config('discussions.table_prefix') . '_categories');
+        Schema::dropIfExists(config('discuss.table_prefix') . '_followed_threads');
+        Schema::dropIfExists(config('discuss.table_prefix') . '_posts');
+        Schema::dropIfExists(config('discuss.table_prefix') . '_threads');
+        Schema::dropIfExists(config('discuss.table_prefix') . '_categories');
     }
 }

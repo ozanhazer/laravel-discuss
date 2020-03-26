@@ -1,4 +1,4 @@
-@extends('discussions::layout')
+@extends('discuss::layout')
 
 @section('content')
   Detail...

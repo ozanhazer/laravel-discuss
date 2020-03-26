@@ -1,6 +1,6 @@
 <?php
 
-namespace Alfatron\Discussions\Models;
+namespace Alfatron\Discuss\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,6 +15,6 @@ class Post extends BaseModel
 
     public function author()
     {
-        return $this->belongsTo(config('discussions.user_model'), 'user_id');
+        return $this->belongsTo(config('discuss.user_model'), 'user_id');
     }
 }

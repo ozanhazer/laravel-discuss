@@ -1,8 +1,8 @@
 <?php
 
-namespace Alfatron\Discussions\Tests;
+namespace Alfatron\Discuss\Tests;
 
-use Alfatron\Discussions\Models\Thread;
+use Alfatron\Discuss\Models\Thread;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class IndexControllerTest extends TestCase
@@ -16,7 +16,7 @@ class IndexControllerTest extends TestCase
     {
         $thread = factory(Thread::class)->create();
 
-        $response = $this->get(route('discussions.index'));
+        $response = $this->get(route('discuss.index'));
         $response->assertStatus(200);
         $response->assertSeeText($thread->title);
         $response->assertSeeText($thread->author->name);

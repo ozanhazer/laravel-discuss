@@ -1,10 +1,10 @@
 <?php
 
-namespace Alfatron\Discussions;
+namespace Alfatron\Discuss;
 
 use Illuminate\Support\ServiceProvider;
 
-class DiscussionsServiceProvider extends ServiceProvider
+class DiscussServiceProvider extends ServiceProvider
 {
 
     /**
@@ -12,30 +12,30 @@ class DiscussionsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'discussions');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'discussions');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'discuss');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'discuss');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
         $this->loadFactoriesFrom(__DIR__ . '/../database/factories');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('discussions.php'),
+                __DIR__ . '/../config/config.php' => config_path('discuss.php'),
             ], 'config');
 
             // Publishing the views.
             $this->publishes([
-                __DIR__ . '/../resources/views' => resource_path('views/vendor/discussions'),
+                __DIR__ . '/../resources/views' => resource_path('views/vendor/discuss'),
             ], 'views');
 
             // Publishing assets.
             /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/discussions'),
+                __DIR__.'/../resources/assets' => public_path('vendor/discuss'),
             ], 'assets');*/
 
             // Publishing the translation files.
             $this->publishes([
-                __DIR__ . '/../resources/lang' => resource_path('lang/vendor/discussions'),
+                __DIR__ . '/../resources/lang' => resource_path('lang/vendor/discuss'),
             ], 'lang');
 
             // Registering package commands.
@@ -49,6 +49,6 @@ class DiscussionsServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'discussions');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'discuss');
     }
 }

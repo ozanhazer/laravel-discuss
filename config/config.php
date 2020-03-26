@@ -20,5 +20,5 @@ return [
      * Name of the route for the user profile page. You can disable user profile
      * page altogether by setting this value to empty string or null.
      */
-    'profile_route' => 'discussions.user',
+    'profile_route' => 'discuss.user',
 ];

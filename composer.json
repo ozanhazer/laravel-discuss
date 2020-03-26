@@ -1,11 +1,13 @@
 {
-    "name": "alfatron/discussions",
+    "name": "alfatron/laravel-discuss",
     "description": "Discussions for Laravel",
     "keywords": [
         "alfatron",
-        "discussions"
+        "discussions",
+        "laravel",
+        "forum"
     ],
-    "homepage": "https://github.com/alfatron/discussions",
+    "homepage": "https://github.com/alfatron/laravel-discuss",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -25,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Alfatron\\Discussions\\": "src"
+            "Alfatron\\Discuss\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Alfatron\\Discussions\\Tests\\": "tests"
+            "Alfatron\\Discuss\\Tests\\": "tests"
         },
         "classmap": [
             "tests/models/User.php"
@@ -47,10 +49,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Alfatron\\Discussions\\DiscussionsServiceProvider"
+                "Alfatron\\Discuss\\DiscussServiceProvider"
             ],
             "aliases": {
-                "Discussions": "Alfatron\\Discussions\\DiscussionsFacade"
+                "Discuss": "Alfatron\\Discuss\\DiscussFacade"
             }
         }
     }

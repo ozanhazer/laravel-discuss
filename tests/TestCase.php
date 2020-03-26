@@ -1,8 +1,8 @@
 <?php
 
-namespace Alfatron\Discussions\Tests;
+namespace Alfatron\Discuss\Tests;
 
-use Alfatron\Discussions\DiscussionsServiceProvider;
+use Alfatron\Discuss\DiscussServiceProvider;
 use Illuminate\Log\LogServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
@@ -11,7 +11,7 @@ class TestCase extends OrchestraTestCase
 
     protected function getPackageProviders($app)
     {
-        return [DiscussionsServiceProvider::class];
+        return [DiscussServiceProvider::class];
     }
 
     /**
@@ -30,7 +30,7 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('app.debug', env('APP_DEBUG', true));
 
         // Use our dummy class for the tests
-        $app['config']->set('discussions.user_model', \User::class);
+        $app['config']->set('discuss.user_model', \User::class);
     }
 
     public function setUp(): void

@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use Alfatron\Discussions\Models\Category;
+use Alfatron\Discuss\Models\Category;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 

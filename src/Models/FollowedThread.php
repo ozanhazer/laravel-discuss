@@ -1,6 +1,6 @@
 <?php
 
-namespace Alfatron\Discussions\Models;
+namespace Alfatron\Discuss\Models;
 
 class FollowedThread extends BaseModel
 {
@@ -12,6 +12,6 @@ class FollowedThread extends BaseModel
 
     public function user()
     {
-        return $this->belongsTo(config('discussions.user_model'), 'user_id');
+        return $this->belongsTo(config('discuss.user_model'), 'user_id');
     }
 }

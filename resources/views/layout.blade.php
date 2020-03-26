@@ -5,7 +5,7 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Discussions</title>
+  <title>Discuss</title>
 
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
@@ -24,11 +24,11 @@
 </header>
 
 <div class="container">
-  @include('discussions::partials.breadcrumbs')
+  @include('discuss::partials.breadcrumbs')
 
   <div class="row">
     <div class="col" style="max-width: 200px;">
-      @include('discussions::partials.menu')
+      @include('discuss::partials.menu')
     </div>
     <div class="col">
       @yield('content')

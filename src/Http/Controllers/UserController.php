@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Alfatron\Discussions\Http\Controllers;
+namespace Alfatron\Discuss\Http\Controllers;
 
 
 class UserController
@@ -9,6 +9,6 @@ class UserController
 
     public function __invoke($user)
     {
-        return view('discussions::user', compact('user'));
+        return view('discuss::user', compact('user'));
     }
 }

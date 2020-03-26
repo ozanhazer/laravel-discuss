@@ -1,8 +1,8 @@
 <?php
 
-namespace Alfatron\Discussions\Http\Controllers;
+namespace Alfatron\Discuss\Http\Controllers;
 
-use Alfatron\Discussions\Models\Thread;
+use Alfatron\Discuss\Models\Thread;
 
 class IndexController
 {
@@ -14,6 +14,6 @@ class IndexController
             ->orderBy('last_post_at', 'desc')
             ->paginate(20);
 
-        return view('discussions::index', compact('threads'));
+        return view('discuss::index', compact('threads'));
     }
 }

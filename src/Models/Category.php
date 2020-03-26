@@ -1,6 +1,6 @@
 <?php
 
-namespace Alfatron\Discussions\Models;
+namespace Alfatron\Discuss\Models;
 
 class Category extends BaseModel
 {

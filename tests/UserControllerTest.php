@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Alfatron\Discussions\Tests;
+namespace Alfatron\Discuss\Tests;
 
 
 class UserControllerTest extends TestCase
@@ -11,9 +11,9 @@ class UserControllerTest extends TestCase
      */
     function user_profile_url_works()
     {
-        $user = factory(config('discussions.user_model'))->create();
+        $user = factory(config('discuss.user_model'))->create();
 
-        $response = $this->get(route('discussions.user', $user));
+        $response = $this->get(route('discuss.user', $user));
         $response->assertStatus(200);
         $response->assertSeeText($user->email);
     }

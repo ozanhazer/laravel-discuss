@@ -1,6 +1,6 @@
 <?php
 
-namespace Alfatron\Discussions\Models;
+namespace Alfatron\Discuss\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class BaseModel extends Model
     {
         $tableName = parent::getTable();
 
-        return ($tablePrefix = config('discussions.table_prefix')) ?
+        return ($tablePrefix = config('discuss.table_prefix')) ?
             $tablePrefix . '_' . $tableName :
             $tableName;
     }

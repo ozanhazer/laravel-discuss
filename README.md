@@ -1,9 +1,9 @@
 # Laravel Discuss
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/alfatron/discussions.svg?style=flat-square)](https://packagist.org/packages/alfatron/discussions)
-[![Build Status](https://img.shields.io/travis/alfatron/discussions/master.svg?style=flat-square)](https://travis-ci.org/alfatron/discussions)
-[![Quality Score](https://img.shields.io/scrutinizer/g/alfatron/discussions.svg?style=flat-square)](https://scrutinizer-ci.com/g/alfatron/discussions)
-[![Total Downloads](https://img.shields.io/packagist/dt/alfatron/discussions.svg?style=flat-square)](https://packagist.org/packages/alfatron/discussions)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/alfatron/discuss.svg?style=flat-square)](https://packagist.org/packages/alfatron/discuss)
+[![Build Status](https://img.shields.io/travis/alfatron/discuss/master.svg?style=flat-square)](https://travis-ci.org/alfatron/discuss)
+[![Quality Score](https://img.shields.io/scrutinizer/g/alfatron/discuss.svg?style=flat-square)](https://scrutinizer-ci.com/g/alfatron/discuss)
+[![Total Downloads](https://img.shields.io/packagist/dt/alfatron/discuss.svg?style=flat-square)](https://packagist.org/packages/alfatron/discuss)
 
 Add basic forum support to any laravel 6.0 project.
 
@@ -54,11 +54,11 @@ publish them separately by using the `tags` option like: `php artisan vendor:pub
  route_prefix  | discuss          | Prefix for the urls
  table_prefix  | discuss          | Prefix for the database tables. Can be set as empty string.
  user_model    | App\User::class  | User class for the authors of discussion posts
- profile_route | discussions.user | Name of the route for user profile page 
+ profile_route | discuss.user     | Name of the route for user profile page 
  
 ### Customizing the User model
 
-A profile page for the authors of the discussions is provided. An author is an instance of
+A profile page for the authors of the discuss is provided. An author is an instance of
 `App\User` class by default. If `User` class is moved to another namespace in your project 
 or you need to use a different model you may change the `user_model` config key above.
 
@@ -102,7 +102,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 Inspired by:
 
-- [Laracasts Discussions](https://laracasts.com/discuss)
+- [Laracasts Discuss](https://laracasts.com/discuss)
 - [DevDojo Forums](https://devdojo.com/forums) and [Chatter](https://github.com/thedevdojo/chatter)
 
 ## License

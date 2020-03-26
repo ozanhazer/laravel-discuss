@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Alfatron\Discussions\Debater;
+namespace Alfatron\Discuss\Debater;
 
 
 trait Debater

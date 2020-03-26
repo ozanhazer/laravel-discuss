@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 
-$factory->define(config('discussions.user_model'), function (Faker $faker) {
+$factory->define(config('discuss.user_model'), function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
