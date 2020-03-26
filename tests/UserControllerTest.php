@@ -4,8 +4,11 @@
 namespace Alfatron\Discuss\Tests;
 
 
+use Alfatron\Discuss\Models\Thread;
+
 class UserControllerTest extends TestCase
 {
+
     /**
      * @test
      */
@@ -21,10 +24,32 @@ class UserControllerTest extends TestCase
     /**
      * @test
      */
-    function user_profile_url_should_not_be_displayed_if_route_is_empty()
+    function user_profile_should_return_404_if_user_profiles_are_disabled()
     {
-        // TODO: Should not be shown on listing page
-        // TODO: Profile page should return 404
-        $this->markTestIncomplete();
+        $user = factory(config('discuss.user_model'))->create();
+
+        config()->set('discuss.profile_route', null);
+        $response = $this->get(route('discuss.user', $user));
+        $response->assertStatus(404);
+    }
+
+    /**
+     * @test
+     */
+    function users_should_not_be_linked_if_user_profiles_are_disabled()
+    {
+        $thread = factory(Thread::class)->create();
+        $user = $thread->author;
+
+        $profileUrl = route('discuss.user', $user);
+
+        $response = $this->get(route('discuss.index'));
+        $response->assertSee($profileUrl);
+
+        // Let's disable user profiles and test again
+        config()->set('discuss.profile_route', null);
+
+        $response = $this->get(route('discuss.index'));
+        $response->assertDontSee($profileUrl);
     }
 }

@@ -25,8 +25,21 @@ class IndexControllerTest extends TestCase
     /**
      * @test
      */
+    function not_found_message_shown_if_there_are_no_messages_yet()
+    {
+        $response = $this->get(route('discuss.index'));
+        $response->assertSeeText('No posts found');
+    }
+
+    /**
+     * @test
+     */
     function pagination_links_are_displayed()
     {
-        $this->markTestIncomplete();
+        factory(Thread::class, 40)->create();
+
+        $response = $this->get(route('discuss.index'));
+        $response->assertStatus(200);
+        $response->assertSee('class="pagination"');
     }
 }

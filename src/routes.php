@@ -15,9 +15,6 @@ Route::middleware('web')
         Route::get('/', 'IndexController')->name('discuss.index');
         Route::get('/detail/{thread}', 'DetailController')->name('discuss.detail');
 
-        // It means the profile page is not wanted if route is empty in the config.
-        if (config('discuss.profile_route')) {
-            Route::get('/user/{user}', 'UserController')->name('discuss.user');
-        }
+        Route::get('/user/{user}', 'UserController')->name('discuss.user');
 
     });
