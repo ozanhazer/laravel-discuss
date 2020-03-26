@@ -3,10 +3,21 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateInitialTables extends Migration
+class CreateDiscussTables extends Migration
 {
+
+    private $userModelTableName;
+
+    private $userModelPK;
+
     public function up()
     {
+        $userClassName = config('discuss.user_model');
+        /** @var \Illuminate\Foundation\Auth\User $userModel */
+        $userModel          = new $userClassName;
+        $this->userModelPK        = $userModel->getKeyName();
+        $this->userModelTableName = $userModel->getTable();
+
         Schema::create(config('discuss.table_prefix') . '_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('order')->default(1);
@@ -33,8 +44,9 @@ class CreateInitialTables extends Migration
                 ->on(config('discuss.table_prefix') . '_categories')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')
-                ->on(config('discuss.user_model'))
+            $table->foreign('user_id')
+                ->references($this->userModelPK)
+                ->on($this->userModelTableName)
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -52,8 +64,9 @@ class CreateInitialTables extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('user_id')->references('id')
-                ->on(config('discuss.user_model'))
+            $table->foreign('user_id')
+                ->references($this->userModelPK)
+                ->on($this->userModelTableName)
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -68,8 +81,9 @@ class CreateInitialTables extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('user_id')->references('id')
-                ->on(config('discuss.user_model'))
+            $table->foreign('user_id')
+                ->references($this->userModelPK)
+                ->on($this->userModelTableName)
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
