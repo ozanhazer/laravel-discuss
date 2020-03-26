@@ -13,12 +13,14 @@ class CreateDiscussTables extends Migration
     public function up()
     {
         $userClassName = config('discuss.user_model');
+
         /** @var \Illuminate\Foundation\Auth\User $userModel */
-        $userModel          = new $userClassName;
+        $userModel = new $userClassName;
+
         $this->userModelPK        = $userModel->getKeyName();
         $this->userModelTableName = $userModel->getTable();
 
-        Schema::create(config('discuss.table_prefix') . '_categories', function (Blueprint $table) {
+        Schema::create($this->prefixTable('categories'), function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('order')->default(1);
             $table->string('name');
@@ -27,7 +29,7 @@ class CreateDiscussTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create(config('discuss.table_prefix') . '_threads', function (Blueprint $table) {
+        Schema::create($this->prefixTable('threads'), function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('category_id');
             $table->string('title');
@@ -41,7 +43,7 @@ class CreateDiscussTables extends Migration
             $table->softDeletes();
 
             $table->foreign('category_id')->references('id')
-                ->on(config('discuss.table_prefix') . '_categories')
+                ->on($this->prefixTable('categories'))
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->foreign('user_id')
@@ -51,7 +53,7 @@ class CreateDiscussTables extends Migration
                 ->onUpdate('cascade');
         });
 
-        Schema::create(config('discuss.table_prefix') . '_posts', function (Blueprint $table) {
+        Schema::create($this->prefixTable('posts'), function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('thread_id');
             $table->unsignedBigInteger('user_id');
@@ -60,7 +62,7 @@ class CreateDiscussTables extends Migration
             $table->softDeletes();
 
             $table->foreign('thread_id')->references('id')
-                ->on(config('discuss.table_prefix') . '_threads')
+                ->on($this->prefixTable('threads'))
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
@@ -71,13 +73,13 @@ class CreateDiscussTables extends Migration
                 ->onUpdate('cascade');
         });
 
-        Schema::create(config('discuss.table_prefix') . '_followed_threads', function (Blueprint $table) {
+        Schema::create($this->prefixTable('followed_threads'), function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('thread_id');
             $table->primary(['user_id', 'thread_id']);
 
             $table->foreign('thread_id')->references('id')
-                ->on(config('discuss.table_prefix') . '_threads')
+                ->on($this->prefixTable('threads'))
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
@@ -91,9 +93,16 @@ class CreateDiscussTables extends Migration
 
     public function down()
     {
-        Schema::dropIfExists(config('discuss.table_prefix') . '_followed_threads');
-        Schema::dropIfExists(config('discuss.table_prefix') . '_posts');
-        Schema::dropIfExists(config('discuss.table_prefix') . '_threads');
-        Schema::dropIfExists(config('discuss.table_prefix') . '_categories');
+        Schema::dropIfExists($this->prefixTable('followed_threads'));
+        Schema::dropIfExists($this->prefixTable('posts'));
+        Schema::dropIfExists($this->prefixTable('threads'));
+        Schema::dropIfExists($this->prefixTable('categories'));
+    }
+
+    private function prefixTable($tableName)
+    {
+        return ($tablePrefix = config('discuss.table_prefix')) ?
+            $tablePrefix . '_' . $tableName :
+            $tableName;
     }
 }
