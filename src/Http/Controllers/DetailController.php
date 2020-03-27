@@ -4,13 +4,18 @@
 namespace Alfatron\Discuss\Http\Controllers;
 
 
+use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Thread;
 
 class DetailController
 {
 
-    public function __invoke(Thread $thread)
+    public function __invoke(Category $category, Thread $thread)
     {
-        return view('discuss::detail');
+        if ($thread->category_id != $category->id) {
+            abort(404);
+        }
+
+        return view('discuss::detail', compact('thread'));
     }
 }

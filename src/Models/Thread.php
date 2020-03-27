@@ -27,4 +27,9 @@ class Thread extends BaseModel
     {
         return 'slug';
     }
+
+    public function url()
+    {
+        return route('discuss.detail', ['category' => $this->category, 'thread' => $this]);
+    }
 }

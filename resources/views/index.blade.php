@@ -10,7 +10,7 @@
         <img src="https://randomuser.me/api/portraits/men/32.jpg" class="mr-3 rounded-circle"
              style="width: 50px;" alt="...">
         <div class="media-body">
-          <h5 class="mt-0"><a href="{{route('discuss.detail', $thread)}}">{{$thread->title}}</a></h5>
+          <h5 class="mt-0"><a href="{{$thread->url()}}">{{$thread->title}}</a></h5>
 
           @component('discuss::components.author-link', ['user' => $thread->author])@endcomponent
 

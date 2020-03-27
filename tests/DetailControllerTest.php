@@ -18,7 +18,7 @@ class DetailControllerTest extends TestCase
     function detail_url_works()
     {
         $thread   = factory(Thread::class)->create();
-        $response = $this->get(route('discuss.detail', $thread));
+        $response = $this->get($thread->url());
 
         $response->assertStatus(200);
     }
@@ -29,7 +29,7 @@ class DetailControllerTest extends TestCase
     function return_404_if_thread_does_not_exist()
     {
         $thread = factory(Thread::class)->create();
-        $url    = route('discuss.detail', $thread);
+        $url    = $thread->url();
         $thread->forceDelete();
 
         $this->assertDatabaseMissing((new Thread)->getTable(), [
@@ -46,7 +46,7 @@ class DetailControllerTest extends TestCase
     function return_404_if_thread_is_soft_deleted()
     {
         $thread = factory(Thread::class)->create();
-        $url    = route('discuss.detail', $thread);
+        $url    = $thread->url();
 
         $thread->delete();
 

@@ -13,7 +13,7 @@ Route::middleware('web')
     ->group(function () {
 
         Route::get('/', 'IndexController')->name('discuss.index');
-        Route::get('/detail/{thread}', 'DetailController')->name('discuss.detail');
+        Route::get('/detail/{category}/{thread}', 'DetailController')->name('discuss.detail');
 
         Route::get('/user/{user}', 'UserController')->name('discuss.user');
 

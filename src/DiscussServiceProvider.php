@@ -2,6 +2,7 @@
 
 namespace Alfatron\Discuss;
 
+use Alfatron\Discuss\Discuss\Breadcrumbs;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Thread;
 use Illuminate\Support\ServiceProvider;
@@ -84,6 +85,10 @@ class DiscussServiceProvider extends ServiceProvider
     {
         view()->composer('discuss::partials.menu', function ($view) {
             $view->with('categories', Category::query()->orderBy('order')->get());
+        });
+
+        view()->composer('discuss::partials.breadcrumbs', function ($view) {
+            $view->with('breadcrumbs', new Breadcrumbs());
         });
     }
 }
