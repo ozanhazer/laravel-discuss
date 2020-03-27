@@ -28,6 +28,13 @@
 
   <div class="row">
     <div class="col" style="max-width: 200px;">
+      <div class="buttons-area mb-4">
+        @section('buttons-area')
+          <a href="#" class="btn btn-primary w-100 rounded-pill">
+            New Discussion
+          </a>
+        @show
+      </div>
       @include('discuss::partials.menu')
     </div>
     <div class="col">
