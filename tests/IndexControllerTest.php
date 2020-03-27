@@ -2,6 +2,7 @@
 
 namespace Alfatron\Discuss\Tests;
 
+use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Thread;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -17,7 +18,7 @@ class IndexControllerTest extends TestCase
         $thread = factory(Thread::class)->create();
 
         $response = $this->get(route('discuss.index'));
-        $response->assertStatus(200);
+        $response->assertOk();
         $response->assertSeeText($thread->title);
         $response->assertSeeText($thread->author->name);
     }
@@ -39,7 +40,58 @@ class IndexControllerTest extends TestCase
         factory(Thread::class, 40)->create();
 
         $response = $this->get(route('discuss.index'));
-        $response->assertStatus(200);
+        $response->assertOk();
         $response->assertSee('class="pagination"');
+    }
+
+    /**
+     * @test
+     */
+    function categories_are_listed()
+    {
+        // Since we want to decouple the test from the html code, we
+        // create multiple pages of data and make sure that all the
+        // categories are shown on the left menu.
+        $this->assertEquals(0, Category::query()->count());
+        $threads = factory(Thread::class, 100)->create();
+
+        $response = $this->get(route('discuss.index'));
+        $response->assertOk();
+
+        foreach($threads as $thread) {
+            $response->assertSee(e($thread->category->name));
+        }
+    }
+
+    /**
+     * @test
+     */
+    function threads_are_filtered_by_category()
+    {
+        $category1 = factory(Category::class)->create();
+        $category2 = factory(Category::class)->create();
+
+        factory(Thread::class, 4)->create([
+            'category_id' => $category1->id,
+        ]);
+
+        factory(Thread::class, 40)->create([
+            'category_id' => $category2->id,
+        ]);
+
+        // Index page (no categories selected)
+        $response = $this->get(route('discuss.index'));
+        $response->assertOk();
+        $this->assertEquals(44, $response->viewData('threads')->total());
+
+        // Category 1
+        $response = $this->get(route('discuss.category', $category1));
+        $response->assertOk();
+        $this->assertEquals(4, $response->viewData('threads')->total());
+
+        // Category 2
+        $response = $this->get(route('discuss.category', $category2));
+        $response->assertOk();
+        $this->assertEquals(40, $response->viewData('threads')->total());
     }
 }

@@ -17,4 +17,5 @@ Route::middleware('web')
 
         Route::get('/user/{user}', 'UserController')->name('discuss.user');
 
+        Route::get('/{selectedCategory}', 'IndexController')->name('discuss.category');
     });

@@ -10,16 +10,10 @@
   </li>
 
   <li class="dropdown-divider"></li>
+
+  @foreach ($categories as $category)
   <li class="nav-item">
-    <a class="nav-link" href="#">Site Hakkında</a>
+    <a class="nav-link" href="{{route('discuss.category', $category)}}">{{$category->name}}</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Ekipman</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Kayma Teknikleri</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Kayak Merkezleri</a>
-  </li>
+  @endforeach
 </ul>

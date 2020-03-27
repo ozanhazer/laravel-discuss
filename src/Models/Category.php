@@ -11,4 +11,9 @@ class Category extends BaseModel
     {
         return $this->hasMany(Thread::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
