@@ -25,7 +25,7 @@ class BreadcrumbsTest extends TestCase
             switch ($routeName) {
                 case 'discuss.index';
                     $this->get(route($routeName))
-                        ->assertSee('class="breadcrumb"');
+                        ->assertDontSee('class="breadcrumb"');
                     break;
                 case 'discuss.detail';
                     $thread = factory(Thread::class)->create();

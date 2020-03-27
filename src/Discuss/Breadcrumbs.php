@@ -16,11 +16,7 @@ class Breadcrumbs implements IteratorAggregate, Countable
     public function __construct()
     {
 
-        if (Route::is('discuss.index')) {
-
-            $this->addRootItem();
-
-        } elseif (Route::is('discuss.category')) {
+        if (Route::is('discuss.category')) {
 
             $this->addRootItem();
             $this->appendBreadcrumb(Route::current()->parameter('selectedCategory')->name);
