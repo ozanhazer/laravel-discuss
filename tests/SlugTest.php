@@ -5,12 +5,13 @@ namespace Alfatron\Discuss\Tests;
 
 
 use Alfatron\Discuss\Models\Category;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 
 class SlugTest extends TestCase
 {
 
-    use WithFaker;
+    use WithFaker, DatabaseTransactions;
 
     /**
      * @test

@@ -4,6 +4,7 @@
 namespace Alfatron\Discuss\Tests;
 
 
+use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Thread;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -17,10 +18,9 @@ class DetailControllerTest extends TestCase
      */
     function detail_url_works()
     {
-        $thread   = factory(Thread::class)->create();
-        $response = $this->get($thread->url());
+        $thread = factory(Thread::class)->create();
 
-        $response->assertStatus(200);
+        $this->get($thread->url())->assertStatus(200);
     }
 
     /**
@@ -36,8 +36,7 @@ class DetailControllerTest extends TestCase
             'id' => $thread->id,
         ]);
 
-        $response = $this->get($url);
-        $response->assertStatus(404);
+        $this->get($url)->assertStatus(404);
     }
 
     /**
@@ -54,7 +53,21 @@ class DetailControllerTest extends TestCase
             'id' => $thread->id,
         ]);
 
-        $response = $this->get($url);
-        $response->assertStatus(404);
+        $this->get($url)->assertStatus(404);
+    }
+
+    /**
+     * @test
+     */
+    function return_404_if_category_of_thread_was_changed()
+    {
+        $thread = factory(Thread::class)->create();
+        $url    = $thread->url();
+
+        $newCategory         = factory(Category::class)->create();
+        $thread->category_id = $newCategory->id;
+        $thread->save();
+
+        $this->get($url)->assertStatus(404);
     }
 }

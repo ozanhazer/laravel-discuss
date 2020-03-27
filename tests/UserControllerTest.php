@@ -5,9 +5,12 @@ namespace Alfatron\Discuss\Tests;
 
 
 use Alfatron\Discuss\Models\Thread;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserControllerTest extends TestCase
 {
+
+    use DatabaseTransactions;
 
     /**
      * @test
