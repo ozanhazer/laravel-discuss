@@ -28,7 +28,7 @@
           <i class="fa fa-comment"></i> {{$thread->post_count}}
         </div>
         <div style="width: 150px;" class="align-self-center">
-          <a href="#" class="btn btn-outline-info rounded-pill btn-block">{{$thread->category->name}}</a>
+          <a href="{{route('discuss.category', $thread->category)}}" class="btn btn-outline-info rounded-pill btn-block">{{$thread->category->name}}</a>
         </div>
       </div>
     @endforeach
