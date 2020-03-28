@@ -101,8 +101,6 @@ class CreateDiscussTables extends Migration
 
     private function prefixTable($tableName)
     {
-        return ($tablePrefix = config('discuss.table_prefix')) ?
-            $tablePrefix . '_' . $tableName :
-            $tableName;
+        return discuss_table($tableName);
     }
 }
