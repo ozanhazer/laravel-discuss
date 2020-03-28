@@ -72,13 +72,16 @@ class DiscussServiceProvider extends ServiceProvider
 
     private function registerSluggableListeners()
     {
-        $setSlug = function ($row) {
+        Category::saving(function ($row) {
             if (!$row->slug) {
                 $row->slug = Str::slug($row->name);
             }
-        };
-        Category::saving($setSlug);
-        Thread::saving($setSlug);
+        });
+        Thread::saving(function ($row) {
+            if (!$row->slug) {
+                $row->slug = Str::slug($row->title);
+            }
+        });
     }
 
     private function setViewModels()

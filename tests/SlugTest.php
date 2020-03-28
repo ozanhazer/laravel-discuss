@@ -5,6 +5,7 @@ namespace Alfatron\Discuss\Tests;
 
 
 use Alfatron\Discuss\Models\Category;
+use Alfatron\Discuss\Models\Thread;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -23,6 +24,13 @@ class SlugTest extends TestCase
         $category->save();
 
         $this->assertNotEmpty($category->slug);
+
+        $thread        = factory(Thread::class)->make();
+        $thread->title = $this->faker->name;
+        $thread->slug  = null;
+        $thread->save();
+
+        $this->assertNotEmpty($thread->slug);
     }
 
     /**
