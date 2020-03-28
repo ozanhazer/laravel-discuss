@@ -33,6 +33,7 @@ class CreateDiscussTables extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('category_id');
             $table->string('title');
+            $table->text('body');
             $table->string('slug')->unique();
             $table->unsignedBigInteger('user_id');
             $table->boolean('sticky')->default(false);

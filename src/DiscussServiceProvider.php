@@ -86,8 +86,22 @@ class DiscussServiceProvider extends ServiceProvider
 
     private function setViewModels()
     {
-        view()->composer('discuss::partials.menu', function ($view) {
-            $view->with('categories', Category::query()->orderBy('order')->get());
+        $categories = function () {
+            static $categories;
+
+            if (!$categories) {
+                $categories = Category::query()->orderBy('order')->get();
+            }
+
+            return $categories;
+        };
+
+        view()->composer('discuss::partials.menu', function ($view) use ($categories) {
+            $view->with('categories', $categories());
+        });
+
+        view()->composer('discuss::partials.thread-form', function ($view) use ($categories) {
+            $view->with('categories', $categories());
         });
 
         view()->composer('discuss::partials.breadcrumbs', function ($view) {

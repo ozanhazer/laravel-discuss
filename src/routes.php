@@ -18,4 +18,7 @@ Route::middleware('web')
         Route::get('/user/{user}', 'UserController')->name('discuss.user');
 
         Route::get('/{selectedCategory}', 'IndexController')->name('discuss.category');
+
+        Route::post('/create-thread', 'ThreadController@insert')->name('discuss.create-thread');
+        Route::post('/update-thread', 'ThreadController@update')->name('discuss.update-thread');
     });

@@ -30,7 +30,7 @@
     <div class="col" style="max-width: 200px;">
       <div class="buttons-area mb-4">
         @section('buttons-area')
-          <a href="#" class="btn btn-primary w-100 rounded-pill">
+          <a href="#" class="btn btn-primary w-100 rounded-pill" data-toggle="modal" data-target="#thread-form-modal">
             New Discussion
           </a>
         @show
@@ -45,6 +45,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+@include('discuss::partials.thread-form')
 
 </body>
 </html>
