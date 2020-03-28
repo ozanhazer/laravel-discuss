@@ -19,7 +19,8 @@ class BreadcrumbsTest extends TestCase
      */
     function breadcrumbs_shown_or_hidden_for_all_routes()
     {
-        $routeNames = array_keys(Route::getRoutes()->getRoutesByName());
+        $routesByName = Route::getRoutes()->getRoutesByName();
+        $routeNames = array_keys($routesByName);
 
         foreach ($routeNames as $routeName) {
             switch ($routeName) {
@@ -41,7 +42,9 @@ class BreadcrumbsTest extends TestCase
                         ->assertSee('class="breadcrumb"');
                     break;
                 default:
-                    $this->assertTrue(false, 'Untested route: ' . $routeName);
+                    if(in_array('GET', $routesByName[$routeName]->methods)) {
+                        $this->assertTrue(false, 'Untested route: ' . $routeName);
+                    }
             }
         }
 
