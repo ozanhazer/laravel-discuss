@@ -2,14 +2,16 @@
 
 namespace Alfatron\Discuss\Tests;
 
-use Alfatron\Discuss\DiscussServiceProvider;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\FollowedThread;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ConfigTest extends TestCase
 {
+
+    use DatabaseTransactions;
 
     /** @test */
     public function route_prefix_works()
@@ -55,5 +57,14 @@ class ConfigTest extends TestCase
         /** @var Category $model */
         $model = new Category();
         $this->assertEquals('categories', $model->getTable());
+    }
+
+    /**
+     * @test
+     */
+    function table_prefix_works_correctly_on_relations()
+    {
+        $post = factory(Post::class)->create();
+        $this->assertEquals('discuss_threads', $post->thread->getTable());
     }
 }

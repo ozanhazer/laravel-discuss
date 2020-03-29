@@ -9,12 +9,11 @@ class BaseModel extends Model
 
     public function getTable()
     {
-        // This method is called multiple times for relations
-        // thus we are making use of static vars.
-        static $tableName;
+        $tableName = parent::getTable();
 
-        if (!$tableName) {
-            $tableName = discuss_table(parent::getTable());
+        $prefix = config('discuss.table_prefix');
+        if ($prefix && strpos($tableName, $prefix) === false) {
+            $tableName = discuss_table($tableName);
         }
 
         return $tableName;
