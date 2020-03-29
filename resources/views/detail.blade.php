@@ -12,4 +12,4 @@
   <a href="#" class="btn btn-light w-100 rounded-pill">
     Follow
   </a>
-@show
+@stop
