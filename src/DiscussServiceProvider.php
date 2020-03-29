@@ -4,6 +4,7 @@ namespace Alfatron\Discuss;
 
 use Alfatron\Discuss\Discuss\Breadcrumbs;
 use Alfatron\Discuss\Models\Category;
+use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -25,7 +26,7 @@ class DiscussServiceProvider extends ServiceProvider
             // $this->commands([]);
         }
 
-        $this->registerSluggableListeners();
+        $this->registerModelListeners();
 
         $this->setViewModels();
     }
@@ -70,18 +71,29 @@ class DiscussServiceProvider extends ServiceProvider
         ], 'lang');
     }
 
-    private function registerSluggableListeners()
+    private function registerModelListeners()
     {
         Category::saving(function ($row) {
             if (!$row->slug) {
                 $row->slug = Str::slug($row->name);
             }
         });
+
         Thread::saving(function ($row) {
             if (!$row->slug) {
                 $row->slug = Str::slug($row->title);
             }
         });
+
+        $updatePostCount = function ($post) {
+            $thread = $post->thread;
+
+            $thread->post_count = Post::query()->where('thread_id', $thread->id)->count();
+            $thread->save();
+        };
+
+        Post::saved($updatePostCount);
+        Post::deleted($updatePostCount);
     }
 
     private function setViewModels()
