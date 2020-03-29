@@ -39,6 +39,10 @@
 
             @lang('discuss::discuss.posted_at', ['created_at' => $post->created_at->diffForHumans()])
 
+            <div class="post-body">
+              {{$thread->body}}
+            </div>
+
           </div>
         </div>
       @endforeach
@@ -49,11 +53,15 @@
 @stop
 
 @section('buttons-area')
-  <a href="#" class="btn btn-primary w-100 rounded-pill mb-2">
+  <a href="#" class="btn btn-primary w-100 rounded-pill mb-2" data-toggle="modal" data-target="#post-form-modal">
     Reply
   </a>
 
   <a href="#" class="btn btn-light w-100 rounded-pill">
     Follow
   </a>
+@stop
+
+@section('after-scripts')
+  @include('discuss::partials.post-form')
 @stop

@@ -41,56 +41,6 @@
 
   {{-- FIXME --}}
   <script>
-    ($ => {
-      $.fn.handleForm = function (callbackFn) {
-        const $form = this;
-        const form = $form.get(0);
-
-        if (form.nodeName.toLowerCase() !== 'form') {
-          throw "Invalid node type. handleForm should be used on form elements only.";
-        }
-
-        const setLoading = start => {
-          if (start) {
-            $form.find('[type=submit]').prop('disabled', true);
-            $form.find('[type=submit]').append('<i class="fa fa-refresh fa-spin ml-2"></i>');
-          } else {
-            $form.find('[type=submit]').prop('disabled', false);
-            $form.find('[type=submit]').find('.fa-refresh').remove();
-          }
-        };
-
-        const resetValidation = () => {
-          $form.find('.is-invalid').removeClass('is-invalid');
-          $form.find('.invalid-feedback').remove();
-        };
-
-        const addValidationMessages = errors => {
-          for (const fieldName in errors) {
-            const errorMessage = errors[fieldName].join('\n');
-            $form.find('[name=' + fieldName + ']')
-              .addClass('is-invalid')
-              .after('<div class="invalid-feedback">' + errorMessage + '</div>')
-          }
-        };
-
-        form.addEventListener('submit', e => {
-          e.preventDefault();
-          setLoading(true);
-          resetValidation();
-
-          const xhr = $.post($form.attr('action'), $form.serialize())
-            .catch(response => response.status === 422 ?
-              addValidationMessages(response.responseJSON.errors) :
-              bootbox.alert('An unexpected error has occured. Please try again later...'))
-            .always(() => setLoading(false));
-
-          callbackFn(xhr);
-        });
-      };
-
-    })(jQuery);
-
     $('#thread-form-modal form').handleForm(xhr => xhr.then(response => {
       if (response.success) {
         $('#thread-form-modal').modal('hide');

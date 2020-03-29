@@ -21,4 +21,6 @@ Route::middleware('web')
 
         Route::post('/create-thread', 'ThreadController@insert')->name('discuss.create-thread');
         Route::post('/update-thread', 'ThreadController@update')->name('discuss.update-thread');
+        Route::post('/create-post/{thread}', 'PostController@insert')->name('discuss.create-post');
+        Route::post('/update-post/{thread}', 'PostController@update')->name('discuss.update-post');
     });
