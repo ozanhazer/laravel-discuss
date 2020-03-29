@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Alfatron\Discuss\Http\Controllers;
-
 
 class UserController
 {

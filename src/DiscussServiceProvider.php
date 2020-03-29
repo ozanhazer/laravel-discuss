@@ -40,7 +40,7 @@ class DiscussServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'discuss');
     }
 
-    private function loadDefinitions(): void
+    private function loadDefinitions()
     {
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'discuss');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'discuss');

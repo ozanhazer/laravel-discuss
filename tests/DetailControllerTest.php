@@ -5,6 +5,7 @@ namespace Alfatron\Discuss\Tests;
 
 
 use Alfatron\Discuss\Models\Category;
+use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -19,6 +20,7 @@ class DetailControllerTest extends TestCase
     function detail_url_works()
     {
         $thread = factory(Thread::class)->create();
+        factory(Post::class, 5)->create(['thread_id' => $thread->id]);
 
         $this->get($thread->url())->assertStatus(200);
     }

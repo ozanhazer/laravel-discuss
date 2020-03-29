@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Alfatron\Discuss\Http\Controllers;
-
 
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Thread;
