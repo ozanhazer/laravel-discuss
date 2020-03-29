@@ -14,7 +14,7 @@ class ThreadController
     public function insert(Request $request)
     {
         $this->validate($request, [
-            'title'       => 'required|min:10',
+            'title'       => 'required|min:10|unique:' . discuss_table('threads') . ',title',
             'category_id' => 'required|exists:' . discuss_table('categories') . ',id',
             'body'        => 'required',
         ]);
