@@ -16,6 +16,10 @@ class DetailController
             abort(404);
         }
 
-        return view('discuss::detail', compact('thread'));
+        $posts = $thread->posts()
+            ->with('author')
+            ->orderBy('created_at')->paginate();
+
+        return view('discuss::detail', compact('thread', 'posts'));
     }
 }
