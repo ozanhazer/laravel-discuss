@@ -41,46 +41,61 @@
 
   {{-- FIXME --}}
   <script>
-    // $('#thread-form-modal').handleForm().then(response => location.href = response.url);
+    ($ => {
+      $.fn.handleForm = function (callbackFn) {
+        const $form = this;
+        const form = $form.get(0);
 
-    $('#thread-form-modal').find('form').on('submit', function (e) {
-      e.preventDefault();
-      const $form = $(this);
+        if (form.nodeName.toLowerCase() !== 'form') {
+          throw "Invalid node type. handleForm should be used on form elements only.";
+        }
 
-      // Loading
-      $form.find('[type=submit]').prop('disabled', true);
-      $form.find('[type=submit]').append('<i class="fa fa-refresh fa-spin ml-2"></i>');
-
-      // Reset validation
-      $form.find('.is-invalid').removeClass('is-invalid');
-      $form.find('.invalid-feedback').remove();
-
-      $.post($form.attr('action'), $form.serialize())
-        .then(function (response) {
-          if (response.success === true && response.url) {
-            location.href = response.url;
+        const setLoading = start => {
+          if (start) {
+            $form.find('[type=submit]').prop('disabled', true);
+            $form.find('[type=submit]').append('<i class="fa fa-refresh fa-spin ml-2"></i>');
           } else {
-            bootbox.alert('Unexpected response');
+            $form.find('[type=submit]').prop('disabled', false);
+            $form.find('[type=submit]').find('.fa-refresh').remove();
           }
-        })
-        .catch(function (response) {
-          if (response.status === 422) {
-            // Add validation messages
-            for (const fieldName in response.responseJSON.errors) {
-              const errorMessage = response.responseJSON.errors[fieldName].join('\n');
-              $form.find('[name=' + fieldName + ']')
-                .addClass('is-invalid')
-                .after('<div class="invalid-feedback">' + errorMessage + '</div>')
-            }
-          } else {
-            bootbox.alert('An unexpected error has occured. Please try again later...');
+        };
+
+        const resetValidation = () => {
+          $form.find('.is-invalid').removeClass('is-invalid');
+          $form.find('.invalid-feedback').remove();
+        };
+
+        const addValidationMessages = errors => {
+          for (const fieldName in errors) {
+            const errorMessage = errors[fieldName].join('\n');
+            $form.find('[name=' + fieldName + ']')
+              .addClass('is-invalid')
+              .after('<div class="invalid-feedback">' + errorMessage + '</div>')
           }
-        })
-        .always(function () {
-          // Reset loading
-          $form.find('[type=submit]').prop('disabled', false);
-          $form.find('[type=submit]').find('.fa-refresh').remove();
+        };
+
+        form.addEventListener('submit', e => {
+          e.preventDefault();
+          setLoading(true);
+          resetValidation();
+
+          const xhr = $.post($form.attr('action'), $form.serialize())
+            .catch(response => response.status === 422 ?
+              addValidationMessages(response.responseJSON.errors) :
+              bootbox.alert('An unexpected error has occured. Please try again later...'))
+            .always(() => setLoading(false));
+
+          callbackFn(xhr);
         });
-    });
+      };
+
+    })(jQuery);
+
+    $('#thread-form-modal form').handleForm(xhr => xhr.then(response => {
+      if (response.success) {
+        $('#thread-form-modal').modal('hide');
+        location.href = response.url;
+      }
+    }));
   </script>
 @endauth
