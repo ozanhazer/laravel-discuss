@@ -41,17 +41,45 @@
 
   {{-- FIXME --}}
   <script>
+    // $('#thread-form-modal').handleForm().then(response => location.href = response.url);
+
     $('#thread-form-modal').find('form').on('submit', function (e) {
       e.preventDefault();
+      const $form = $(this);
 
-      $.post($(this).attr('action'), $(this).serialize())
+      // Loading
+      $form.find('[type=submit]').prop('disabled', true);
+      $form.find('[type=submit]').append('<i class="fa fa-refresh fa-spin ml-2"></i>');
+
+      // Reset validation
+      $form.find('.is-invalid').removeClass('is-invalid');
+      $form.find('.invalid-feedback').remove();
+
+      $.post($form.attr('action'), $form.serialize())
         .then(function (response) {
-          if (response === true) {
-            alert('Saved');
+          if (response.success === true && response.url) {
+            location.href = response.url;
+          } else {
+            bootbox.alert('Unexpected response');
           }
         })
         .catch(function (response) {
-          alert(response.responseJSON);
+          if (response.status === 422) {
+            // Add validation messages
+            for (const fieldName in response.responseJSON.errors) {
+              const errorMessage = response.responseJSON.errors[fieldName].join('\n');
+              $form.find('[name=' + fieldName + ']')
+                .addClass('is-invalid')
+                .after('<div class="invalid-feedback">' + errorMessage + '</div>')
+            }
+          } else {
+            bootbox.alert('An unexpected error has occured. Please try again later...');
+          }
+        })
+        .always(function () {
+          // Reset loading
+          $form.find('[type=submit]').prop('disabled', false);
+          $form.find('[type=submit]').find('.fa-refresh').remove();
         });
     });
   </script>

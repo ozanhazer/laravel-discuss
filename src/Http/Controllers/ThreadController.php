@@ -19,13 +19,16 @@ class ThreadController
             'body'        => 'required',
         ]);
 
-        $thread             = new Thread();
-        $thread->user_id    = $request->user()->id;
-        $thread->title      = $request->get('title');
-        $thread->body       = $request->get('body');
+        $thread              = new Thread();
+        $thread->user_id     = $request->user()->id;
+        $thread->title       = $request->get('title');
+        $thread->body        = $request->get('body');
         $thread->category_id = $request->get('category_id');
         $thread->save();
 
-        return response()->json(true);
+        return response()->json([
+            'success' => true,
+            'url'     => $thread->url(),
+        ]);
     }
 }
