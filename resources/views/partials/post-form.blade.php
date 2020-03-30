@@ -1,7 +1,7 @@
 @can('insert', Alfatron\Discuss\Models\Post::class)
   <div class="modal fade" id="post-form-modal" tabindex="-1">
     <div class="modal-dialog">
-      <form action="{{route('discuss.post.create', $thread)}}">
+      <form action="#">
         @csrf
         <div class="modal-content">
           <div class="modal-header">

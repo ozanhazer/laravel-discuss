@@ -14,7 +14,7 @@
           <div class="modal-body">
 
             <div class="form-group">
-              <input type="text" name="title" class="form-control" id="thread-title" placeholder="Title...">
+              <input type="text" name="title" class="form-control" placeholder="Title...">
             </div>
 
             <div class="form-group">

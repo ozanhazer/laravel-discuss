@@ -52,4 +52,13 @@ class PostController
 
         return response()->json(['success' => true]);
     }
+
+    public function populate(Post $post)
+    {
+        $this->authorize('update', $post);
+
+        return response()->json([
+            'body' => $post->body,
+        ]);
+    }
 }

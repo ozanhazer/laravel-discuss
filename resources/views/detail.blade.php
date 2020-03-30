@@ -26,7 +26,9 @@
   @canany(['update', 'delete', 'change-category'], $thread)
     <div class="bg-light p-1 d-inline-block rounded mt-3">
       @can('update', $thread)
-        <a href="#" class="btn btn-light btn-sm" data-toggle="modal" data-target="#thread-edit-form-modal">Edit Thread</a>
+        <a href="#" class="btn btn-light btn-sm" data-toggle="modal" data-target="#thread-edit-form-modal">
+          Edit Thread
+        </a>
       @endcan
 
       @can('change-category', $thread)
@@ -64,14 +66,18 @@
             @lang('discuss::discuss.posted_at', ['created_at' => $post->created_at->diffForHumans()])
 
             <div class="post-body">
-              {{$thread->body}}
+              {{$post->body}}
             </div>
 
 
             @canany(['update', 'delete'], $post)
               <div class="bg-light p-1 d-inline-block rounded mt-3">
                 @can('update', $post)
-                  <a href="#" class="btn btn-light btn-sm">Edit Post</a>
+                  <a href="#" class="btn btn-light btn-sm"
+                     data-toggle="edit-reply-modal"
+                     data-populate-url="{{route('discuss.post.populate', $post)}}"
+                     data-action="{{route('discuss.post.update', $post)}}"
+                     data-title="Edit Reply">Edit Reply</a>
                 @endcan
 
                 @can('delete', $post)
@@ -91,7 +97,10 @@
 @stop
 
 @section('buttons-area')
-  <a href="#" class="btn btn-primary w-100 rounded-pill mb-2" data-toggle="modal" data-target="#post-form-modal">
+  <a href="#" class="btn btn-primary w-100 rounded-pill mb-2"
+     data-toggle="reply-modal"
+     data-action="{{route('discuss.post.create', $thread)}}"
+     data-title="Reply">
     Reply
   </a>
 
@@ -103,4 +112,27 @@
 @section('after-scripts')
   @include('discuss::partials.post-form')
   @include('discuss::partials.thread-edit-form')
+
+  <script>
+    ($ => {
+      const $modal = $('#post-form-modal');
+      $('[data-toggle=reply-modal]').on('click', function (e) {
+        e.preventDefault();
+
+        $modal.find('.modal-title').text($(this).data('title'));
+        $modal.find('form').attr('action', $(this).data('action'));
+        $modal.find('[name=body]').val('');
+        $modal.modal('show');
+      });
+
+      $('[data-toggle=edit-reply-modal]').on('click', function (e) {
+        e.preventDefault();
+
+        $modal.find('.modal-title').text($(this).data('title'));
+        $modal.find('form').attr('action', $(this).data('action'));
+        $.get($(this).data('populate-url')).then(response => $modal.find('[name=body]').val(response.body));
+        $modal.modal('show');
+      });
+    })(jQuery);
+  </script>
 @stop

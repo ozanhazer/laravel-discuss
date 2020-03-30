@@ -46,4 +46,16 @@ class PostControllerTest extends TestCase
         $response = $this->post(route('discuss.post.delete', $post), [], ['Accept' => 'application/json']);
         $response->assertStatus(403);
     }
+
+    /**
+     * @test
+     */
+    function users_cannot_use_populate_endpoint_for_other_users_posts()
+    {
+        $post = factory(Post::class)->create();
+        $this->actingAs(factory(config('discuss.user_model'))->create());
+
+        $response = $this->get(route('discuss.post.populate', $post));
+        $response->assertStatus(403);
+    }
 }

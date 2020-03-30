@@ -361,6 +361,22 @@ class ThreadControllerTest extends TestCase
         ]);
     }
 
+    /**
+     * @test
+     */
+    function populate_thread()
+    {
+        $thread = factory(Thread::class)->create();
+        $this->actingAs($thread->author);
+
+        $response = $this->get(route('discuss.thread.populate', $thread));
+        $response->assertOk();
+        $response->assertExactJson([
+            'title'   => $thread->title,
+            'body'    => $thread->body,
+        ]);
+    }
+
 
     function invalidTitles()
     {

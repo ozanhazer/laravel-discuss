@@ -111,4 +111,21 @@ class PostControllerTest extends TestCase
         $response->assertExactJson(['success' => true]);
         $this->assertSoftDeleted($post);
     }
+
+
+    /**
+     * @test
+     */
+    function populate_post()
+    {
+        $post = factory(Post::class)->create();
+        $this->actingAs($post->author);
+
+        $response = $this->get(route('discuss.post.populate', $post));
+        $response->assertOk();
+        $response->assertExactJson([
+            'body'    => $post->body,
+        ]);
+    }
+
 }

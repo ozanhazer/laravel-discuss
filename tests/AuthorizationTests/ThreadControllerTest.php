@@ -89,4 +89,16 @@ class ThreadControllerTest extends TestCase
             $response->assertStatus(403);
         }
     }
+
+    /**
+     * @test
+     */
+    function users_cannot_use_populate_endpoint_for_other_users_posts()
+    {
+        $thread = factory(Thread::class)->create();
+        $this->actingAs(factory(config('discuss.user_model'))->create());
+
+        $response = $this->get(route('discuss.thread.populate', $thread));
+        $response->assertStatus(403);
+    }
 }

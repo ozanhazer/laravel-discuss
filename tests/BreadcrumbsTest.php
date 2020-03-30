@@ -42,6 +42,7 @@ class BreadcrumbsTest extends TestCase
                         ->assertSee('class="breadcrumb"');
                     break;
                 case 'discuss.thread.populate': // xhr
+                case 'discuss.post.populate': // xhr
                     break;
                 default:
                     if(in_array('GET', $routesByName[$routeName]->methods)) {
