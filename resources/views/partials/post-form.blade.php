@@ -1,4 +1,4 @@
-@auth
+@can('insert', Alfatron\Discuss\Models\Post::class)
   <div class="modal fade" id="post-form-modal" tabindex="-1">
     <div class="modal-dialog">
       <form action="{{route('discuss.post.create', $thread)}}">
@@ -34,4 +34,22 @@
       }
     }));
   </script>
-@endauth
+@else
+  <div class="modal fade" id="post-form-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Reply</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          Please login to reply
+
+        </div>
+      </div>
+    </div>
+  </div>
+@endcan
