@@ -243,7 +243,7 @@ class ThreadControllerTest extends TestCase
         $response->assertOk();
         $this->assertSoftDeleted($thread);
 
-        $response->assertExactJson(['success' => true]);
+        $response->assertExactJson(['url' => route('discuss.index')]);
     }
 
     /**

@@ -61,7 +61,7 @@ class ThreadController
 
         $thread->delete();
 
-        return response()->json(['success' => true]);
+        return response()->json(['url' => route('discuss.index')]);
     }
 
     public function changeCategory(Thread $thread, Request $request)

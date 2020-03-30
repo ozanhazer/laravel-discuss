@@ -50,7 +50,7 @@ class PostController
 
         $post->delete();
 
-        return response()->json(['success' => true]);
+        return response()->json(['url' => $post->thread->url()]);
     }
 
     public function populate(Post $post)

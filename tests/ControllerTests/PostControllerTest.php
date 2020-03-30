@@ -108,7 +108,7 @@ class PostControllerTest extends TestCase
 
         $response = $this->post(route('discuss.post.delete', $post), [], ['Accept' => 'application/json']);
         $response->assertOk();
-        $response->assertExactJson(['success' => true]);
+        $response->assertExactJson(['url' => $post->thread->url()]);
         $this->assertSoftDeleted($post);
     }
 

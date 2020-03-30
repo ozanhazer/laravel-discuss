@@ -44,7 +44,11 @@
       @endcan
 
       @can('delete', $thread)
-        <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+        <a href="#" class="btn btn-danger btn-sm"
+           data-action="delete-post"
+           data-url="{{route('discuss.thread.delete', $thread)}}">
+        <i class="fa fa-trash-o"></i>
+        </a>
       @endcan
     </div>
   @endcanany
@@ -81,7 +85,11 @@
                 @endcan
 
                 @can('delete', $post)
-                  <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                  <a href="#" class="btn btn-danger btn-sm"
+                     data-action="delete-post"
+                     data-url="{{route('discuss.post.delete', $post)}}">
+                    <i class="fa fa-trash-o"></i>
+                  </a>
                 @endcan
               </div>
             @endcanany
@@ -133,6 +141,16 @@
         $.get($(this).data('populate-url')).then(response => $modal.find('[name=body]').val(response.body));
         $modal.modal('show');
       });
+
+      $('[data-action=delete-post]').on('click', function () {
+        const $btn = $(this);
+        bootbox.confirm('Are you sure that you want to delete this post?', answer => {
+          if (!answer) {
+            return;
+          }
+          $.post($btn.data('url')).then(response => location.href = response.url)
+        });
+      })
     })(jQuery);
   </script>
 @stop
