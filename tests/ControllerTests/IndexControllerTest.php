@@ -1,9 +1,10 @@
 <?php
 
-namespace Alfatron\Discuss\Tests;
+namespace Alfatron\Discuss\Tests\ControllerTests;
 
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Thread;
+use Alfatron\Discuss\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class IndexControllerTest extends TestCase
