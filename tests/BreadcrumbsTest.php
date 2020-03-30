@@ -41,6 +41,11 @@ class BreadcrumbsTest extends TestCase
                     $this->get(route($routeName, factory(Category::class)->create()))
                         ->assertSee('class="breadcrumb"');
                     break;
+                case 'discuss.my-participation';
+                    $this->actingAs(factory(config('discuss.user_model'))->create());
+                    $this->get(route($routeName))
+                        ->assertSee('class="breadcrumb"');
+                    break;
                 case 'discuss.thread.populate': // xhr
                 case 'discuss.post.populate': // xhr
                     break;

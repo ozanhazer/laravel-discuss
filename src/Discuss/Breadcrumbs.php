@@ -29,6 +29,11 @@ class Breadcrumbs implements IteratorAggregate, Countable
             $this->appendBreadcrumb($category->name, route('discuss.category', $category));
             $this->appendBreadcrumb(Route::current()->parameter('thread')->title);
 
+        } elseif (Route::is('discuss.my-participation')) {
+
+            $this->addRootItem();
+            $this->appendBreadcrumb('My Participation', route('discuss.my-participation'));
+
         }
 
     }

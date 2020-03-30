@@ -14,6 +14,7 @@ Route::middleware('web')
 
         Route::get('/', 'IndexController')->name('discuss.index');
         Route::get('/detail/{category}/{thread}', 'DetailController')->name('discuss.detail');
+        Route::get('/my-participation', 'IndexController@myParticipation')->name('discuss.my-participation');
 
         Route::get('/user/{user}', 'UserController')->name('discuss.user');
 

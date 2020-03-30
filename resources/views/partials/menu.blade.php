@@ -5,9 +5,15 @@
       All Threads
     </a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">My Participation</a>
-  </li>
+  @auth
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('discuss.my-participation')}}">My Participation</a>
+    </li>
+  @else
+    <li class="nav-item">
+      <a class="nav-link" href="#">My Participation</a>
+    </li>
+  @endauth
   <li class="nav-item">
     <a class="nav-link" href="#">Following</a>
   </li>
