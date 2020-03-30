@@ -23,6 +23,30 @@
     {{$thread->body}}
   </div>
 
+  @canany(['update', 'delete', 'change-category'], $thread)
+    <div class="bg-light p-1 d-inline-block rounded mt-3">
+      @can('update', $thread)
+        <a href="#" class="btn btn-light btn-sm">Edit Thread</a>
+      @endcan
+
+      @can('change-category', $thread)
+        <a href="#" class="btn btn-light btn-sm">Change Category</a>
+      @endcan
+
+      @can('make-sticky', $thread)
+        @if ($thread->sticky)
+          <a href="#" class="btn btn-light btn-sm">Make Unsticky</a>
+        @else
+          <a href="#" class="btn btn-light btn-sm">Make Sticky</a>
+        @endif
+      @endcan
+
+      @can('delete', $thread)
+        <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+      @endcan
+    </div>
+  @endcanany
+
   <hr>
 
   <div>
@@ -42,6 +66,20 @@
             <div class="post-body">
               {{$thread->body}}
             </div>
+
+
+            @canany(['update', 'delete'], $post)
+              <div class="bg-light p-1 d-inline-block rounded mt-3">
+                @can('update', $post)
+                  <a href="#" class="btn btn-light btn-sm">Edit Post</a>
+                @endcan
+
+                @can('delete', $post)
+                  <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                @endcan
+              </div>
+            @endcanany
+
 
           </div>
         </div>

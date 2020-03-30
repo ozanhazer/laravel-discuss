@@ -1,7 +1,7 @@
 @auth
   <div class="modal fade" id="post-form-modal" tabindex="-1">
     <div class="modal-dialog">
-      <form action="{{route('discuss.create-post', $thread)}}">
+      <form action="{{route('discuss.post.create', $thread)}}">
         @csrf
         <div class="modal-content">
           <div class="modal-header">

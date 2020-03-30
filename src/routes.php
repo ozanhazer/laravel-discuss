@@ -19,8 +19,15 @@ Route::middleware('web')
 
         Route::get('/{selectedCategory}', 'IndexController')->name('discuss.category');
 
-        Route::post('/create-thread', 'ThreadController@insert')->name('discuss.create-thread');
-        Route::post('/update-thread', 'ThreadController@update')->name('discuss.update-thread');
-        Route::post('/create-post/{thread}', 'PostController@insert')->name('discuss.create-post');
-        Route::post('/update-post/{thread}', 'PostController@update')->name('discuss.update-post');
+        Route::post('/create-thread', 'ThreadController@insert')->name('discuss.thread.create');
+        Route::post('/update-thread/{thread}', 'ThreadController@update')->name('discuss.thread.update');
+        Route::post('/delete-thread/{thread}', 'ThreadController@delete')->name('discuss.thread.delete');
+
+        Route::post('/change-category/{thread}', 'ThreadController@changeCategory')->name('discuss.change-category');
+        Route::post('/make-sticky/{thread}', 'ThreadController@makeSticky')->name('discuss.make-sticky');
+        Route::post('/make-unsticky/{thread}', 'ThreadController@makeUnsticky')->name('discuss.make-unsticky');
+
+        Route::post('/create-post/{thread}', 'PostController@insert')->name('discuss.post.create');
+        Route::post('/update-post/{post}', 'PostController@update')->name('discuss.post.update');
+        Route::post('/delete-post/{post}', 'PostController@delete')->name('discuss.post.delete');
     });

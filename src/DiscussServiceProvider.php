@@ -6,6 +6,9 @@ use Alfatron\Discuss\Discuss\Breadcrumbs;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
+use Alfatron\Discuss\Policies\PostPolicy;
+use Alfatron\Discuss\Policies\ThreadPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -27,8 +30,8 @@ class DiscussServiceProvider extends ServiceProvider
         }
 
         $this->registerModelListeners();
-
         $this->setViewModels();
+        $this->registerPolicies();
     }
 
     /**
@@ -119,5 +122,18 @@ class DiscussServiceProvider extends ServiceProvider
         view()->composer('discuss::partials.breadcrumbs', function ($view) {
             $view->with('breadcrumbs', new Breadcrumbs());
         });
+    }
+
+    private function registerPolicies()
+    {
+        Gate::before(function ($user, $ability) {
+            if (method_exists($user, 'isDiscussSuperAdmin')) {
+                return $user->isDiscussSuperAdmin();
+            }
+        });
+
+        // TODO: Set it in the configuration so that user can change the logic
+        Gate::policy(Thread::class, ThreadPolicy::class);
+        Gate::policy(Post::class, PostPolicy::class);
     }
 }
