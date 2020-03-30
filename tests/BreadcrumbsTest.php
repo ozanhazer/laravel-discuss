@@ -41,6 +41,8 @@ class BreadcrumbsTest extends TestCase
                     $this->get(route($routeName, factory(Category::class)->create()))
                         ->assertSee('class="breadcrumb"');
                     break;
+                case 'discuss.thread.populate': // xhr
+                    break;
                 default:
                     if(in_array('GET', $routesByName[$routeName]->methods)) {
                         $this->assertTrue(false, 'Untested route: ' . $routeName);

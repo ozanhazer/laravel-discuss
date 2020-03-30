@@ -1,7 +1,7 @@
 @extends('discuss::layout')
 
 @section('content')
-  <h1>{{$thread->title}}</h1>
+  <h1 class="thread-title">{{$thread->title}}</h1>
 
   <div class="small text-muted overflow-auto">
     <div class="float-left">
@@ -19,14 +19,14 @@
     </div>
   </div>
 
-  <div class="post-body">
+  <div class="thread-body">
     {{$thread->body}}
   </div>
 
   @canany(['update', 'delete', 'change-category'], $thread)
     <div class="bg-light p-1 d-inline-block rounded mt-3">
       @can('update', $thread)
-        <a href="#" class="btn btn-light btn-sm">Edit Thread</a>
+        <a href="#" class="btn btn-light btn-sm" data-toggle="modal" data-target="#thread-edit-form-modal">Edit Thread</a>
       @endcan
 
       @can('change-category', $thread)
@@ -102,4 +102,5 @@
 
 @section('after-scripts')
   @include('discuss::partials.post-form')
+  @include('discuss::partials.thread-edit-form')
 @stop

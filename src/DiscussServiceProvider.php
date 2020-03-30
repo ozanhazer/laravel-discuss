@@ -115,7 +115,7 @@ class DiscussServiceProvider extends ServiceProvider
             $view->with('categories', $categories());
         });
 
-        view()->composer('discuss::partials.thread-form', function ($view) use ($categories) {
+        view()->composer('discuss::partials.thread-create-form', function ($view) use ($categories) {
             $view->with('categories', $categories());
         });
 

@@ -48,7 +48,11 @@ class ThreadController
         $thread->body  = $request->get('body');
         $thread->save();
 
-        return response()->json(['success' => true]);
+        return response()->json([
+            'success' => true,
+            'title'   => $thread->title,
+            'body'    => $thread->body,
+        ]);
     }
 
     public function delete(Thread $thread)
@@ -98,5 +102,15 @@ class ThreadController
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function populate(Thread $thread)
+    {
+        $this->authorize('update', $thread);
+
+        return response()->json([
+            'title' => $thread->title,
+            'body'  => $thread->body,
+        ]);
     }
 }

@@ -134,11 +134,12 @@ class ThreadControllerTest extends TestCase
         $this->actingAs($thread->author);
 
         $title    = $this->faker->text;
+        $body     = $this->faker->text(5000);
         $response = $this->post(
             route('discuss.thread.update', $thread),
             [
                 'title' => $title,
-                'body'  => $this->faker->text(5000),
+                'body'  => $body,
             ],
             ['Accept' => 'application/json']
         );
@@ -149,7 +150,11 @@ class ThreadControllerTest extends TestCase
             'title' => $title,
         ]);
 
-        $response->assertExactJson(['success' => true]);
+        $response->assertExactJson([
+            'success' => true,
+            'title'   => $title,
+            'body'    => $body,
+        ]);
     }
 
     /**
@@ -184,8 +189,6 @@ class ThreadControllerTest extends TestCase
             'id'          => $thread->id,
             'category_id' => $otherCategory->id,
         ]);
-
-        $response->assertExactJson(['success' => true]);
     }
 
     /**
@@ -308,8 +311,8 @@ class ThreadControllerTest extends TestCase
         $response->assertOk();
         $response->assertExactJson(['success' => true]);
         $this->assertDatabaseHas(discuss_table('threads'), [
-            'id'         => $thread->id,
-            'sticky'     => true,
+            'id'     => $thread->id,
+            'sticky' => true,
         ]);
     }
 

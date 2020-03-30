@@ -21,6 +21,7 @@ Route::middleware('web')
 
         Route::post('/create-thread', 'ThreadController@insert')->name('discuss.thread.create');
         Route::post('/update-thread/{thread}', 'ThreadController@update')->name('discuss.thread.update');
+        Route::get('/populate-thread/{thread}', 'ThreadController@populate')->name('discuss.thread.populate');
         Route::post('/delete-thread/{thread}', 'ThreadController@delete')->name('discuss.thread.delete');
 
         Route::post('/change-category/{thread}', 'ThreadController@changeCategory')->name('discuss.change-category');

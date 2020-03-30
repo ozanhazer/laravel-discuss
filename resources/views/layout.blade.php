@@ -30,7 +30,7 @@
     <div class="col" style="max-width: 200px;">
       <div class="buttons-area mb-4">
         @section('buttons-area')
-          <a href="#" class="btn btn-primary w-100 rounded-pill" data-toggle="modal" data-target="#thread-form-modal">
+          <a href="#" class="btn btn-primary w-100 rounded-pill" data-toggle="modal" data-target="#thread-create-form-modal">
             New Discussion
           </a>
         @show
@@ -99,7 +99,7 @@
   })(jQuery);
 </script>
 
-@include('discuss::partials.thread-form')
+@include('discuss::partials.thread-create-form')
 @yield('after-scripts')
 
 </body>
