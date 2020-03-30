@@ -5,22 +5,41 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/alfatron/discuss.svg?style=flat-square)](https://scrutinizer-ci.com/g/alfatron/discuss)
 [![Total Downloads](https://img.shields.io/packagist/dt/alfatron/discuss.svg?style=flat-square)](https://packagist.org/packages/alfatron/discuss)
 
-Add basic forum support to any laravel 6.0 project.
+Laravel Discuss is a very customizable form add-on for any laravel 6.0 project.
 
 ## Features
 
 * Default laravel conventions and setup is respected, works out of the box
-* Fully customizable to be blended into your project easily
-* Tests written
+* Fully customizable to be blended into your project completely
+* Extensive tests written, full code coverage
+* Well documented
 * Categories
-* Followed threads
-* Participated threads
-* User profile page
-* Localization
+* Follow threads
+* List participated threads
+* Customizable user profile page
+* Localization support
+* Authorization and moderation support
 
-A very basic design built using Twitter Bootstrap comes out of the box. You may publish the
-blade files and adjust to match your project's design.
+### What is customizable?
 
+*See the documentation for details*
+
+1. **Design**: A very basic design built using Twitter Bootstrap and simple - easy to understand - javascript comes out of the box. 
+You may publish the front-end files (blade, js, scss) and adjust them to match your project's design.
+
+2. **URL Prefix**: You may change the url prefix for your taste or localization concerns.
+
+3. **Table Prefix**: All tables are prefixed with `discuss`, you may change or remove the prefix.
+
+4. **User Model**: The discussions are linked to the laravel User eloquent model. If you changed the location of the default 
+   User class or prefer to use a separate model for the forum, you may do so!
+   
+5. **Authorization**: You may implement an `isDiscussSuperAdmin` method on your User class for moderation. Or you
+   can adjust the permissions by implementing your own logic based on standard laravel authorization.
+
+6. **User Profile Page**: A very basic user profile page is provided, which you can customize the design. 
+   If you already have a profile page for your project you may use it instead, or disable forum profile 
+   page alltogether.
 
 ## Installation
 
@@ -44,8 +63,13 @@ migrations if you think you'll have a conflict with the table names.
 
 ## Customization
 
-Run `php artisan vendor:publish` to publish views, config and translation files. You can also
-publish them separately by using the `tags` option like: `php artisan vendor:publish --tag=config`.
+Run `php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider` to publish 
+views, config and translation files. You can also publish them separately by using the `tags` 
+option like: 
+
+`php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=config`.
+`php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=views`.
+`php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=lang`.
 
 ### Configuration:
 
@@ -81,6 +105,28 @@ class User exteds Authenticatable
 You can also change the `profile_route` config if you want to use a custom user profile page.
 An instanse of `user_model` (i.e `User` class) will be passed as a parameter. You disable user
 profile page by setting `profile_route` to empty string or `null`.
+
+### Authorization
+
+Laravel Discuss uses the standard Laravel authorization feature by utilizing the policies.
+By default only super users can take moderation actions. You may implement `isDiscussSuperAdmin`
+method to decide which users have the permission like:
+
+```php
+class User exteds Authenticatable
+{
+    // ....
+
+    public function isDiscussSuperAdmin()
+    {
+        return $this->isSuperAdmin();
+        // or:
+        // return $this->is_admin === true
+        // return $this->permissions()->where('permission', 'admin')->count() > 0
+    }
+}
+```
+
 
 ## Screenshots
 
