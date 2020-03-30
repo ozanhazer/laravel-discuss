@@ -230,7 +230,7 @@ class ThreadControllerTest extends TestCase
     /**
      * @test
      */
-    function delete_succussfully()
+    function delete_successfully()
     {
         $thread = factory(Thread::class)->create();
         $this->actingAs($thread->author);
@@ -248,8 +248,25 @@ class ThreadControllerTest extends TestCase
      */
     function change_category_successfully()
     {
-        // FIXME
-        $this->markTestIncomplete('User model\'ine bir şekilde isSuperAdmin falan eklemek lazım');
+        $thread = factory(Thread::class)->create();
+
+        $thread->author->isSuperAdmin = true;
+        $this->actingAs($thread->author);
+
+        $someCategory = factory(Category::class)->create();
+
+        $this->assertNotEquals($someCategory->id, $thread->category_id);
+
+        $response = $this->post(route('discuss.change-category', $thread), [
+            'category_id' => $someCategory->id,
+        ], ['Accept' => 'application/json']);
+
+        $response->assertOk();
+        $response->assertExactJson(['success' => true]);
+        $this->assertDatabaseHas(discuss_table('threads'), [
+            'id'          => $thread->id,
+            'category_id' => $someCategory->id,
+        ]);
     }
 
     /**
@@ -257,8 +274,43 @@ class ThreadControllerTest extends TestCase
      */
     function make_sticky()
     {
-        // FIXME
-        $this->markTestIncomplete('User model\'ine bir şekilde isSuperAdmin falan eklemek lazım');
+        $thread = factory(Thread::class)->create([
+            'sticky' => false,
+        ]);
+
+        $thread->author->isSuperAdmin = true;
+        $this->actingAs($thread->author);
+
+        $response = $this->post(route('discuss.make-sticky', $thread), [], ['Accept' => 'application/json']);
+
+        $response->assertOk();
+        $response->assertExactJson(['success' => true]);
+        $this->assertDatabaseHas(discuss_table('threads'), [
+            'id'     => $thread->id,
+            'sticky' => true,
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    function do_nothing_while_making_sticky_if_its_already_sticky()
+    {
+        $thread = factory(Thread::class)->create([
+            'sticky' => true,
+        ]);
+
+        $thread->author->isSuperAdmin = true;
+        $this->actingAs($thread->author);
+
+        $response = $this->post(route('discuss.make-sticky', $thread), [], ['Accept' => 'application/json']);
+
+        $response->assertOk();
+        $response->assertExactJson(['success' => true]);
+        $this->assertDatabaseHas(discuss_table('threads'), [
+            'id'         => $thread->id,
+            'sticky'     => true,
+        ]);
     }
 
     /**
@@ -266,8 +318,44 @@ class ThreadControllerTest extends TestCase
      */
     function make_unsticky()
     {
-        // FIXME
-        $this->markTestIncomplete('User model\'ine bir şekilde isSuperAdmin falan eklemek lazım');
+        $thread = factory(Thread::class)->create([
+            'sticky' => true,
+        ]);
+
+        $thread->author->isSuperAdmin = true;
+        $this->actingAs($thread->author);
+
+        $response = $this->post(route('discuss.make-unsticky', $thread), [], ['Accept' => 'application/json']);
+
+        $response->assertOk();
+        $response->assertExactJson(['success' => true]);
+        $this->assertDatabaseHas(discuss_table('threads'), [
+            'id'     => $thread->id,
+            'sticky' => false,
+        ]);
+    }
+
+
+    /**
+     * @test
+     */
+    function do_nothing_while_making_unsticky_if_its_already_unsticky()
+    {
+        $thread = factory(Thread::class)->create([
+            'sticky' => false,
+        ]);
+
+        $thread->author->isSuperAdmin = true;
+        $this->actingAs($thread->author);
+
+        $response = $this->post(route('discuss.make-unsticky', $thread), [], ['Accept' => 'application/json']);
+
+        $response->assertOk();
+        $response->assertExactJson(['success' => true]);
+        $this->assertDatabaseHas(discuss_table('threads'), [
+            'id'     => $thread->id,
+            'sticky' => false,
+        ]);
     }
 
 

@@ -128,7 +128,7 @@ class DiscussServiceProvider extends ServiceProvider
     {
         Gate::before(function ($user, $ability) {
             if (method_exists($user, 'isDiscussSuperAdmin')) {
-                return $user->isDiscussSuperAdmin();
+                return $user->isDiscussSuperAdmin() ? true : null;
             }
         });
 

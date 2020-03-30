@@ -68,8 +68,10 @@ class ThreadController
             'category_id' => 'required|exists:' . discuss_table('categories') . ',id',
         ]);
 
-        $thread->category_id = $request->get('category_id');
-        $thread->save();
+        if ($thread->category_id != $request->get('category_id')) {
+            $thread->category_id = $request->get('category_id');
+            $thread->save();
+        }
 
         return response()->json(['success' => true]);
     }
@@ -78,8 +80,10 @@ class ThreadController
     {
         $this->authorize('make-sticky', $thread);
 
-        $thread->sticky = true;
-        $thread->save();
+        if (!$thread->sticky) {
+            $thread->sticky = true;
+            $thread->save();
+        }
 
         return response()->json(['success' => true]);
     }
@@ -88,8 +92,10 @@ class ThreadController
     {
         $this->authorize('make-sticky', $thread);
 
-        $thread->sticky = true;
-        $thread->save();
+        if ($thread->sticky) {
+            $thread->sticky = false;
+            $thread->save();
+        }
 
         return response()->json(['success' => true]);
     }
