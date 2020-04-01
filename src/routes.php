@@ -14,7 +14,12 @@ Route::middleware(config('discuss.middleware_group'))
 
         Route::get('/', 'IndexController')->name('discuss.index');
         Route::get('/detail/{category}/{thread}', 'DetailController')->name('discuss.detail');
-        Route::get('/my-participation', 'IndexController@myParticipation')->name('discuss.my-participation');
+
+        Route::get('/my-participation', 'MyParticipationController')->name('discuss.my-participation');
+
+        Route::get('/followed-threads', 'FollowedThreadsController')->name('discuss.followed-threads');
+        Route::post('/follow/{thread}', 'FollowedThreadsController@follow')->name('discuss.follow');
+        Route::post('/unfollow/{thread}', 'FollowedThreadsController@unfollow')->name('discuss.unfollow');
 
         Route::get('/user/{user}', 'UserController')->name('discuss.user');
 

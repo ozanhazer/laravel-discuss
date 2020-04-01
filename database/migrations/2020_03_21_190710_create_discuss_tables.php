@@ -55,7 +55,7 @@ class CreateDiscussTables extends Migration
         });
 
         Schema::create($this->prefixTable('posts'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('thread_id');
             $table->unsignedBigInteger('user_id');
             $table->text('body');
@@ -75,9 +75,12 @@ class CreateDiscussTables extends Migration
         });
 
         Schema::create($this->prefixTable('followed_threads'), function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('thread_id');
-            $table->primary(['user_id', 'thread_id']);
+            $table->timestamps();
+
+            $table->unique(['user_id', 'thread_id']);
 
             $table->foreign('thread_id')->references('id')
                 ->on($this->prefixTable('threads'))

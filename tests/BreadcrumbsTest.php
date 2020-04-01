@@ -42,6 +42,7 @@ class BreadcrumbsTest extends TestCase
                         ->assertSee('class="breadcrumb"');
                     break;
                 case 'discuss.my-participation';
+                case 'discuss.followed-threads';
                     $this->actingAs(factory(config('discuss.user_model'))->create());
                     $this->get(route($routeName))
                         ->assertSee('class="breadcrumb"');

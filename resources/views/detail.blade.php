@@ -47,7 +47,7 @@
         <a href="#" class="btn btn-danger btn-sm"
            data-action="delete-post"
            data-url="{{route('discuss.thread.delete', $thread)}}">
-        <i class="fa fa-trash-o"></i>
+          <i class="fa fa-trash-o"></i>
         </a>
       @endcan
     </div>
@@ -112,9 +112,19 @@
     Reply
   </a>
 
-  <a href="#" class="btn btn-light w-100 rounded-pill">
-    Follow
-  </a>
+  @if ($thread->isFollowed())
+    <button class="btn btn-light w-100 rounded-pill"
+            data-url="{{route('discuss.unfollow', $thread)}}"
+            data-action="unfollow">
+      Unfollow
+    </button>
+  @else
+    <button class="btn btn-light w-100 rounded-pill"
+            data-url="{{route('discuss.follow', $thread)}}"
+            data-action="follow">
+      Follow
+    </button>
+  @endif
 @stop
 
 @section('after-scripts')
@@ -150,7 +160,11 @@
           }
           $.post($btn.data('url')).then(response => location.href = response.url)
         });
-      })
+      });
+
+      $('[data-action=follow],[data-action=unfollow]').on('click', function () {
+        $.post($(this).data('url')).then(() => location.reload());
+      });
     })(jQuery);
   </script>
 @stop

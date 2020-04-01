@@ -32,4 +32,17 @@ class Thread extends BaseModel
     {
         return route('discuss.detail', ['category' => $this->category, 'thread' => $this]);
     }
+
+    public function isFollowed()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return false;
+        }
+
+        return FollowedThread::query()
+            ->where('user_id', $user->id)
+            ->where('thread_id', $this->id)
+            ->count() > 0;
+    }
 }

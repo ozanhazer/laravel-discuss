@@ -9,14 +9,17 @@
     <li class="nav-item">
       <a class="nav-link" href="{{route('discuss.my-participation')}}">My Participation</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('discuss.followed-threads')}}">Following</a>
+    </li>
   @else
     <li class="nav-item">
       <a class="nav-link" href="#">My Participation</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Following</a>
+    </li>
   @endauth
-  <li class="nav-item">
-    <a class="nav-link" href="#">Following</a>
-  </li>
 
   <li class="dropdown-divider"></li>
 
