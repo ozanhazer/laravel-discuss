@@ -21,4 +21,14 @@ return [
      * page altogether by setting this value to empty string or null.
      */
     'profile_route' => 'discuss.user',
+
+    /**
+     * The name of the middleware group in your laravel application.
+     */
+    'middleware_group' => 'web',
+
+    /**
+     * The name of the auth middleware in your laravel application.
+     */
+    'auth_middleware' => 'auth',
 ];

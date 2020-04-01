@@ -7,9 +7,9 @@ Route::bind('user', function ($value) {
     return $userModel->query()->where($userModel->getRouteKeyName(), $value)->firstOrFail();
 });
 
-Route::middleware('web')
+Route::middleware(config('discuss.middleware_group'))
     ->namespace('Alfatron\Discuss\Http\Controllers')
-    ->prefix(config('discuss.route_prefix', 'discuss'))
+    ->prefix(config('discuss.route_prefix'))
     ->group(function () {
 
         Route::get('/', 'IndexController')->name('discuss.index');
