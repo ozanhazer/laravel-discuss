@@ -106,7 +106,7 @@
 
 @section('buttons-area')
   <a href="#" class="btn btn-primary w-100 rounded-pill mb-2"
-     data-toggle="reply-modal"
+     {!! auth()->check() ? 'data-toggle="reply-modal"' : 'data-action="not-logged-in"' !!}
      data-action="{{route('discuss.post.create', $thread)}}"
      data-title="Reply">
     Reply
@@ -114,14 +114,14 @@
 
   @if ($thread->isFollowed())
     <button class="btn btn-light w-100 rounded-pill"
-            data-url="{{route('discuss.unfollow', $thread)}}"
-            data-action="unfollow">
+            {!! auth()->check() ? 'data-action="unfollow"' : 'data-action="not-logged-in"' !!}
+            data-url="{{route('discuss.unfollow', $thread)}}">
       Unfollow
     </button>
   @else
     <button class="btn btn-light w-100 rounded-pill"
-            data-url="{{route('discuss.follow', $thread)}}"
-            data-action="follow">
+            {!! auth()->check() ? 'data-action="follow"' : 'data-action="not-logged-in"' !!}
+            data-url="{{route('discuss.follow', $thread)}}">
       Follow
     </button>
   @endif
@@ -131,40 +131,42 @@
   @include('discuss::partials.post-form')
   @include('discuss::partials.thread-edit-form')
 
-  <script>
-    ($ => {
-      const $modal = $('#post-form-modal');
-      $('[data-toggle=reply-modal]').on('click', function (e) {
-        e.preventDefault();
+  @auth
+    <script>
+      ($ => {
+        const $modal = $('#post-form-modal');
+        $('[data-toggle=reply-modal]').on('click', function (e) {
+          e.preventDefault();
 
-        $modal.find('.modal-title').text($(this).data('title'));
-        $modal.find('form').attr('action', $(this).data('action'));
-        $modal.find('[name=body]').val('');
-        $modal.modal('show');
-      });
-
-      $('[data-toggle=edit-reply-modal]').on('click', function (e) {
-        e.preventDefault();
-
-        $modal.find('.modal-title').text($(this).data('title'));
-        $modal.find('form').attr('action', $(this).data('action'));
-        $.get($(this).data('populate-url')).then(response => $modal.find('[name=body]').val(response.body));
-        $modal.modal('show');
-      });
-
-      $('[data-action=delete-post]').on('click', function () {
-        const $btn = $(this);
-        bootbox.confirm('Are you sure that you want to delete this post?', answer => {
-          if (!answer) {
-            return;
-          }
-          $.post($btn.data('url')).then(response => location.href = response.url)
+          $modal.find('.modal-title').text($(this).data('title'));
+          $modal.find('form').attr('action', $(this).data('action'));
+          $modal.find('[name=body]').val('');
+          $modal.modal('show');
         });
-      });
 
-      $('[data-action=follow],[data-action=unfollow]').on('click', function () {
-        $.post($(this).data('url')).then(() => location.reload());
-      });
-    })(jQuery);
-  </script>
+        $('[data-toggle=edit-reply-modal]').on('click', function (e) {
+          e.preventDefault();
+
+          $modal.find('.modal-title').text($(this).data('title'));
+          $modal.find('form').attr('action', $(this).data('action'));
+          $.get($(this).data('populate-url')).then(response => $modal.find('[name=body]').val(response.body));
+          $modal.modal('show');
+        });
+
+        $('[data-action=delete-post]').on('click', function () {
+          const $btn = $(this);
+          bootbox.confirm('Are you sure that you want to delete this post?', answer => {
+            if (!answer) {
+              return;
+            }
+            $.post($btn.data('url')).then(response => location.href = response.url)
+          });
+        });
+
+        $('[data-action=follow],[data-action=unfollow]').on('click', function () {
+          $.post($(this).data('url')).then(() => location.reload());
+        });
+      })(jQuery);
+    </script>
+  @endauth
 @stop

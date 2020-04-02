@@ -24,13 +24,13 @@
     <h1 class="float-left">Forum</h1>
 
     <div class="float-right pt-3">
-    @auth
+      @auth
         @component('discuss::components.author-link', ['user' => auth()->user()])
           <i class="fa fa-user"></i> {{auth()->user()->name}}
         @endcomponent
-    @else
-      <div class="text-muted small">Not logged in</div>
-    @endauth
+      @else
+        <div class="text-muted small">Not logged in</div>
+      @endauth
     </div>
   </div>
 </header>
@@ -42,7 +42,8 @@
     <div class="col" style="max-width: 200px;">
       <div class="buttons-area mb-4">
         @section('buttons-area')
-          <a href="#" class="btn btn-primary w-100 rounded-pill" data-toggle="modal"
+          <a href="#" class="btn btn-primary w-100 rounded-pill"
+             {!! auth()->check() ? 'data-toggle="modal"' : 'data-action="not-logged-in"' !!}
              data-target="#thread-create-form-modal">
             New Discussion
           </a>
@@ -109,11 +110,17 @@
       });
     };
 
+    // CSRF Setup
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
     });
+
+    @guest
+    // Not logged in notification
+    $('[data-action=not-logged-in]').click(() => bootbox.alert('You should be logged in to do that :)'));
+    @endguest
   })(jQuery);
 </script>
 

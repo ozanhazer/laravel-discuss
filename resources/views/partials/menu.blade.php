@@ -14,10 +14,10 @@
     </li>
   @else
     <li class="nav-item">
-      <a class="nav-link" href="#">My Participation</a>
+      <a class="nav-link" data-action="not-logged-in" href="#">My Participation</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Following</a>
+    <li class="nav-item not-logged-in">
+      <a class="nav-link" data-action="not-logged-in" href="#">Following</a>
     </li>
   @endauth
 
