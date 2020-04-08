@@ -12,6 +12,7 @@ class IndexController
     {
         $threads = Thread::query()
             ->with('author', 'category')
+            ->orderBy('sticky', 'desc')
             ->orderBy('last_post_at', 'desc');
 
         if ($selectedCategory->exists) {

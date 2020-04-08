@@ -364,7 +364,7 @@ class ThreadControllerTest extends TestCase
     /**
      * @test
      */
-    function populate_thread()
+    function get_thread_data_for_editing()
     {
         $thread = factory(Thread::class)->create();
         $this->actingAs($thread->author);
@@ -372,9 +372,44 @@ class ThreadControllerTest extends TestCase
         $response = $this->get(route('discuss.thread.populate', $thread));
         $response->assertOk();
         $response->assertExactJson([
-            'title'   => $thread->title,
-            'body'    => $thread->body,
+            'title' => $thread->title,
+            'body'  => $thread->body,
         ]);
+    }
+
+    /**
+     * @test
+     */
+    function sticky_posts_displayed_first_at_index_page()
+    {
+        $threads      = factory(Thread::class, 10)->create(['sticky' => false]);
+        $stickyThread = factory(Thread::class)->create(['sticky' => true]);
+
+        $response = $this->get(route('discuss.index'));
+
+        $titles = $threads->map(function ($thread) {
+            return $thread->title;
+        })->prepend($stickyThread->title);
+
+        $response->assertSeeTextInOrder($titles->toArray());
+    }
+
+    /**
+     * @test
+     */
+    function sticky_posts_displayed_first_at_category_page()
+    {
+        $category     = factory(Category::class)->create();
+        $threads      = factory(Thread::class, 10)->create(['sticky' => false, 'category_id' => $category->id]);
+        $stickyThread = factory(Thread::class)->create(['sticky' => true, 'category_id' => $category->id]);
+
+        $response = $this->get(route('discuss.category', $category));
+
+        $titles = $threads->map(function ($thread) {
+            return $thread->title;
+        })->prepend($stickyThread->title);
+
+        $response->assertSeeTextInOrder($titles->toArray());
     }
 
 

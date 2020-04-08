@@ -6,7 +6,7 @@
 
   @if ($threads->count() > 0)
     @foreach($threads as $thread)
-      <div class="media mt-4">
+      <div class="media mt-4 {{$thread->sticky ? 'sticky-thread' : ''}}">
         <img src="https://randomuser.me/api/portraits/men/32.jpg" class="mr-3 rounded-circle"
              style="width: 50px;" alt="...">
         <div class="media-body">

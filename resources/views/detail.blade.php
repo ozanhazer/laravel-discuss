@@ -37,9 +37,9 @@
 
       @can('make-sticky', $thread)
         @if ($thread->sticky)
-          <a href="#" class="btn btn-light btn-sm">Make Unsticky</a>
+          <a href="#" class="btn btn-light btn-sm" data-action="make-unsticky" data-url="{{route('discuss.make-unsticky', $thread)}}">Make Unsticky</a>
         @else
-          <a href="#" class="btn btn-light btn-sm">Make Sticky</a>
+          <a href="#" class="btn btn-light btn-sm" data-action="make-sticky" data-url="{{route('discuss.make-sticky', $thread)}}">Make Sticky</a>
         @endif
       @endcan
 
@@ -135,6 +135,8 @@
     <script>
       ($ => {
         const $modal = $('#post-form-modal');
+
+        // Reply modal
         $('[data-toggle=reply-modal]').on('click', function (e) {
           e.preventDefault();
 
@@ -144,6 +146,8 @@
           $modal.modal('show');
         });
 
+
+        // Edit reply modal
         $('[data-toggle=edit-reply-modal]').on('click', function (e) {
           e.preventDefault();
 
@@ -153,6 +157,8 @@
           $modal.modal('show');
         });
 
+
+        // Delete post
         $('[data-action=delete-post]').on('click', function () {
           const $btn = $(this);
           bootbox.confirm('Are you sure that you want to delete this post?', answer => {
@@ -163,9 +169,18 @@
           });
         });
 
+
+        // Follow / unfollow action
         $('[data-action=follow],[data-action=unfollow]').on('click', function () {
           $.post($(this).data('url')).then(() => location.reload());
         });
+
+
+        // Make sticky
+        $('[data-action=make-sticky],[data-action=make-unsticky]').on('click', function () {
+          $.post($(this).data('url')).then(() => location.reload());
+        });
+
       })(jQuery);
     </script>
   @endauth
