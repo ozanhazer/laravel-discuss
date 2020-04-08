@@ -119,6 +119,10 @@ class DiscussServiceProvider extends ServiceProvider
             $view->with('categories', $categories());
         });
 
+        view()->composer('discuss::partials.change-category-form', function ($view) use ($categories) {
+            $view->with('categories', $categories());
+        });
+
         view()->composer('discuss::partials.breadcrumbs', function ($view) {
             $view->with('breadcrumbs', new Breadcrumbs());
         });

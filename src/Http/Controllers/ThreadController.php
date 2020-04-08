@@ -77,7 +77,10 @@ class ThreadController
             $thread->save();
         }
 
-        return response()->json(['success' => true]);
+        return response()->json([
+            'success' => true,
+            'url'     => $thread->url(),
+        ]);
     }
 
     public function makeSticky(Thread $thread)
@@ -109,8 +112,9 @@ class ThreadController
         $this->authorize('update', $thread);
 
         return response()->json([
-            'title' => $thread->title,
-            'body'  => $thread->body,
+            'title'       => $thread->title,
+            'body'        => $thread->body,
+            'category_id' => $thread->category_id,
         ]);
     }
 }

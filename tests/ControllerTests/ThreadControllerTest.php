@@ -264,8 +264,13 @@ class ThreadControllerTest extends TestCase
             'category_id' => $someCategory->id,
         ], ['Accept' => 'application/json']);
 
+        $thread = $thread->fresh();
+
         $response->assertOk();
-        $response->assertExactJson(['success' => true]);
+        $response->assertExactJson([
+            'success' => true,
+            'url'     => $thread->url(),
+        ]);
         $this->assertDatabaseHas(discuss_table('threads'), [
             'id'          => $thread->id,
             'category_id' => $someCategory->id,
@@ -372,8 +377,9 @@ class ThreadControllerTest extends TestCase
         $response = $this->get(route('discuss.thread.populate', $thread));
         $response->assertOk();
         $response->assertExactJson([
-            'title' => $thread->title,
-            'body'  => $thread->body,
+            'title'       => $thread->title,
+            'body'        => $thread->body,
+            'category_id' => (string) $thread->category_id,
         ]);
     }
 

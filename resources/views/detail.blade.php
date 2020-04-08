@@ -32,7 +32,10 @@
       @endcan
 
       @can('change-category', $thread)
-        <a href="#" class="btn btn-light btn-sm">Change Category</a>
+        <a href="#" class="btn btn-light btn-sm"
+           data-toggle="change-category-modal"
+           data-populate-url="{{route('discuss.thread.populate', $thread)}}"
+           data-action="{{route('discuss.change-category', $thread)}}">Change Category</a>
       @endcan
 
       @can('make-sticky', $thread)
@@ -130,6 +133,7 @@
 @section('after-scripts')
   @include('discuss::partials.post-form')
   @include('discuss::partials.thread-edit-form')
+  @include('discuss::partials.change-category-form')
 
   @auth
     <script>
@@ -179,6 +183,17 @@
         // Make sticky
         $('[data-action=make-sticky],[data-action=make-unsticky]').on('click', function () {
           $.post($(this).data('url')).then(() => location.reload());
+        });
+
+
+        // Change category
+        $('[data-toggle=change-category-modal]').on('click', function (e) {
+          e.preventDefault();
+
+          const $modal = $('#change-category-form-modal');
+          $modal.find('form').attr('action', $(this).data('action'));
+          $.get($(this).data('populate-url')).then(response => $modal.find('[name=category_id]').val(response.category_id));
+          $modal.modal('show');
         });
 
       })(jQuery);
