@@ -58,6 +58,15 @@
         @show
       </div>
       @include('discuss::partials.menu')
+
+      @can('edit-permissions')
+        <ul class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('discuss.permissions.list')}}">Edit Permissions</a>
+          </li>
+        </ul>
+      @endcan
+
     </div>
     <div class="col">
       @yield('content')

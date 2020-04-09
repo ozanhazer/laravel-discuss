@@ -93,10 +93,33 @@ class CreateDiscussTables extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
+
+        Schema::create($this->prefixTable('permissions'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('ability', 50);
+            $table->string('entity', 50);
+            $table->unsignedBigInteger('granted_by');
+            $table->timestamps();
+
+            $table->unique(['user_id', 'ability', 'entity']);
+
+            $table->foreign('user_id')
+                ->references($this->userModelPK)
+                ->on($this->userModelTableName)
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('granted_by')
+                ->references($this->userModelPK)
+                ->on($this->userModelTableName)
+                ->onUpdate('cascade');
+        });
     }
 
     public function down()
     {
+        Schema::dropIfExists($this->prefixTable('permissions'));
         Schema::dropIfExists($this->prefixTable('followed_threads'));
         Schema::dropIfExists($this->prefixTable('posts'));
         Schema::dropIfExists($this->prefixTable('threads'));

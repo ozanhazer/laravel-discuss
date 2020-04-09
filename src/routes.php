@@ -23,8 +23,6 @@ Route::middleware(config('discuss.middleware_group'))
 
         Route::get('/user/{user}', 'UserController')->name('discuss.user');
 
-        Route::get('/{selectedCategory}', 'IndexController')->name('discuss.category');
-
         Route::post('/thread/create', 'ThreadController@insert')->name('discuss.thread.create');
         Route::post('/thread/update/{thread}', 'ThreadController@update')->name('discuss.thread.update');
         Route::get('/thread/populate/{thread}', 'ThreadController@populate')->name('discuss.thread.populate');
@@ -38,4 +36,11 @@ Route::middleware(config('discuss.middleware_group'))
         Route::post('/post/update/{post}', 'PostController@update')->name('discuss.post.update');
         Route::get('/post/populate/{post}', 'PostController@populate')->name('discuss.post.populate');
         Route::post('/post/delete/{post}', 'PostController@delete')->name('discuss.post.delete');
+
+        Route::get('/permissions', 'PermissionController')->name('discuss.permissions.list');
+        Route::get('/permission/edit/{user}', 'PermissionController@edit')->name('discuss.permissions.edit');
+        Route::post('/permission/save', 'PermissionController@save')->name('discuss.permissions.save');
+        Route::post('/permission/delete', 'PermissionController@delete')->name('discuss.permissions.delete');
+
+        Route::get('/{selectedCategory}', 'IndexController')->name('discuss.category');
     });

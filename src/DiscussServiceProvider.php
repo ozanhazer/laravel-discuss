@@ -136,6 +136,10 @@ class DiscussServiceProvider extends ServiceProvider
             }
         });
 
+        Gate::define('edit-permissions', function ($user) {
+            return false; // Only super admins can edit permissions
+        });
+
         Gate::policy(Thread::class, config('discuss.thread_policy'));
         Gate::policy(Post::class, config('discuss.post_policy'));
     }
