@@ -31,4 +31,14 @@ return [
      * The name of the auth middleware in your laravel application.
      */
     'auth_middleware' => 'auth',
+
+    /**
+     * The policy for thread moderation
+     */
+    'thread_policy' => \Alfatron\Discuss\Policies\ThreadPolicy::class,
+
+    /**
+     * The policy for post moderation
+     */
+    'post_policy' => \Alfatron\Discuss\Policies\PostPolicy::class,
 ];

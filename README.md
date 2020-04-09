@@ -55,6 +55,9 @@ Run the migrations:
 php artisan migrate
 ```
 
+Add `isDiscussSuperAdmin` method to `App\User` class.  
+(See the 'Customization' documentation if your user model is different)
+
 and navigate to `https://yourproject.test/discuss`
 
 Necessary tables are prefixed with `discuss_` by default. You can change or remove this
@@ -109,8 +112,16 @@ profile page by setting `profile_route` to empty string or `null`.
 ### Authorization
 
 Laravel Discuss uses the standard Laravel authorization feature by utilizing the policies.
-By default only super users can take moderation actions. You may implement `isDiscussSuperAdmin`
-method to decide which users have the permission like:
+The permissions are kept in a separate table so no modifications are made to your own
+tables and it is fully customizable.
+
+There is a separate page provided with the package for granting permissions per user which 
+you may access from the index page of laravel-discuss. However if you already have authorization 
+in your project you can define your custom policies too.
+
+To be able to moderate the discussion forums and see the permission setup page you'll need to 
+describe which users should be super admin first. To do that implement `isDiscussSuperAdmin`
+method on your `User` class like:
 
 ```php
 class User exteds Authenticatable
@@ -126,6 +137,20 @@ class User exteds Authenticatable
     }
 }
 ```
+
+
+Available permissions are:
+
+ Permission     | Entity
+--------------- + -------
+ insert         | Thread 
+ update         | Thread
+ delete         | Thread
+ changeCategory | Thread
+ makeSticky     | Thread
+ insert         | Post
+ update         | Post
+ delete         | Post
 
 
 ## Screenshots

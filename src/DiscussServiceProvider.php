@@ -136,8 +136,7 @@ class DiscussServiceProvider extends ServiceProvider
             }
         });
 
-        // TODO: Set it in the configuration so that user can change the logic
-        Gate::policy(Thread::class, ThreadPolicy::class);
-        Gate::policy(Post::class, PostPolicy::class);
+        Gate::policy(Thread::class, config('discuss.thread_policy'));
+        Gate::policy(Post::class, config('discuss.post_policy'));
     }
 }
