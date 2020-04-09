@@ -66,6 +66,22 @@ migrations if you think you'll have a conflict with the table names.
 
 ## Customization
 
+What you can customize:
+* User avatar
+* User display name
+* User model class
+* User profile page address (change or disable)
+* Url prefix
+* Database table prefix
+* Middleware group
+* Auth middleware
+* Authorization rules:
+  * Super admin
+  * Thread policy
+  * Post (reply) policy
+* Frontend: Blade Views
+* Translation files
+
 Run `php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider` to publish 
 views, config and translation files. You can also publish them separately by using the `tags` 
 option like: 
@@ -76,12 +92,16 @@ option like:
 
 ### Configuration:
 
- Config Key    | default          | Description
--------------- + ---------------- + ---------------------
- route_prefix  | discuss          | Prefix for the urls
- table_prefix  | discuss          | Prefix for the database tables. Can be set as empty string.
- user_model    | App\User::class  | User class for the authors of discussion posts
- profile_route | discuss.user     | Name of the route for user profile page 
+ Config Key       | default          | Description
+----------------- + ---------------- + ---------------------
+ route_prefix     | discuss          | Prefix for the urls
+ table_prefix     | discuss          | Prefix for the database tables. Can be set as empty string.
+ user_model       | App\User::class  | User class for the authors of discussion posts
+ profile_route    | discuss.user     | Name of the route for user profile page 
+ middleware_group | web              | "web" is the default route group in a typical Laravel application
+ auth_middleware  | auth             | "auth" is the default authentication middleware in a typical Laravel application
+ thread_policy    | Alfatron\Discuss\Policies\ThreadPolicy::class | 
+ post_policy      | 
  
 ### Customizing the User model
 
