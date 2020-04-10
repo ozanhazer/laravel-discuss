@@ -1,8 +1,8 @@
 @extends('discuss::layout')
 
 @section('content')
-  <input type="search" name="q" placeholder="@lang('discuss::discuss.search_in_discussions_placeholder')"
-         class="form-control">
+{{--  <input type="search" name="q" placeholder="@lang('discuss::discuss.search_in_discussions_placeholder')"--}}
+{{--         class="form-control">--}}
 
   @if ($threads->count() > 0)
     @foreach($threads as $thread)
