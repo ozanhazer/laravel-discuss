@@ -21,7 +21,7 @@
       <tbody>
       @foreach($usersWithPermissions as $user)
         <tr>
-          <td>{{$user->name}} ({{$user->id}})</td>
+          <td>{{$user->discussDisplayName()}} #{{$user->id}}</td>
           <td>
             @foreach ($user->discussPermissions as $permission)
             <div class="mb-2">
@@ -30,7 +30,7 @@
                         'entity' => __('discuss::discuss.' . $permission->entity)
                       ])
               <div class="small text-muted">
-                Granted by {{$permission->grantor->name}} at {{$permission->created_at->format('d.m.Y H:i')}}
+                Granted by {{$permission->grantor->discussDisplayName()}} at {{$permission->created_at->format('d.m.Y H:i')}}
               </div>
             </div>
             @endforeach

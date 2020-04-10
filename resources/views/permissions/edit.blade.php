@@ -7,7 +7,7 @@
     <input type="hidden" name="user_id" value="{{$user->getKey()}}">
 
     <h1>
-      {{$user->name}} ({{$user->id}})
+      {{$user->discussDisplayName()}} #{{$user->id}}
     </h1>
     <div class="small">
       {{$user->email}}

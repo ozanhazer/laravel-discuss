@@ -7,8 +7,8 @@
   @if ($threads->count() > 0)
     @foreach($threads as $thread)
       <div class="media mt-4 {{$thread->sticky ? 'sticky-thread' : ''}}">
-        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="mr-3 rounded-circle"
-             style="width: 50px;" alt="...">
+        <img src="{{$thread->author->discussAvatar()}}" class="mr-3 rounded-circle"
+             style="width: 50px;" alt="Profile photo of {{$thread->author->discussDisplayName()}}">
         <div class="media-body">
           <h5 class="mt-0"><a href="{{$thread->url()}}">{{$thread->title}}</a></h5>
 

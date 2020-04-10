@@ -22,7 +22,7 @@ class UserControllerTest extends TestCase
 
         $response = $this->get(route('discuss.user', $user));
         $response->assertStatus(200);
-        $response->assertSeeText($user->email);
+        $response->assertSeeText($user->discussDisplayName());
     }
 
     /**

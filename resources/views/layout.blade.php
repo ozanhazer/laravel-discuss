@@ -34,7 +34,7 @@
     <div class="float-right pt-3">
       @auth
         @component('discuss::components.author-link', ['user' => auth()->user()])
-          <i class="fa fa-user"></i> {{auth()->user()->name}}
+          <i class="fa fa-user"></i> {{auth()->user()->discussDisplayName()}}
         @endcomponent
       @else
         <div class="text-muted small">Not logged in</div>

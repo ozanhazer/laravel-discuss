@@ -1,5 +1,5 @@
 @extends('discuss::layout')
 
 @section('content')
-  User detail {{$user->email}}
+  User detail page of {{$user->discussDisplayName()}}
 @stop
