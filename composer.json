@@ -1,13 +1,13 @@
 {
-    "name": "alfatron/laravel-discuss",
-    "description": "Discussions for Laravel",
+    "name": "ozanhazer/laravel-discuss",
+    "description": "Discussions (Forum) for any Laravel project",
     "keywords": [
         "alfatron",
         "discussions",
         "laravel",
         "forum"
     ],
-    "homepage": "https://github.com/alfatron/laravel-discuss",
+    "homepage": "https://github.com/ozanhazer/laravel-discuss",
     "license": "MIT",
     "type": "library",
     "authors": [

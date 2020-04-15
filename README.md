@@ -1,5 +1,7 @@
 # Laravel Discuss
 
+WORK IN PROGRESS!
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/alfatron/discuss.svg?style=flat-square)](https://packagist.org/packages/alfatron/discuss)
 [![Build Status](https://img.shields.io/travis/alfatron/discuss/master.svg?style=flat-square)](https://travis-ci.org/alfatron/discuss)
 [![Quality Score](https://img.shields.io/scrutinizer/g/alfatron/discuss.svg?style=flat-square)](https://scrutinizer-ci.com/g/alfatron/discuss)
