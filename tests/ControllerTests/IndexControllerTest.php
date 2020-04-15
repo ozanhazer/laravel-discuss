@@ -21,7 +21,7 @@ class IndexControllerTest extends TestCase
         $response = $this->get(route('discuss.index'));
         $response->assertOk();
         $response->assertSeeText($thread->title);
-        $response->assertSeeText($thread->author->name);
+        $response->assertSeeText($thread->author->discussDisplayName());
     }
 
     /**

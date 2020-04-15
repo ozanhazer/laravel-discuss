@@ -40,6 +40,7 @@ trait DiscussUser
         return null;
     }
 
+    // FIXME: Write tests
     public function discussDisplayName()
     {
         [$username, $domain] = explode('@', $this->email);
@@ -53,6 +54,7 @@ trait DiscussUser
         return "$username@$domain";
     }
 
+    // FIXME: Write tests
     public function discussAvatar()
     {
         $hash = md5(mb_strtolower(trim($this->email)));

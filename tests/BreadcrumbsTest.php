@@ -25,6 +25,7 @@ class BreadcrumbsTest extends TestCase
         foreach ($routeNames as $routeName) {
             switch ($routeName) {
                 case 'discuss.index';
+                case 'discuss.permissions.list':
                     $this->get(route($routeName))
                         ->assertDontSee('class="breadcrumb"');
                     break;
@@ -34,6 +35,7 @@ class BreadcrumbsTest extends TestCase
                         ->assertSee('class="breadcrumb"');
                     break;
                 case 'discuss.user';
+                case 'discuss.permissions.edit':
                     $this->get(route($routeName, factory(config('discuss.user_model'))->create()))
                         ->assertDontSee('class="breadcrumb"');
                     break;
