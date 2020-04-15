@@ -2,10 +2,10 @@
 
 WORK IN PROGRESS!
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/alfatron/discuss.svg?style=flat-square)](https://packagist.org/packages/alfatron/discuss)
-[![Build Status](https://img.shields.io/travis/alfatron/discuss/master.svg?style=flat-square)](https://travis-ci.org/alfatron/discuss)
-[![Quality Score](https://img.shields.io/scrutinizer/g/alfatron/discuss.svg?style=flat-square)](https://scrutinizer-ci.com/g/alfatron/discuss)
-[![Total Downloads](https://img.shields.io/packagist/dt/alfatron/discuss.svg?style=flat-square)](https://packagist.org/packages/alfatron/discuss)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ozanhazer/laravel-discuss.svg?style=flat)](https://packagist.org/packages/ozanhazer/laravel-discuss)
+[![Build Status](https://img.shields.io/travis/ozanhazer/laravel-discuss/master.svg?style=flat)](https://travis-ci.org/ozanhazer/laravel-discuss)
+[![Quality Score](https://img.shields.io/scrutinizer/g/ozanhazer/laravel-discuss.svg?style=flat)](https://scrutinizer-ci.com/g/ozanhazer/laravel-discuss)
+[![Total Downloads](https://img.shields.io/packagist/dt/ozanhazer/laravel-discuss.svg?style=flat)](https://packagist.org/packages/ozanhazer/laravel-discuss)
 
 Laravel Discuss is a very customizable form add-on for any laravel 6.0 project.
 
@@ -48,7 +48,7 @@ You may publish the front-end files (blade, js, scss) and adjust them to match y
 You can install the package via composer:
 
 ```bash
-composer require alfatron/laravel-discuss
+composer require ozanhazer/laravel-discuss
 ```
 
 Run the migrations:
@@ -191,7 +191,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
-- [Ozan Hazer](https://github.com/alfatron)
+- [Ozan Hazer](https://github.com/ozanhazer)
 
 Inspired by:
 
