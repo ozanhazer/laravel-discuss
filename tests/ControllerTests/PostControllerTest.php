@@ -42,9 +42,10 @@ class PostControllerTest extends TestCase
 
         $thread = factory(Thread::class)->create();
 
+        $body     = $this->faker->text(5000);
         $response = $this->post(
             route('discuss.post.create', $thread),
-            ['body' => $this->faker->text(5000)],
+            ['body' => $body],
             ['Accept' => 'application/json']
         );
 
@@ -124,7 +125,7 @@ class PostControllerTest extends TestCase
         $response = $this->get(route('discuss.post.populate', $post));
         $response->assertOk();
         $response->assertExactJson([
-            'body'    => $post->body,
+            'body' => $post->body,
         ]);
     }
 
