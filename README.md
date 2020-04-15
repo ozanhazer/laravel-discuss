@@ -2,10 +2,11 @@
 
 WORK IN PROGRESS!
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ozanhazer/laravel-discuss.svg?style=flat)](https://packagist.org/packages/ozanhazer/laravel-discuss)
-[![Build Status](https://img.shields.io/travis/ozanhazer/laravel-discuss/master.svg?style=flat)](https://travis-ci.org/ozanhazer/laravel-discuss)
-[![Quality Score](https://img.shields.io/scrutinizer/g/ozanhazer/laravel-discuss.svg?style=flat)](https://scrutinizer-ci.com/g/ozanhazer/laravel-discuss)
-[![Total Downloads](https://img.shields.io/packagist/dt/ozanhazer/laravel-discuss.svg?style=flat)](https://packagist.org/packages/ozanhazer/laravel-discuss)
+[![License](https://img.shields.io/packagist/l/ozanhazer/laravel-discuss)](https://packagist.org/packages/ozanhazer/laravel-discuss)
+[![Build Status](https://img.shields.io/travis/ozanhazer/laravel-discuss/master.svg)](https://travis-ci.org/ozanhazer/laravel-discuss)
+[![Quality Score](https://img.shields.io/scrutinizer/g/ozanhazer/laravel-discuss.svg)](https://scrutinizer-ci.com/g/ozanhazer/laravel-discuss)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ozanhazer/laravel-discuss.svg)](https://packagist.org/packages/ozanhazer/laravel-discuss)
+[![Total Downloads](https://img.shields.io/packagist/dt/ozanhazer/laravel-discuss.svg)](https://packagist.org/packages/ozanhazer/laravel-discuss)
 
 Laravel Discuss is a very customizable form add-on for any laravel 6.0 project.
 
