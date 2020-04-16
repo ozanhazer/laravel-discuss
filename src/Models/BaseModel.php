@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
-
     public function getTable()
     {
         $tableName = parent::getTable();
@@ -18,5 +17,4 @@ class BaseModel extends Model
 
         return $tableName;
     }
-
 }

@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class PostController
 {
-
     use ValidatesRequests, AuthorizesRequests;
 
     public function insert(Thread $thread, Request $request)

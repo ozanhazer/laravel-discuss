@@ -4,6 +4,7 @@ Route::bind('user', function ($value) {
     /** @var \Illuminate\Foundation\Auth\User $userModel */
     $userClassName = config('discuss.user_model');
     $userModel     = new $userClassName;
+
     return $userModel->query()->where($userModel->getRouteKeyName(), $value)->firstOrFail();
 });
 

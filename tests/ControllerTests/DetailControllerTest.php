@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Alfatron\Discuss\Tests\ControllerTests;
-
 
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Post;
@@ -12,7 +10,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class DetailControllerTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 class FollowedThreadsControllerTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
@@ -57,7 +56,7 @@ class FollowedThreadsControllerTest extends TestCase
         $response = $this->get(route('discuss.followed-threads'));
         $response->assertSee($followed->title);
 
-        for($i = 1; $i < 3; $i++) {
+        for ($i = 1; $i < 3; $i++) {
             $response->assertDontSee($threads[$i]->title);
         }
     }
@@ -95,7 +94,6 @@ class FollowedThreadsControllerTest extends TestCase
         $response = $this->post(route('discuss.follow', $thread));
         $response->assertOk();
         $response->assertExactJson(['success' => true]);
-
     }
 
     /**

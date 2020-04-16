@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Alfatron\Discuss\Http\Controllers;
-
 
 use Alfatron\Discuss\Models\Permission;
 use DB;
@@ -14,7 +12,6 @@ use Log;
 
 class PermissionController extends Controller
 {
-
     use AuthorizesRequests, ValidatesRequests;
 
     public function __construct()

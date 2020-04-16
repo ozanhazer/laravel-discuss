@@ -6,15 +6,12 @@ use Alfatron\Discuss\Discuss\Breadcrumbs;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
-use Alfatron\Discuss\Policies\PostPolicy;
-use Alfatron\Discuss\Policies\ThreadPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
 class DiscussServiceProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      */

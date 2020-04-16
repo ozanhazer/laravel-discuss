@@ -10,9 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 
 class PostControllerTest extends TestCase
 {
-
     use DatabaseTransactions, WithFaker;
-
 
     /**
      * @test

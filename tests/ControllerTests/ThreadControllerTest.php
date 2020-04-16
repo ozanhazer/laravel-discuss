@@ -10,7 +10,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 
 class ThreadControllerTest extends TestCase
 {
-
     use DatabaseTransactions, WithFaker;
 
     /**
@@ -343,7 +342,6 @@ class ThreadControllerTest extends TestCase
         ]);
     }
 
-
     /**
      * @test
      */
@@ -417,7 +415,6 @@ class ThreadControllerTest extends TestCase
 
         $response->assertSeeTextInOrder($titles->toArray());
     }
-
 
     function invalidTitles()
     {

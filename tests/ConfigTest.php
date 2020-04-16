@@ -10,7 +10,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ConfigTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /** @test */

@@ -1,12 +1,9 @@
 <?php
 
-
 namespace Alfatron\Discuss\Tests;
-
 
 class TranslationTest extends TestCase
 {
-
     /**
      * @test
      */

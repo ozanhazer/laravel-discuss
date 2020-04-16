@@ -20,31 +20,31 @@ class BreadcrumbsTest extends TestCase
     function breadcrumbs_shown_or_hidden_for_all_routes()
     {
         $routesByName = Route::getRoutes()->getRoutesByName();
-        $routeNames = array_keys($routesByName);
+        $routeNames   = array_keys($routesByName);
 
         foreach ($routeNames as $routeName) {
             switch ($routeName) {
-                case 'discuss.index';
+                case 'discuss.index':
                 case 'discuss.permissions.list':
                     $this->get(route($routeName))
                         ->assertDontSee('class="breadcrumb"');
                     break;
-                case 'discuss.detail';
+                case 'discuss.detail':
                     $thread = factory(Thread::class)->create();
                     $this->get($thread->url())
                         ->assertSee('class="breadcrumb"');
                     break;
-                case 'discuss.user';
+                case 'discuss.user':
                 case 'discuss.permissions.edit':
                     $this->get(route($routeName, factory(config('discuss.user_model'))->create()))
                         ->assertDontSee('class="breadcrumb"');
                     break;
-                case 'discuss.category';
+                case 'discuss.category':
                     $this->get(route($routeName, factory(Category::class)->create()))
                         ->assertSee('class="breadcrumb"');
                     break;
-                case 'discuss.my-participation';
-                case 'discuss.followed-threads';
+                case 'discuss.my-participation':
+                case 'discuss.followed-threads':
                     $this->actingAs(factory(config('discuss.user_model'))->create());
                     $this->get(route($routeName))
                         ->assertSee('class="breadcrumb"');
@@ -53,7 +53,7 @@ class BreadcrumbsTest extends TestCase
                 case 'discuss.post.populate': // xhr
                     break;
                 default:
-                    if(in_array('GET', $routesByName[$routeName]->methods)) {
+                    if (in_array('GET', $routesByName[$routeName]->methods)) {
                         $this->assertTrue(false, 'Untested route: ' . $routeName);
                     }
             }

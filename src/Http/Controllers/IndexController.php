@@ -7,7 +7,6 @@ use Alfatron\Discuss\Models\Thread;
 
 class IndexController
 {
-
     public function __invoke(?Category $selectedCategory)
     {
         $threads = Thread::query()

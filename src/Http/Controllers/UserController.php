@@ -4,7 +4,6 @@ namespace Alfatron\Discuss\Http\Controllers;
 
 class UserController
 {
-
     public function __invoke($user)
     {
         if (!config('discuss.profile_route')) {

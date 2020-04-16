@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 
 class MyParticipationController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(config('discuss.auth_middleware'));
@@ -15,7 +14,6 @@ class MyParticipationController extends Controller
 
     public function __invoke()
     {
-
         $threads = Thread::query()
             ->with('author', 'category')
             ->where('user_id', auth()->user()->id)

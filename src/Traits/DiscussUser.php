@@ -1,14 +1,11 @@
 <?php
 
-
 namespace Alfatron\Discuss\Traits;
-
 
 use Alfatron\Discuss\Models\Permission;
 
 trait DiscussUser
 {
-
     public function discussPermissions()
     {
         return $this->hasMany(Permission::class);
@@ -58,6 +55,7 @@ trait DiscussUser
     public function discussAvatar()
     {
         $hash = md5(mb_strtolower(trim($this->email)));
+
         return 'https://www.gravatar.com/avatar/' . $hash . '?d=retro';
     }
 }

@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateDiscussTables extends Migration
 {
-
     private $userModelTableName;
 
     private $userModelPK;

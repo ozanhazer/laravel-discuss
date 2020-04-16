@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 $factory->define(Category::class, function (Faker $faker) {
     $name = $faker->name;
+
     return [
         'name'  => $name,
         'color' => $faker->hexColor,

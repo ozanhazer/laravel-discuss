@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Alfatron\Discuss\Tests;
-
 
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Thread;
@@ -11,7 +9,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 
 class SlugTest extends TestCase
 {
-
     use WithFaker, DatabaseTransactions;
 
     /**

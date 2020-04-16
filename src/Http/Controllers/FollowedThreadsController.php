@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Alfatron\Discuss\Http\Controllers;
-
 
 use Alfatron\Discuss\Models\FollowedThread;
 use Alfatron\Discuss\Models\Thread;
@@ -24,7 +22,7 @@ class FollowedThreadsController extends Controller
                 $followedThreads = (new FollowedThread)->getTable();
                 $query->select(\DB::raw(1))
                     ->from($followedThreads)
-                    ->whereRaw($followedThreads . '.thread_id='. (new Thread)->getTable() . '.id')
+                    ->whereRaw($followedThreads . '.thread_id=' . (new Thread)->getTable() . '.id')
                     ->where('user_id', auth()->user()->id);
             })
             ->orderBy('last_post_at', 'desc')

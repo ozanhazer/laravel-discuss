@@ -59,7 +59,7 @@ class IndexControllerTest extends TestCase
         $response = $this->get(route('discuss.index'));
         $response->assertOk();
 
-        foreach($threads as $thread) {
+        foreach ($threads as $thread) {
             $response->assertSee(e($thread->category->name));
         }
     }

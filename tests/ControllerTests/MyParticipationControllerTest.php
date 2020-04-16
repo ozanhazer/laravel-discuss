@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 class MyParticipationControllerTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
@@ -66,7 +65,7 @@ class MyParticipationControllerTest extends TestCase
             $response->assertSee($reply->thread->title);
         }
 
-        foreach($threadsByOtherPeople as $thread) {
+        foreach ($threadsByOtherPeople as $thread) {
             $response->assertDontSee($thread->title);
         }
     }

@@ -7,7 +7,6 @@ use Alfatron\Discuss\Models\Thread;
 
 class Permission
 {
-
     public static $permissions = [
         [Thread::class, 'insert'],
         [Thread::class, 'update'],

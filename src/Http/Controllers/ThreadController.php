@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class ThreadController
 {
-
     use ValidatesRequests, AuthorizesRequests;
 
     public function insert(Request $request)

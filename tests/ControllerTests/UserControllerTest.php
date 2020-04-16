@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Alfatron\Discuss\Tests\ControllerTests;
-
 
 use Alfatron\Discuss\Models\Thread;
 use Alfatron\Discuss\Tests\TestCase;
@@ -10,7 +8,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserControllerTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
@@ -43,7 +40,7 @@ class UserControllerTest extends TestCase
     function users_should_not_be_linked_if_user_profiles_are_disabled()
     {
         $thread = factory(Thread::class)->create();
-        $user = $thread->author;
+        $user   = $thread->author;
 
         $profileUrl = route('discuss.user', $user);
 
