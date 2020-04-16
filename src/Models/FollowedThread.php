@@ -4,7 +4,6 @@ namespace Alfatron\Discuss\Models;
 
 class FollowedThread extends BaseModel
 {
-
     public function thread()
     {
         return $this->belongsTo(Thread::class);

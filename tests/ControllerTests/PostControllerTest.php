@@ -124,5 +124,4 @@ class PostControllerTest extends TestCase
             'body' => $post->body,
         ]);
     }
-
 }

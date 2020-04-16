@@ -46,7 +46,7 @@ trait DiscussUser
             $username[0] . $username[1] . '****' . mb_substr($username, -1) :
             $username[0] . '****';
 
-        $domain = $domain{0} . '****' . mb_substr($domain, -4);
+        $domain = $domain[0] . '****' . mb_substr($domain, -4);
 
         return "$username@$domain";
     }
