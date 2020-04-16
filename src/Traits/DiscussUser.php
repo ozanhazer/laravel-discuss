@@ -43,8 +43,8 @@ trait DiscussUser
         [$username, $domain] = explode('@', $this->email);
 
         $username = mb_strlen($username) >= 8 ?
-            $username{0} . $username{1} . '****' . mb_substr($username, -1) :
-            $username{0} . '****';
+            $username[0] . $username[1] . '****' . mb_substr($username, -1) :
+            $username[0] . '****';
 
         $domain = $domain{0} . '****' . mb_substr($domain, -4);
 

@@ -28,7 +28,6 @@ class Breadcrumbs implements IteratorAggregate, Countable
             $this->addRootItem();
             $this->appendBreadcrumb('Followed Threads', route('discuss.followed-threads'));
         }
-
     }
 
     protected function appendBreadcrumb($title, $url = null)

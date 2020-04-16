@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Alfatron\Discuss\Tests;
-
 
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Thread;
@@ -11,7 +9,6 @@ use Illuminate\Support\Facades\Route;
 
 class BreadcrumbsTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
@@ -58,6 +55,5 @@ class BreadcrumbsTest extends TestCase
                     }
             }
         }
-
     }
 }

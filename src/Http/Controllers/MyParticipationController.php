@@ -28,5 +28,4 @@ class MyParticipationController extends Controller
 
         return view('discuss::my-participation', compact('threads'));
     }
-
 }

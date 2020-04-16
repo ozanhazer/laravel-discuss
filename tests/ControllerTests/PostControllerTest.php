@@ -71,7 +71,6 @@ class PostControllerTest extends TestCase
         $response->assertJsonValidationErrors(['body']);
     }
 
-
     /**
      * @test
      */
@@ -110,7 +109,6 @@ class PostControllerTest extends TestCase
         $response->assertExactJson(['url' => $post->thread->url()]);
         $this->assertSoftDeleted($post);
     }
-
 
     /**
      * @test

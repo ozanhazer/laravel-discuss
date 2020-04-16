@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 
 class FollowedThreadsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(config('discuss.auth_middleware'));

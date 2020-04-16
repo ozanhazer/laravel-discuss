@@ -11,5 +11,4 @@ class TranslationTest extends TestCase
     {
         $this->markTestIncomplete('Not ready for testing yet');
     }
-
 }

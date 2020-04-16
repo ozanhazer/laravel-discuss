@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Alfatron\Discuss\Policies;
-
 
 use Alfatron\Discuss\Models\Thread;
 use Illuminate\Auth\Access\HandlesAuthorization;

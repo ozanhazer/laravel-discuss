@@ -12,7 +12,6 @@ Route::middleware(config('discuss.middleware_group'))
     ->namespace('Alfatron\Discuss\Http\Controllers')
     ->prefix(config('discuss.route_prefix'))
     ->group(function () {
-
         Route::get('/', 'IndexController')->name('discuss.index');
         Route::get('/detail/{category}/{thread}', 'DetailController')->name('discuss.detail');
 
