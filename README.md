@@ -7,6 +7,7 @@ WORK IN PROGRESS!
 [![Quality Score](https://img.shields.io/scrutinizer/g/ozanhazer/laravel-discuss.svg)](https://scrutinizer-ci.com/g/ozanhazer/laravel-discuss)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/ozanhazer/laravel-discuss.svg)](https://packagist.org/packages/ozanhazer/laravel-discuss)
 [![Total Downloads](https://img.shields.io/packagist/dt/ozanhazer/laravel-discuss.svg)](https://packagist.org/packages/ozanhazer/laravel-discuss)
+[![Style CI Status](https://github.styleci.io/repos/256029924/shield)](https://github.styleci.io/repos/256029924)
 
 Laravel Discuss is a very customizable form add-on for any laravel 6.0 project.
 
