@@ -2,11 +2,13 @@
 
 namespace Alfatron\Discuss\Tests\ControllerTests;
 
+use Alfatron\Discuss\Events\ThreadVisited;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
 use Alfatron\Discuss\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Event;
 
 class DetailControllerTest extends TestCase
 {
@@ -69,5 +71,20 @@ class DetailControllerTest extends TestCase
         $thread->save();
 
         $this->get($url)->assertStatus(404);
+    }
+
+    /**
+     * @test
+     */
+    public function thread_visited_event_dispatched_on_visit()
+    {
+        Event::fake();
+
+        $thread = factory(Thread::class)->create();
+        $this->get($thread->url())->assertStatus(200);
+
+        Event::assertDispatched(ThreadVisited::class, function ($event) use ($thread) {
+            return $event->thread->id == $thread->id;
+        });
     }
 }

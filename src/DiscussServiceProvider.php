@@ -3,9 +3,12 @@
 namespace Alfatron\Discuss;
 
 use Alfatron\Discuss\Discuss\Breadcrumbs;
+use Alfatron\Discuss\Events\ThreadVisited;
+use Alfatron\Discuss\Listeners\UpdateViewCount;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -27,6 +30,7 @@ class DiscussServiceProvider extends ServiceProvider
         }
 
         $this->registerModelListeners();
+        $this->registerPackageListeners();
         $this->setViewModels();
         $this->registerPolicies();
     }
@@ -139,5 +143,10 @@ class DiscussServiceProvider extends ServiceProvider
 
         Gate::policy(Thread::class, config('discuss.thread_policy'));
         Gate::policy(Post::class, config('discuss.post_policy'));
+    }
+
+    private function registerPackageListeners()
+    {
+        Event::listen(ThreadVisited::class, UpdateViewCount::class);
     }
 }

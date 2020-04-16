@@ -23,6 +23,7 @@ Laravel Discuss is a very customizable form add-on for any laravel 6.0 project.
 * Customizable user profile page
 * Localization support
 * Authorization and moderation support
+* Number of visits for threads: counted unique, honors "Do Not Track", crawlers are ignored, proxies are taken into account.
 
 ### What is customizable?
 
@@ -105,7 +106,8 @@ option like:
  middleware_group | web              | "web" is the default route group in a typical Laravel application
  auth_middleware  | auth             | "auth" is the default authentication middleware in a typical Laravel application
  thread_policy    | Alfatron\Discuss\Policies\ThreadPolicy::class | 
- post_policy      | 
+ post_policy      | Alfatron\Discuss\Policies\PostPolicy::class |
+ honor_dnt        | true             |
  
 ### Customizing the User model
 

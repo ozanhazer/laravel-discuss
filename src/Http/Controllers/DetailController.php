@@ -2,6 +2,7 @@
 
 namespace Alfatron\Discuss\Http\Controllers;
 
+use Alfatron\Discuss\Events\ThreadVisited;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Thread;
 
@@ -16,6 +17,8 @@ class DetailController
         $posts = $thread->posts()
             ->with('author')
             ->orderBy('created_at')->paginate();
+
+        event(new ThreadVisited($thread));
 
         return view('discuss::detail', compact('thread', 'posts'));
     }

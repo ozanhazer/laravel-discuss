@@ -47,4 +47,9 @@ return [
      * The policy for post moderation.
      */
     'post_policy' => \Alfatron\Discuss\Policies\PostPolicy::class,
+
+    /**
+     * Honor "Do Not Track" header while counting the thread visits.
+     */
+    'honor_dnt' => true,
 ];

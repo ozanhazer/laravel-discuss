@@ -19,7 +19,8 @@
     ],
     "require": {
         "php": "^7.2",
-        "illuminate/support": "^6.12.0"
+        "illuminate/support": "^6.12.0",
+        "jaybizzle/crawler-detect": "^1.2"
     },
     "require-dev": {
         "orchestra/testbench": "^4.4.0",
