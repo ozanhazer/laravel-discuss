@@ -9,7 +9,7 @@ WORK IN PROGRESS!
 [![Total Downloads](https://img.shields.io/packagist/dt/ozanhazer/laravel-discuss.svg)](https://packagist.org/packages/ozanhazer/laravel-discuss)
 [![Style CI Status](https://github.styleci.io/repos/256029924/shield)](https://github.styleci.io/repos/256029924)
 
-Laravel Discuss is a very customizable form add-on for any laravel 6.0 project.
+Laravel Discuss is a very customizable form add-on for any laravel v6 project.
 
 ## Features
 
@@ -45,6 +45,11 @@ You may publish the front-end files (blade, js, scss) and adjust them to match y
 6. **User Profile Page**: A very basic user profile page is provided, which you can customize the design. 
    If you already have a profile page for your project you may use it instead, or disable forum profile 
    page alltogether.
+   
+## Requirements
+
+- Laravel 6.18+
+- Redis (Used for unique view counts)
 
 ## Installation
 
@@ -97,17 +102,19 @@ option like:
 
 ### Configuration:
 
- Config Key       | default          | Description
------------------ + ---------------- + ---------------------
- route_prefix     | discuss          | Prefix for the urls
- table_prefix     | discuss          | Prefix for the database tables. Can be set as empty string.
- user_model       | App\User::class  | User class for the authors of discussion posts
- profile_route    | discuss.user     | Name of the route for user profile page 
- middleware_group | web              | "web" is the default route group in a typical Laravel application
- auth_middleware  | auth             | "auth" is the default authentication middleware in a typical Laravel application
- thread_policy    | Alfatron\Discuss\Policies\ThreadPolicy::class | 
- post_policy      | Alfatron\Discuss\Policies\PostPolicy::class |
- honor_dnt        | true             |
+ Config Key            | default          | Description
+---------------------- + ---------------- + ---------------------
+ route_prefix          | discuss          | Prefix for the urls
+ table_prefix          | discuss          | Prefix for the database tables. Can be set as empty string.
+ user_model            | App\User::class  | User class for the authors of discussion posts
+ profile_route         | discuss.user     | Name of the route for user profile page 
+ middleware_group      | web              | "web" is the default route group in a typical Laravel application
+ auth_middleware       | auth             | "auth" is the default authentication middleware in a typical Laravel application
+ thread_policy         | Alfatron\Discuss\Policies\ThreadPolicy::class | 
+ post_policy           | Alfatron\Discuss\Policies\PostPolicy::class |
+ view_count.honor_dnt  | true             |
+ view_count.storage    | Alfatron\Discuss\Discuss\UniqueChecker\RedisStorage::class |
+ view_count.expiration | 60 * 24          |
  
 ### Customizing the User model
 

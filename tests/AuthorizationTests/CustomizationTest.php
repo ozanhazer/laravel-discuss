@@ -4,8 +4,8 @@ namespace Alfatron\Discuss\Tests\AuthorizationTests;
 
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
-use Alfatron\Discuss\Tests\models\PostPolicy;
-use Alfatron\Discuss\Tests\models\ThreadPolicy;
+use Alfatron\Discuss\Tests\HelperClasses\PostPolicy;
+use Alfatron\Discuss\Tests\HelperClasses\ThreadPolicy;
 use Alfatron\Discuss\Tests\TestCase;
 use Illuminate\Support\Facades\Gate;
 

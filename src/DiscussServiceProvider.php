@@ -3,6 +3,7 @@
 namespace Alfatron\Discuss;
 
 use Alfatron\Discuss\Discuss\Breadcrumbs;
+use Alfatron\Discuss\Discuss\UniqueChecker\UniqueCheckerStorage;
 use Alfatron\Discuss\Events\ThreadVisited;
 use Alfatron\Discuss\Listeners\UpdateViewCount;
 use Alfatron\Discuss\Models\Category;
@@ -29,6 +30,7 @@ class DiscussServiceProvider extends ServiceProvider
             // $this->commands([]);
         }
 
+        $this->bindServices();
         $this->registerModelListeners();
         $this->registerPackageListeners();
         $this->setViewModels();
@@ -148,5 +150,10 @@ class DiscussServiceProvider extends ServiceProvider
     private function registerPackageListeners()
     {
         Event::listen(ThreadVisited::class, UpdateViewCount::class);
+    }
+
+    private function bindServices()
+    {
+        $this->app->bind(UniqueCheckerStorage::class, config('discuss.view_count.storage'));
     }
 }

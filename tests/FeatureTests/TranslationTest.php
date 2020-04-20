@@ -1,6 +1,8 @@
 <?php
 
-namespace Alfatron\Discuss\Tests;
+namespace Alfatron\Discuss\Tests\FeatureTests;
+
+use Alfatron\Discuss\Tests\TestCase;
 
 class TranslationTest extends TestCase
 {

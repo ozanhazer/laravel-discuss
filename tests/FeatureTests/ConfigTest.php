@@ -1,11 +1,12 @@
 <?php
 
-namespace Alfatron\Discuss\Tests;
+namespace Alfatron\Discuss\Tests\FeatureTests;
 
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\FollowedThread;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
+use Alfatron\Discuss\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ConfigTest extends TestCase

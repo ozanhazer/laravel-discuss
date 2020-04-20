@@ -48,8 +48,22 @@ return [
      */
     'post_policy' => \Alfatron\Discuss\Policies\PostPolicy::class,
 
-    /**
-     * Honor "Do Not Track" header while counting the thread visits.
-     */
-    'honor_dnt' => true,
+    'view_count' => [
+        /**
+         * Honor "Do Not Track" header while counting the thread visits.
+         */
+        'honor_dnt' => true,
+
+        /**
+         * Storage engine for the visitor data. The ip address and the user agent
+         * information is used to count views uniquely. Redis is strongly recommended.
+         */
+        'storage' => \Alfatron\Discuss\Discuss\UniqueChecker\RedisStorage::class,
+
+        /**
+         * Visitor data will expire after this amount of minutes. Don't set it too long
+         * since different visitors can be assigned the same IP.
+         */
+        'expiration' => 60 * 24,
+    ],
 ];

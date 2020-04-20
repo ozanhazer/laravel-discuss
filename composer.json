@@ -19,11 +19,11 @@
     ],
     "require": {
         "php": "^7.2",
-        "illuminate/support": "^6.12.0",
-        "jaybizzle/crawler-detect": "^1.2"
+        "illuminate/support": "^6.18.0",
+        "jaybizzle/crawler-detect": "^1.2.75"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.4.0",
+        "orchestra/testbench": "^4.7",
         "phpunit/phpunit": "^8.0"
     },
     "autoload": {
@@ -37,10 +37,7 @@
     "autoload-dev": {
         "psr-4": {
             "Alfatron\\Discuss\\Tests\\": "tests"
-        },
-        "classmap": [
-            "tests/models/User.php"
-        ]
+        }
     },
     "scripts": {
         "test": "vendor/bin/phpunit",

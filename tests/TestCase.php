@@ -3,6 +3,8 @@
 namespace Alfatron\Discuss\Tests;
 
 use Alfatron\Discuss\DiscussServiceProvider;
+use Alfatron\Discuss\Tests\HelperClasses\User;
+use Illuminate\Support\Facades\Redis;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
@@ -26,9 +28,11 @@ class TestCase extends OrchestraTestCase
             'prefix'   => '',
         ]);
         $app['config']->set('app.debug', env('APP_DEBUG', true));
+        $app['config']->set('database.redis.options.prefix', 'testbench_');
+        $app['config']->set('database.redis.default.database', 5);
 
         // Use our dummy class for the tests
-        $app['config']->set('discuss.user_model', \User::class);
+        $app['config']->set('discuss.user_model', User::class);
     }
 
     public function setUp(): void
@@ -37,5 +41,11 @@ class TestCase extends OrchestraTestCase
 
         $this->artisan('migrate', ['--database' => 'testbench'])->run();
         $this->loadLaravelMigrations();
+
+        // We have a test for invalid redis port, this will cause
+        // the test fail before even starting without the if stmt.
+        if (config('database.redis.default.port') == 6379) {
+            Redis::flushAll();
+        }
     }
 }
