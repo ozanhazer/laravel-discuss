@@ -8,6 +8,8 @@ class Thread extends BaseModel
 {
     use SoftDeletes;
 
+    protected $dates = ['last_post_at'];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -16,6 +18,11 @@ class Thread extends BaseModel
     public function author()
     {
         return $this->belongsTo(config('discuss.user_model'), 'user_id');
+    }
+
+    public function lastReplier()
+    {
+        return $this->belongsTo(config('discuss.user_model'), 'last_posted_by');
     }
 
     public function posts()

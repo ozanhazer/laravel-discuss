@@ -17,5 +17,6 @@ $factory->define(\Alfatron\Discuss\Models\Thread::class, function (Faker $faker)
         'body'        => $faker->text(),
         'sticky'      => $faker->boolean,
         'view_count'  => $faker->numberBetween(0, 1000),
+        'post_count'  => 0,
     ];
 });

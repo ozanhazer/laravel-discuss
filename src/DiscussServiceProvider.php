@@ -9,6 +9,7 @@ use Alfatron\Discuss\Listeners\UpdateViewCount;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -94,7 +95,14 @@ class DiscussServiceProvider extends ServiceProvider
         $updatePostCount = function ($post) {
             $thread = $post->thread;
 
-            $thread->post_count = Post::query()->where('thread_id', $thread->id)->count();
+            $lastPost = Post::query()
+                ->where('thread_id', $thread->id)
+                ->orderBy('id', 'desc')
+                ->first();
+
+            $thread->last_posted_by = $lastPost->user_id;
+            $thread->last_post_at   = $lastPost->created_at;
+            $thread->post_count     = Post::query()->where('thread_id', $thread->id)->count();
             $thread->save();
         };
 

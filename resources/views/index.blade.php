@@ -12,11 +12,12 @@
         <div class="media-body">
           <h5 class="mt-0"><a href="{{$thread->url()}}">{{$thread->title}}</a></h5>
 
-          @component('discuss::components.author-link', ['user' => $thread->author])@endcomponent
 
           @if ($thread->last_post_at)
+            @component('discuss::components.author-link', ['user' => $thread->lastReplier])@endcomponent
             @lang('discuss::discuss.replied_at', ['last_post_at' => $thread->last_post_at->diffForHumans()])
           @else
+            @component('discuss::components.author-link', ['user' => $thread->author])@endcomponent
             @lang('discuss::discuss.posted_at', ['created_at' => $thread->created_at->diffForHumans()])
           @endif
 

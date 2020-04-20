@@ -10,7 +10,7 @@ class IndexController
     public function __invoke(?Category $selectedCategory)
     {
         $threads = Thread::query()
-            ->with('author', 'category')
+            ->with('author', 'category', 'lastReplier')
             ->orderBy('sticky', 'desc')
             ->orderBy('last_post_at', 'desc');
 

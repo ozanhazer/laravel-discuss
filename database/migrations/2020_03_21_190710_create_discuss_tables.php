@@ -40,6 +40,7 @@ class CreateDiscussTables extends Migration
             $table->unsignedInteger('post_count')->default(0);
             $table->timestamps();
             $table->timestamp('last_post_at')->nullable();
+            $table->unsignedBigInteger('last_posted_by')->nullable();
             $table->softDeletes();
 
             $table->foreign('category_id')->references('id')
@@ -47,6 +48,11 @@ class CreateDiscussTables extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->foreign('user_id')
+                ->references($this->userModelPK)
+                ->on($this->userModelTableName)
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreign('last_posted_by')
                 ->references($this->userModelPK)
                 ->on($this->userModelTableName)
                 ->onDelete('cascade')
