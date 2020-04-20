@@ -4,7 +4,6 @@ namespace Alfatron\Discuss\Tests\FeatureTests;
 
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
-use Alfatron\Discuss\Tests\HelperClasses\User;
 use Alfatron\Discuss\Tests\TestCase;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

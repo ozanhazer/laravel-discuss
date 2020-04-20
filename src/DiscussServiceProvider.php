@@ -9,7 +9,6 @@ use Alfatron\Discuss\Listeners\UpdateViewCount;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
