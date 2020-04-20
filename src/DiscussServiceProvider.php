@@ -99,8 +99,8 @@ class DiscussServiceProvider extends ServiceProvider
                 ->orderBy('id', 'desc')
                 ->first();
 
-            $thread->last_posted_by = $lastPost->user_id;
-            $thread->last_post_at   = $lastPost->created_at;
+            $thread->last_posted_by = optional($lastPost)->user_id;
+            $thread->last_post_at   = optional($lastPost)->created_at;
             $thread->post_count     = Post::query()->where('thread_id', $thread->id)->count();
             $thread->save();
         };

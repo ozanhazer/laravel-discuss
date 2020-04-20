@@ -23,13 +23,13 @@ class DenormalizeThreadReplyInfoTest extends TestCase
         $thread = factory(Thread::class)->create();
         $this->assertNull($thread->last_post_at);
 
-        $post = factory(Post::class)->create(['thread_id' => $thread->id]);
+        $posts = factory(Post::class, 3)->create(['thread_id' => $thread->id]);
 
         $thread->refresh();
         $this->assertNotNull($thread->last_post_at);
         $this->assertInstanceOf(Carbon::class, $thread->last_post_at);
-        $this->assertEquals($post->created_at, $thread->last_post_at);
-        $this->assertEquals($post->user_id, $thread->last_posted_by);
+        $this->assertEquals($posts[2]->created_at, $thread->last_post_at);
+        $this->assertEquals($posts[2]->user_id, $thread->last_posted_by);
     }
 
     /**
@@ -63,6 +63,26 @@ class DenormalizeThreadReplyInfoTest extends TestCase
         $thread->refresh();
         $this->assertEquals($posts[2]->created_at, $thread->last_post_at);
         $this->assertEquals($posts[2]->user_id, $thread->last_posted_by);
+    }
+
+    /**
+     * @test
+     */
+    public function last_post_fields_should_be_null_if_no_posts_left_after_deleting()
+    {
+        $thread = factory(Thread::class)->create();
+
+        $post = factory(Post::class)->create(['thread_id'  => $thread->id]);
+
+        $thread->refresh();
+        $this->assertEquals($post->created_at, $thread->last_post_at);
+        $this->assertEquals($post->user_id, $thread->last_posted_by);
+
+        $post->delete();
+
+        $thread->refresh();
+        $this->assertNull($thread->last_post_at);
+        $this->assertNull($thread->last_posted_by);
     }
 
     /**
