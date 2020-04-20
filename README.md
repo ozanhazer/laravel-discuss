@@ -53,30 +53,50 @@ You may publish the front-end files (blade, js, scss) and adjust them to match y
 
 ## Installation
 
-You can install the package via composer:
+1. Install the package via composer:
 
 ```bash
 composer require ozanhazer/laravel-discuss
 ```
 
-Run the migrations:
+2. Run the migrations:
 
 ```bash
 php artisan migrate
 ```
 
-Add `isDiscussSuperAdmin` method to `App\User` class.  
-(See the 'Customization' documentation if your user model is different)
+3. Add trait `use Alfatron\Discuss\Traits\DiscussUser` to `App\User` class.  
 
-and navigate to `https://yourproject.test/discuss`
+4. Override the `isDiscussSuperAdmin` method of the `DiscussUser` trait in the `App\User` class 
+to define the super admins. Super admins can give permissions to other users and can take all the 
+moderation actions.
 
-Necessary tables are prefixed with `discuss_` by default. You can change or remove this
-prefix through the config file. You may want to  publish the vendor files before running the
-migrations if you think you'll have a conflict with the table names. 
+5. Navigate to `https://yourproject.test/discuss`
+
+### Installation Customization & Additional Actions
+
+* See the "Customizations" chapter for details about configuration changes and customizations. 
+
+* If you have renamed or moved your User class or want to use a different class for users, you
+can change the Laravel user class (`App\User` by default) in the config file.
+
+* Database tables are prefixed with `discuss_` by default. You can change or remove this
+prefix through the config file. 
+
+* You can create categories directly from the database, it's pretty straight-forward.
+
+* A very basic design is installed by default. You should publish the view files and customize 
+it to fit your projects design. You can start with changing the layout to your projects layout.
+
+* laravel-discuss uses the default authentication and authorization features of laravel. You
+may want to scaffold the default laravel auth ui if you're installing laravel-discuss to a new
+project. 
+
 
 ## Customization
 
 What you can customize:
+
 * User avatar
 * User display name
 * User model class
@@ -91,6 +111,9 @@ What you can customize:
   * Post (reply) policy
 * Frontend: Blade Views
 * Translation files
+
+You will need to publish the vendor files and change the configuration **before** 
+running the migrations if you need to customize table prefixes or user model class.
 
 Run `php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider` to publish 
 views, config and translation files. You can also publish them separately by using the `tags` 
