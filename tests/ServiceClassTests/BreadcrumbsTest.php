@@ -49,6 +49,7 @@ class BreadcrumbsTest extends TestCase
                     break;
                 case 'discuss.thread.populate': // xhr
                 case 'discuss.post.populate': // xhr
+                case 'discuss.permissions.find-user': // xhr
                     break;
                 default:
                     if (in_array('GET', $routesByName[$routeName]->methods)) {

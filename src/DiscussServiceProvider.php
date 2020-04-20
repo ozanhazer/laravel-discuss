@@ -9,10 +9,12 @@ use Alfatron\Discuss\Listeners\UpdateViewCount;
 use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
+use Alfatron\Discuss\Traits\DiscussUser;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Log;
 
 class DiscussServiceProvider extends ServiceProvider
 {
@@ -35,6 +37,7 @@ class DiscussServiceProvider extends ServiceProvider
         $this->registerPackageListeners();
         $this->setViewModels();
         $this->registerPolicies();
+        $this->checkSetup();
     }
 
     /**
@@ -141,9 +144,7 @@ class DiscussServiceProvider extends ServiceProvider
     private function registerPolicies()
     {
         Gate::before(function ($user, $ability) {
-            if (method_exists($user, 'isDiscussSuperAdmin')) {
-                return $user->isDiscussSuperAdmin() ? true : null;
-            }
+            return $user->isDiscussSuperAdmin() === true ? true : null;
         });
 
         Gate::define('edit-permissions', function ($user) {
@@ -162,5 +163,14 @@ class DiscussServiceProvider extends ServiceProvider
     private function bindServices()
     {
         $this->app->bind(UniqueCheckerStorage::class, config('discuss.view_count.storage'));
+    }
+
+    private function checkSetup()
+    {
+        if (!method_exists(config('discuss.user_model'), 'discussPermissions')) {
+            $msg = 'Invalid setup: ' . DiscussUser::class . ' trait is not used';
+            Log::error($msg);
+            abort(501, $msg);
+        }
     }
 }

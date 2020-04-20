@@ -9,7 +9,7 @@ WORK IN PROGRESS!
 [![Total Downloads](https://img.shields.io/packagist/dt/ozanhazer/laravel-discuss.svg)](https://packagist.org/packages/ozanhazer/laravel-discuss)
 [![Style CI Status](https://github.styleci.io/repos/256029924/shield)](https://github.styleci.io/repos/256029924)
 
-Laravel Discuss is a very customizable form add-on for any laravel v6 project.
+Laravel Discuss is a highly customizable discussion forum add-on for any Laravel v6+ project.
 
 ## Features
 
@@ -68,8 +68,8 @@ php artisan migrate
 3. Add trait `use Alfatron\Discuss\Traits\DiscussUser` to `App\User` class.  
 
 4. Override the `isDiscussSuperAdmin` method of the `DiscussUser` trait in the `App\User` class 
-to define the super admins. Super admins can give permissions to other users and can take all the 
-moderation actions.
+to define the super admins. Only super admins can give permissions to other users and no user has
+the super admin privileges by default.
 
 5. Navigate to `https://yourproject.test/discuss`
 

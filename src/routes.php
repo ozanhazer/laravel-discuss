@@ -40,6 +40,7 @@ Route::middleware(config('discuss.middleware_group'))
         Route::get('/permissions', 'PermissionController')->name('discuss.permissions.list');
         Route::get('/permission/edit/{user}', 'PermissionController@edit')->name('discuss.permissions.edit');
         Route::post('/permission/save', 'PermissionController@save')->name('discuss.permissions.save');
+        Route::get('/permission/findUser', 'PermissionController@findUser')->name('discuss.permissions.find-user');
 
         Route::get('/{selectedCategory}', 'IndexController')->name('discuss.category');
     });

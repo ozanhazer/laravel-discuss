@@ -6,8 +6,12 @@ use Alfatron\Discuss\Models\Category;
 use Alfatron\Discuss\Models\FollowedThread;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
+use Alfatron\Discuss\Tests\HelperClasses\AnotherUser;
+use Alfatron\Discuss\Tests\HelperClasses\PostPolicy;
+use Alfatron\Discuss\Tests\HelperClasses\ThreadPolicy;
 use Alfatron\Discuss\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Gate;
 
 class ConfigTest extends TestCase
 {
@@ -66,5 +70,34 @@ class ConfigTest extends TestCase
     {
         $post = factory(Post::class)->create();
         $this->assertEquals('discuss_threads', $post->thread->getTable());
+    }
+
+    /**
+     * @test
+     */
+    public function user_model_is_customizable()
+    {
+        config()->set('discuss.user_model', AnotherUser::class);
+        $thread = factory(Thread::class)->create();
+        $this->assertInstanceOf(AnotherUser::class, $thread->author);
+    }
+
+    /**
+     * @test
+     * @environment-setup useTestClassForPolicies
+     */
+    function custom_policies_can_be_set_in_the_config()
+    {
+        $policy = Gate::getPolicyFor(Thread::class);
+        $this->assertInstanceOf(ThreadPolicy::class, $policy);
+
+        $policy = Gate::getPolicyFor(Post::class);
+        $this->assertInstanceOf(PostPolicy::class, $policy);
+    }
+
+    protected function useTestClassForPolicies($app)
+    {
+        $app->config->set('discuss.thread_policy', ThreadPolicy::class);
+        $app->config->set('discuss.post_policy', PostPolicy::class);
     }
 }

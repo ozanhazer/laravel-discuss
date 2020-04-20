@@ -32,7 +32,9 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('database.redis.default.database', 5);
 
         // Use our dummy class for the tests
-        $app['config']->set('discuss.user_model', User::class);
+        if ($app['config']->get('discuss.user_model') == 'App\User') {
+            $app['config']->set('discuss.user_model', User::class);
+        }
     }
 
     public function setUp(): void

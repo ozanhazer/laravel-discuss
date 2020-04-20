@@ -17,5 +17,7 @@ class Permission
         [Post::class, 'insert'],
         [Post::class, 'update'],
         [Post::class, 'delete'],
+
+        // ... there is also edit-permission ability?
     ];
 }
