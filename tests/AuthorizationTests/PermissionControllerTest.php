@@ -105,4 +105,13 @@ class PermissionControllerTest extends TestCase
         $this->post(route('discuss.permissions.save'), ['user_id' => $user->id], ['Accept' => 'application/json'])
             ->assertStatus(403);
     }
+
+    /**
+     * @test
+     */
+    public function cannot_query_users_if_cannot_edit_permissions()
+    {
+        $this->get(route('discuss.permissions.find-user', ['user' => 'asdf']), ['Accept' => 'application/json'])
+            ->assertStatus(401);
+    }
 }

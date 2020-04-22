@@ -2,6 +2,7 @@
 
 namespace Alfatron\Discuss\Http\Controllers;
 
+use Alfatron\Discuss\Http\Requests\FindUser;
 use Alfatron\Discuss\Http\Requests\SavePerms;
 use Alfatron\Discuss\Models\Permission;
 use Alfatron\Discuss\Models\Post;
@@ -92,7 +93,7 @@ class PermissionController extends Controller
         return redirect()->back();
     }
 
-    public function findUser(Request $request)
+    public function findUser(FindUser $request)
     {
         $user = config('discuss.user_model')::query()
             ->where('email', $request->get('user'))

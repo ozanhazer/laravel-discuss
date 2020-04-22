@@ -7,10 +7,12 @@ use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
 use Alfatron\Discuss\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class PermissionControllerTest extends TestCase
 {
     use DatabaseTransactions;
+    use WithFaker;
 
     /**
      * @test
@@ -300,10 +302,52 @@ class PermissionControllerTest extends TestCase
             'perms'   => $perms,
         ];
 
-        $response =$this->post(route('discuss.permissions.save'), $postParams, ['Accept' => 'application/json'])
+        $response = $this->post(route('discuss.permissions.save'), $postParams, ['Accept' => 'application/json'])
             ->assertStatus(422);
 
         $response->assertJsonValidationErrors(['perms']);
+    }
+
+    /**
+     * @test
+     */
+    public function find_user_with_email()
+    {
+        $authUser               = factory(config('discuss.user_model'))->create();
+        $authUser->isSuperAdmin = true;
+        $this->actingAs($authUser);
+
+        $email = $this->faker->email;
+
+        $user = factory(config('discuss.user_model'))->create(compact('email'));
+
+        $this->get(route('discuss.permissions.find-user', ['user' => $email]))
+            ->assertStatus(200)
+            ->assertExactJson(['uri' => route('discuss.permissions.edit', $user)]);
+    }
+
+    /**
+     * @test
+     */
+    public function validate_find_user_request()
+    {
+        $authUser               = factory(config('discuss.user_model'))->create();
+        $authUser->isSuperAdmin = true;
+        $this->actingAs($authUser);
+
+        // User not found
+        $this->get(route('discuss.permissions.find-user', ['user' => $this->faker->email]), ['Accept' => 'application/json'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['user' => 'No user found with this email address']);
+
+        // Own account
+        $this->get(route('discuss.permissions.find-user', ['user' => $authUser->email]), ['Accept' => 'application/json'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['user' => 'You cannot edit your own permissions']);
+
+        // Super admin, can already do anything
+        // FIXME: How to test this?
+        $this->markTestIncomplete();
     }
 
     public function invalidPerms()
@@ -316,6 +360,7 @@ class PermissionControllerTest extends TestCase
         $perms[] = [Thread::class => ['asdfsaf']];
         $perms[] = [Thread::class => 'asdfsaf'];
         $perms[] = [Thread::class => 1];
+
         // $perms[] = [Thread::class => ['delete']];
 
         return array_map(function ($perms) {

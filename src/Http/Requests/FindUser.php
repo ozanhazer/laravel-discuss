@@ -23,7 +23,7 @@ class FindUser extends FormRequest
                         ->where('email', $value)
                         ->first();
 
-                    if (!$user->exists()) {
+                    if (!$user) {
                         return $fail(__('No user found with this email address'));
                     }
 
@@ -36,13 +36,6 @@ class FindUser extends FormRequest
                     }
                 },
             ],
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'user.exists' => __('No user found with this e-mail address'),
         ];
     }
 }
