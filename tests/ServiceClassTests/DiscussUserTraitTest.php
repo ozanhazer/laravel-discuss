@@ -2,7 +2,7 @@
 
 namespace Alfatron\Discuss\Tests\ServiceClassTests;
 
-use Alfatron\Discuss\Tests\HelperClasses\User;
+use Alfatron\Discuss\Tests\HelperClasses\AnotherUser;
 use Alfatron\Discuss\Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -15,7 +15,7 @@ class DiscussUserTraitTest extends TestCase
      */
     public function discuss_super_admin_is_false_by_default()
     {
-        $userModel = new User();
+        $userModel = new AnotherUser();
         $this->assertFalse($userModel->isDiscussSuperAdmin());
     }
 
@@ -24,7 +24,7 @@ class DiscussUserTraitTest extends TestCase
      */
     public function default_display_name_is_generated_from_email()
     {
-        $userModel        = new User();
+        $userModel        = new AnotherUser();
         $userModel->email = 'ozanhazer@gmail.com';
 
         $this->assertEquals('oz****r@g****.com', $userModel->discussDisplayName());
@@ -38,7 +38,7 @@ class DiscussUserTraitTest extends TestCase
      */
     public function default_avatar_is_gravatar()
     {
-        $userModel        = new User();
+        $userModel        = new AnotherUser();
         $userModel->email = $this->faker->email;
 
         $this->assertStringStartsWith('https://www.gravatar', $userModel->discussAvatar());
