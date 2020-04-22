@@ -10,7 +10,7 @@ class Permissions
     public static $availablePermissions = [
         Thread::class => ['insert', 'update', 'delete', 'changeCategory', 'makeSticky'],
 
-        Post::class => ['insert', 'update', 'delete']
+        Post::class => ['insert', 'update', 'delete'],
 
         // ... there is also edit-permission ability?
     ];
