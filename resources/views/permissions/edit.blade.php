@@ -24,7 +24,8 @@
         <li class="mb-1">
           <label>
             <input type="checkbox"
-                   name="perms[{{$permission[0]}}][{{$permission[1]}}]"
+                   name="perms[{{$permission[0]}}][]"
+                   value="{{$permission[1]}}"
               {{$user->isDiscussSuperAdmin() ? 'disabled checked' : ''}}
               {{(isset($userPermissions[$permission[0]]) and in_array($permission[1], $userPermissions[$permission[0]])) ? 'checked' : ''}}>
 

@@ -2,12 +2,16 @@
 
 namespace Alfatron\Discuss\Http\Controllers;
 
+use Alfatron\Discuss\Discuss\Permissions;
 use Alfatron\Discuss\Models\Permission;
+use Alfatron\Discuss\Models\Post;
+use Alfatron\Discuss\Models\Thread;
 use DB;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 class PermissionController extends Controller
@@ -49,7 +53,14 @@ class PermissionController extends Controller
             abort(403);
         }
 
-        $permissions     = \Alfatron\Discuss\Discuss\Permission::$permissions;
+        $permissions     = [
+            [Thread::class, 'update'],
+            [Thread::class, 'delete'],
+            [Thread::class, 'changeCategory'],
+            [Thread::class, 'makeSticky'],
+            [Post::class, 'update'],
+            [Post::class, 'delete'],
+        ];
         $userPermissions = $user->discussPermissions->mapToGroups(function ($permission) {
             return [$permission->entity => $permission->ability];
         })->toArray();
@@ -63,6 +74,27 @@ class PermissionController extends Controller
 
         $this->validate($request, [
             'user_id' => 'required',
+            'perms'   => [
+                'bail',
+                'nullable',
+                'array',
+                function ($attribute, $value, $fail) {
+                    foreach ($value as $entity => $abilities) {
+                        if (!isset(Permissions::$availablePermissions[$entity])) {
+                            return $fail(__('Invalid permission entity'));
+                        }
+
+                        if (!is_array($abilities)) {
+                            return $fail(__('Invalid abilities'));
+                        }
+
+                        $invalidVals = array_diff($abilities, Permissions::$availablePermissions[$entity]);
+                        if (count($invalidVals) > 0) {
+                            $fail(__('Invalid abilities'));
+                        }
+                    }
+                },
+            ],
         ]);
 
         $user = config('discuss.user_model')::query()->findOrFail($request->get('user_id'));
@@ -77,8 +109,8 @@ class PermissionController extends Controller
 
         if ($request->get('perms')) {
             foreach ($request->get('perms') as $entity => $abilities) {
-                foreach ($abilities as $ability => $val) {
-                    $perm             = new Permission;
+                foreach ($abilities as $ability) {
+                    $perm             = new Permission();
                     $perm->user_id    = $user->getKey();
                     $perm->entity     = $entity;
                     $perm->ability    = $ability;

@@ -2,7 +2,7 @@
 
 namespace Alfatron\Discuss\Tests\AuthorizationTests;
 
-use Alfatron\Discuss\Discuss\Permission;
+use Alfatron\Discuss\Discuss\Permissions;
 use Alfatron\Discuss\Models\Thread;
 use Alfatron\Discuss\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -20,13 +20,14 @@ class AuthorizationTest extends TestCase
         $user = factory(config('discuss.user_model'))->create();
         $this->actingAs($user);
 
-        $permissions = Permission::$permissions;
+        $permissions = Permissions::$availablePermissions;
 
         $user->isSuperAdmin = true;
 
-        foreach ($permissions as $pair) {
-            $className = $pair[0];
-            $this->assertTrue(Gate::allows($pair[1], new $className), json_encode($pair));
+        foreach ($permissions as $entity => $abilities) {
+            foreach ($abilities as $ability) {
+                $this->assertTrue(Gate::allows($ability, new $entity), json_encode([$entity, $ability]));
+            }
         }
     }
 

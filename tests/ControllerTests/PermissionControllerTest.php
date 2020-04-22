@@ -3,10 +3,15 @@
 namespace Alfatron\Discuss\Tests\ControllerTests;
 
 use Alfatron\Discuss\Models\Permission;
+use Alfatron\Discuss\Models\Post;
+use Alfatron\Discuss\Models\Thread;
 use Alfatron\Discuss\Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PermissionControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */
@@ -53,23 +58,6 @@ class PermissionControllerTest extends TestCase
     /**
      * @test
      */
-    public function add_permission_button_should_work_somehow()
-    {
-        // Not implemented yet! What's the best, easy to customize approach here?
-        $this->markTestIncomplete('Browser test. Kept here as a reminder');
-    }
-
-    /**
-     * @test
-     */
-    public function edit_permission_buttons_should_work()
-    {
-        $this->markTestIncomplete('Browser test. Kept here as a reminder');
-    }
-
-    /**
-     * @test
-     */
     public function pagination_links_should_be_displayed()
     {
         $user               = factory(config('discuss.user_model'))->create();
@@ -99,15 +87,32 @@ class PermissionControllerTest extends TestCase
      */
     public function edit_permissions_page_should_populate_existing_permissions()
     {
-        $this->markTestIncomplete();
-    }
+        $authUser               = factory(config('discuss.user_model'))->create();
+        $authUser->isSuperAdmin = true;
+        $this->actingAs($authUser);
 
-    /**
-     * @test
-     */
-    public function permission_checkboxes_should_be_disabled_for_super_admins()
-    {
-        $this->markTestIncomplete();
+        $user = factory(config('discuss.user_model'))->create();
+
+        $permsGiven = [
+            Thread::class => ['insert', 'update'],
+            Post::class   => ['update'],
+        ];
+
+        foreach ($permsGiven as $entity => $abilities) {
+            foreach ($abilities as $ability) {
+                factory(Permission::class)->create([
+                    'user_id' => $user->id,
+                    'entity'  => $entity,
+                    'ability' => $ability,
+                ]);
+            }
+        }
+
+        $this->get(route('discuss.permissions.edit', $user))
+            ->assertStatus(200)
+            ->assertViewHas('user', $user)
+            ->assertViewHas('permissions')
+            ->assertViewHas('userPermissions', $permsGiven);
     }
 
     /**
@@ -115,7 +120,17 @@ class PermissionControllerTest extends TestCase
      */
     public function edit_permissions_page_should_work_for_new_users()
     {
-        $this->markTestIncomplete();
+        $authUser               = factory(config('discuss.user_model'))->create();
+        $authUser->isSuperAdmin = true;
+        $this->actingAs($authUser);
+
+        $user = factory(config('discuss.user_model'))->create();
+
+        $this->get(route('discuss.permissions.edit', $user))
+            ->assertStatus(200)
+            ->assertViewHas('user', $user)
+            ->assertViewHas('permissions')
+            ->assertViewHas('userPermissions', []);
     }
 
     /**
@@ -123,6 +138,188 @@ class PermissionControllerTest extends TestCase
      */
     public function selected_permissions_should_be_saved()
     {
-        $this->markTestIncomplete('... and unselected one should be removed too');
+        $authUser               = factory(config('discuss.user_model'))->create();
+        $authUser->isSuperAdmin = true;
+        $this->actingAs($authUser);
+
+        $user = factory(config('discuss.user_model'))->create();
+
+        $postParams = [
+            'user_id' => $user->id,
+            'perms'   => [
+                Thread::class => ['insert', 'update'],
+                Post::class   => ['update'],
+            ],
+        ];
+
+        $this->post(route('discuss.permissions.save'), $postParams, ['Accept' => 'application/json'])
+            ->assertStatus(302);
+
+        $this->assertDatabaseHas(discuss_table('permissions'), [
+            'user_id' => $user->id,
+            'entity'  => Thread::class,
+            'ability' => 'insert',
+        ]);
+        $this->assertDatabaseHas(discuss_table('permissions'), [
+            'user_id' => $user->id,
+            'entity'  => Thread::class,
+            'ability' => 'update',
+        ]);
+        $this->assertDatabaseHas(discuss_table('permissions'), [
+            'user_id' => $user->id,
+            'entity'  => Post::class,
+            'ability' => 'update',
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function unselected_permissions_should_be_deleted_when_saving()
+    {
+        $authUser               = factory(config('discuss.user_model'))->create();
+        $authUser->isSuperAdmin = true;
+        $this->actingAs($authUser);
+
+        $user = factory(config('discuss.user_model'))->create();
+
+        // Saved permissions...
+        $permsGiven = [
+            Thread::class => ['insert', 'update'],
+            Post::class   => ['update', 'delete'],
+        ];
+
+        foreach ($permsGiven as $entity => $abilities) {
+            foreach ($abilities as $ability) {
+                factory(Permission::class)->create([
+                    'user_id' => $user->id,
+                    'entity'  => $entity,
+                    'ability' => $ability,
+                ]);
+            }
+        }
+
+        // Make the request
+        $postParams = [
+            'user_id' => $user->id,
+            'perms'   => [
+                Thread::class => ['delete'],
+                Post::class   => ['update'],
+            ],
+        ];
+
+        $this->post(route('discuss.permissions.save'), $postParams, ['Accept' => 'application/json'])
+            ->assertStatus(302);
+
+        // Check thread...
+        $this->assertDatabaseMissing(discuss_table('permissions'), [
+            'user_id' => $user->id,
+            'entity'  => Thread::class,
+            'ability' => 'insert',
+        ]);
+        $this->assertDatabaseMissing(discuss_table('permissions'), [
+            'user_id' => $user->id,
+            'entity'  => Thread::class,
+            'ability' => 'update',
+        ]);
+        $this->assertDatabaseHas(discuss_table('permissions'), [
+            'user_id' => $user->id,
+            'entity'  => Thread::class,
+            'ability' => 'delete',
+        ]);
+
+        // Check post
+        $this->assertDatabaseMissing(discuss_table('permissions'), [
+            'user_id' => $user->id,
+            'entity'  => Post::class,
+            'ability' => 'delete',
+        ]);
+        $this->assertDatabaseHas(discuss_table('permissions'), [
+            'user_id' => $user->id,
+            'entity'  => Post::class,
+            'ability' => 'update',
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function all_permissions_should_be_deleted_if_none_of_them_are_selected()
+    {
+        $authUser               = factory(config('discuss.user_model'))->create();
+        $authUser->isSuperAdmin = true;
+        $this->actingAs($authUser);
+
+        $user = factory(config('discuss.user_model'))->create();
+
+        // Saved permissions...
+        $permsGiven = [
+            Thread::class => ['insert', 'delete'],
+            Post::class   => ['insert', 'delete'],
+        ];
+
+        foreach ($permsGiven as $entity => $abilities) {
+            foreach ($abilities as $ability) {
+                factory(Permission::class)->create([
+                    'user_id' => $user->id,
+                    'entity'  => $entity,
+                    'ability' => $ability,
+                ]);
+            }
+        }
+
+        // Make the request
+        $postParams = [
+            'user_id' => $user->id,
+        ];
+
+        $this->post(route('discuss.permissions.save'), $postParams, ['Accept' => 'application/json'])
+            ->assertStatus(302);
+
+        $this->assertDatabaseMissing(discuss_table('permissions'), [
+            'user_id' => $user->id,
+        ]);
+    }
+
+    /**
+     * @test
+     * @dataProvider invalidPerms
+     *
+     * @param $perms
+     */
+    public function validate_perms_when_saving_permissions($perms)
+    {
+        $authUser               = factory(config('discuss.user_model'))->create();
+        $authUser->isSuperAdmin = true;
+        $this->actingAs($authUser);
+
+        $user = factory(config('discuss.user_model'))->create();
+
+        $postParams = [
+            'user_id' => $user->id,
+            'perms'   => $perms,
+        ];
+
+        $response =$this->post(route('discuss.permissions.save'), $postParams, ['Accept' => 'application/json'])
+            ->assertStatus(422);
+
+        $response->assertJsonValidationErrors(['perms']);
+    }
+
+    public function invalidPerms()
+    {
+        $perms[] = ['asdfafsd' => ['delete']];
+        $perms[] = ['asdfafsd'];
+        $perms[] = [0];
+        $perms[] = [0 => 1];
+        $perms[] = ['xxx', 'asdfafsd' => ['delete']];
+        $perms[] = [Thread::class => ['asdfsaf']];
+        $perms[] = [Thread::class => 'asdfsaf'];
+        $perms[] = [Thread::class => 1];
+        // $perms[] = [Thread::class => ['delete']];
+
+        return array_map(function ($perms) {
+            return [$perms];
+        }, $perms);
     }
 }
