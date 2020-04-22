@@ -17,21 +17,23 @@ class ThreadPolicy
 
     public function update(User $user, Thread $thread)
     {
-        return $thread->user_id == $user->id;
+        return $thread->user_id == $user->id ||
+            $user->hasDiscussPermission(Thread::class, 'update');
     }
 
     public function delete(User $user, Thread $thread)
     {
-        return $thread->user_id == $user->id;
+        return $thread->user_id == $user->id ||
+            $user->hasDiscussPermission(Thread::class, 'delete');
     }
 
     public function changeCategory(User $user, Thread $thread)
     {
-        return false;
+        return $user->hasDiscussPermission(Thread::class, 'changeCategory');
     }
 
     public function makeSticky(User $user, Thread $thread)
     {
-        return false;
+        return $user->hasDiscussPermission(Thread::class, 'makeSticky');
     }
 }

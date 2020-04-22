@@ -17,11 +17,13 @@ class PostPolicy
 
     public function update(User $user, Post $post)
     {
-        return $post->user_id == $user->id;
+        return $post->user_id == $user->id ||
+            $user->hasDiscussPermission(Post::class, 'update');
     }
 
     public function delete(User $user, Post $post)
     {
-        return $post->user_id == $user->id;
+        return $post->user_id == $user->id ||
+            $user->hasDiscussPermission(Post::class, 'delete');
     }
 }

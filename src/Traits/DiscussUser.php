@@ -11,6 +11,14 @@ trait DiscussUser
         return $this->hasMany(Permission::class, 'user_id');
     }
 
+    public function hasDiscussPermission($entity, $ability)
+    {
+        return $this->discussPermissions
+                ->where('entity', $entity)
+                ->where('ability', $ability)
+                ->count() > 0;
+    }
+
     /**
      * Only super admins are allowed to edit permissions of other users.
      */

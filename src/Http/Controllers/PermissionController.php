@@ -10,7 +10,6 @@ use Alfatron\Discuss\Models\Thread;
 use DB;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class PermissionController extends Controller
