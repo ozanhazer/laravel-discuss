@@ -2,7 +2,7 @@
 
 namespace Alfatron\Discuss\Http\Controllers;
 
-use Alfatron\Discuss\Discuss\Permissions;
+use Alfatron\Discuss\Http\Requests\SavePerms;
 use Alfatron\Discuss\Models\Permission;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
@@ -11,7 +11,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Validation\Rule;
 
 class PermissionController extends Controller
 {
@@ -67,40 +66,9 @@ class PermissionController extends Controller
         return view('discuss::permissions.edit', compact('user', 'permissions', 'userPermissions'));
     }
 
-    public function save(Request $request)
+    public function save(SavePerms $request)
     {
-        $this->authorize('edit-permissions');
-
-        $this->validate($request, [
-            'user_id' => 'required',
-            'perms'   => [
-                'bail',
-                'nullable',
-                'array',
-                function ($attribute, $value, $fail) {
-                    foreach ($value as $entity => $abilities) {
-                        if (!isset(Permissions::$availablePermissions[$entity])) {
-                            return $fail(__('Invalid permission entity'));
-                        }
-
-                        if (!is_array($abilities)) {
-                            return $fail(__('Invalid abilities'));
-                        }
-
-                        $invalidVals = array_diff($abilities, Permissions::$availablePermissions[$entity]);
-                        if (count($invalidVals) > 0) {
-                            $fail(__('Invalid abilities'));
-                        }
-                    }
-                },
-            ],
-        ]);
-
         $user = config('discuss.user_model')::query()->findOrFail($request->get('user_id'));
-
-        if ($user->id == auth()->user()->id || $user->isDiscussSuperAdmin()) {
-            abort(403);
-        }
 
         DB::beginTransaction();
 
@@ -126,38 +94,9 @@ class PermissionController extends Controller
 
     public function findUser(Request $request)
     {
-        // User is not authorized because we cannot get the reason if the
-        // authorization fails.
-        // FIXME This endpoint does not cause any critical security issues
-        //       however leaks information, thus should be fixed
-        // $this->authorize('edit-permissions');
-
         $user = config('discuss.user_model')::query()
             ->where('email', $request->get('user'))
             ->first();
-
-        // TODO: Do request validation
-        $this->validate($request, [
-            'user' => [
-                'bail',
-                'required',
-                'email',
-                Rule::exists(config('discuss.user_model'), 'email'),
-                function ($attr, $value, $fail) use ($user) {
-                    if ($user->id == auth()->user()->id) {
-                        $fail('You cannot edit your own permissions');
-
-                        return;
-                    }
-
-                    if ($user->isDiscussSuperAdmin()) {
-                        $fail('The user is super admin, does not need any permission');
-                    }
-                },
-            ],
-        ], [
-            'user.exists' => __('No user found with this e-mail address'),
-        ]);
 
         return response()->json(['uri' => route('discuss.permissions.edit', $user)]);
     }
