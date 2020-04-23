@@ -68,6 +68,8 @@ class AuthorizationTest extends TestCase
         $permission->granted_by = $authUser->id;
         $permission->save();
 
+        $user->refresh();
+
         $this->assertTrue($user->can($ability, new $entity()));
     }
 
