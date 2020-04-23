@@ -11,13 +11,13 @@ class User extends Authenticatable
 
     /**
      * Use this email address to be able to test http requests
-     * with super admin privileges
+     * with super admin privileges.
      */
     const SUPERADMIN_EMAIL = 'superadmin@laraveldiscuss.com';
 
     /**
      * Use this property to toggle super admin privilege easily
-     * in the tests
+     * in the tests.
      *
      * @var bool
      */
