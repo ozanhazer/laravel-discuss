@@ -236,10 +236,14 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 - [Ozan Hazer](https://github.com/ozanhazer)
 
-Inspired by:
+### Inspired by:
 
 - [Laracasts Discuss](https://laracasts.com/discuss)
 - [DevDojo Forums](https://devdojo.com/forums) and [Chatter](https://github.com/thedevdojo/chatter)
+
+---
+
+This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
 
 ## License
 
