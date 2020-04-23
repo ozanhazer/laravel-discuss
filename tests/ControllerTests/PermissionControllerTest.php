@@ -5,6 +5,7 @@ namespace Alfatron\Discuss\Tests\ControllerTests;
 use Alfatron\Discuss\Models\Permission;
 use Alfatron\Discuss\Models\Post;
 use Alfatron\Discuss\Models\Thread;
+use Alfatron\Discuss\Tests\HelperClasses\User;
 use Alfatron\Discuss\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -47,14 +48,6 @@ class PermissionControllerTest extends TestCase
         $this->get(route('discuss.permissions.list'))
             ->assertStatus(200)
             ->assertSeeText('No permissions found');
-    }
-
-    /**
-     * @test
-     */
-    public function dont_list_super_admins()
-    {
-        $this->markTestIncomplete('How can this be tested?');
     }
 
     /**
@@ -346,8 +339,12 @@ class PermissionControllerTest extends TestCase
             ->assertJsonValidationErrors(['user' => 'You cannot edit your own permissions']);
 
         // Super admin, can already do anything
-        // FIXME: How to test this?
-        $this->markTestIncomplete();
+        $someOtherSuperAdmin = factory(config('discuss.user_model'))->create([
+            'email' => User::SUPERADMIN_EMAIL,
+        ]);
+        $this->get(route('discuss.permissions.find-user', ['user' => $someOtherSuperAdmin->email]), ['Accept' => 'application/json'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['user' => 'The user is super admin, does not need any permission']);
     }
 
     public function invalidPerms()
