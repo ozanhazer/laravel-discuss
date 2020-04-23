@@ -125,19 +125,19 @@ option like:
 
 ### Configuration:
 
- Config Key            | default          | Description
----------------------- + ---------------- + ---------------------
- route_prefix          | discuss          | Prefix for the urls
- table_prefix          | discuss          | Prefix for the database tables. Can be set as empty string.
- user_model            | App\User::class  | User class for the authors of discussion posts
- profile_route         | discuss.user     | Name of the route for user profile page 
- middleware_group      | web              | "web" is the default route group in a typical Laravel application
- auth_middleware       | auth             | "auth" is the default authentication middleware in a typical Laravel application
- thread_policy         | Alfatron\Discuss\Policies\ThreadPolicy::class | 
- post_policy           | Alfatron\Discuss\Policies\PostPolicy::class |
- view_count.honor_dnt  | true             |
- view_count.storage    | Alfatron\Discuss\Discuss\UniqueChecker\RedisStorage::class |
- view_count.expiration | 60 * 24          |
+|  Config Key            | default                                       | Description
+| ---------------------- | --------------------------------------------- | --------------------
+|  route_prefix          | discuss                                       | Prefix for the urls
+|  table_prefix          | discuss                                       | Prefix for the database tables. Can be set as empty string.
+|  user_model            | App\User::class                               | User class for the authors of discussion posts
+|  profile_route         | discuss.user                                  | Name of the route for user profile page 
+|  middleware_group      | web                                           | "web" is the default route group in a typical Laravel application
+|  auth_middleware       | auth                                          | "auth" is the default authentication middleware in a typical Laravel application
+|  thread_policy         | Alfatron\Discuss\Policies\ThreadPolicy::class | 
+|  post_policy           | Alfatron\Discuss\Policies\PostPolicy::class   |
+|  view_count.honor_dnt  | true                                          |
+|  view_count.storage    | Alfatron\Discuss\Discuss\UniqueChecker\RedisStorage::class |
+|  view_count.expiration | 60 * 24                                       |
  
 ### Customizing the User model
 
@@ -197,16 +197,25 @@ class User exteds Authenticatable
 
 Available permissions are:
 
- Permission     | Entity
---------------- + -------
- insert         | Thread 
- update         | Thread
- delete         | Thread
- changeCategory | Thread
- makeSticky     | Thread
- insert         | Post
- update         | Post
- delete         | Post
+|  Permission     | Entity |
+| --------------- | ------ |
+|  insert         | Thread | 
+|  update         | Thread |
+|  delete         | Thread |
+|  changeCategory | Thread |
+|  makeSticky     | Thread |
+|  insert         | Post   |
+|  update         | Post   |
+|  delete         | Post   |
+
+
+## Events
+
+The following events are fired:
+
+### Alfatron\Discuss\Events\ThreadVisited 
+
+Fired when a thread is visited. This event is currently used to increase the view counts
 
 
 ## Screenshots
