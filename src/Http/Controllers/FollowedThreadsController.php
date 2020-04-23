@@ -4,6 +4,7 @@ namespace Alfatron\Discuss\Http\Controllers;
 
 use Alfatron\Discuss\Models\FollowedThread;
 use Alfatron\Discuss\Models\Thread;
+use DB;
 use Illuminate\Routing\Controller;
 
 class FollowedThreadsController extends Controller
@@ -15,13 +16,14 @@ class FollowedThreadsController extends Controller
 
     public function __invoke()
     {
-        // FIXME: Improve query
         $threads = Thread::query()
             ->whereExists(function ($query) {
-                $followedThreads = (new FollowedThread)->getTable();
-                $query->select(\DB::raw(1))
+                $followedThreads = (new FollowedThread())->getTable();
+                $threads         = (new Thread())->getTable();
+
+                $query->select(DB::raw(1))
                     ->from($followedThreads)
-                    ->whereRaw($followedThreads . '.thread_id=' . (new Thread)->getTable() . '.id')
+                    ->whereRaw($followedThreads . '.thread_id=' . $threads . '.id')
                     ->where('user_id', auth()->user()->id);
             })
             ->orderBy('last_post_at', 'desc')
