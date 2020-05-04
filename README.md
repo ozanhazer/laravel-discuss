@@ -119,6 +119,7 @@ Run `php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvid
 views, config and translation files. You can also publish them separately by using the `tags` 
 option like: 
 
+`php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=assets`.
 `php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=config`.
 `php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=views`.
 `php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=lang`.

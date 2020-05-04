@@ -2,6 +2,7 @@
 
 namespace Alfatron\Discuss;
 
+use Alfatron\Discuss\Commands\InstallCommand;
 use Alfatron\Discuss\Discuss\Breadcrumbs;
 use Alfatron\Discuss\Discuss\UniqueChecker\UniqueCheckerStorage;
 use Alfatron\Discuss\Events\ThreadVisited;
@@ -26,10 +27,12 @@ class DiscussServiceProvider extends ServiceProvider
         $this->loadDefinitions();
 
         if ($this->app->runningInConsole()) {
-            $this->definePublishedFiles();
+            $this->defineFilesToBePublished();
 
             // Registering package commands.
-            // $this->commands([]);
+            $this->commands([
+                InstallCommand::class,
+            ]);
         }
 
         $this->bindServices();
@@ -58,7 +61,7 @@ class DiscussServiceProvider extends ServiceProvider
         $this->loadFactoriesFrom(__DIR__ . '/../database/factories');
     }
 
-    private function definePublishedFiles(): void
+    private function defineFilesToBePublished(): void
     {
         $this->publishes([
             __DIR__ . '/../config/config.php' => config_path('discuss.php'),
@@ -70,9 +73,9 @@ class DiscussServiceProvider extends ServiceProvider
         ], 'views');
 
         // Publishing assets.
-        /*$this->publishes([
-            __DIR__.'/../resources/assets' => public_path('vendor/discuss'),
-        ], 'assets');*/
+        $this->publishes([
+            __DIR__ . '/../resources/assets' => public_path('vendor/discuss'),
+        ], 'assets');
 
         // Publishing the translation files.
         $this->publishes([
