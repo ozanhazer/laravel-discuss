@@ -1,0 +1,12 @@
+@charset "UTF-8";
+body {
+  background-color: #f0f0f0;
+}
+
+.sticky-thread h5:after {
+  content: "📍";
+  font-size: 0.6em;
+  vertical-align: super;
+}
+
+/*# sourceMappingURL=default.css.map */

@@ -115,14 +115,14 @@ What you can customize:
 You will need to publish the vendor files and change the configuration **before** 
 running the migrations if you need to customize table prefixes or user model class.
 
-Run `php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider` to publish 
+Run `php artisan vendor:publish --provider="Alfatron\\Discuss\\DiscussServiceProvider"` to publish 
 views, config and translation files. You can also publish them separately by using the `tags` 
 option like: 
 
-`php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=assets`.
-`php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=config`.
-`php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=views`.
-`php artisan vendor:publish --provider=Alfatron\Discuss\DiscussServiceProvider --tag=lang`.
+`php artisan vendor:publish --provider="Alfatron\\Discuss\\DiscussServiceProvider" --tag=themes`.
+`php artisan vendor:publish --provider="Alfatron\\Discuss\\DiscussServiceProvider" --tag=config`.
+`php artisan vendor:publish --provider="Alfatron\\Discuss\\DiscussServiceProvider" --tag=views`.
+`php artisan vendor:publish --provider="Alfatron\\Discuss\\DiscussServiceProvider" --tag=lang`.
 
 ### Configuration:
 

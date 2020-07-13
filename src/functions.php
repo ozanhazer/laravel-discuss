@@ -6,3 +6,10 @@ function discuss_table($tableName)
         $tablePrefix . '_' . $tableName :
         $tableName;
 }
+
+function discuss_theme($path)
+{
+    return url('vendor/discuss/' .
+        trim(config('discuss.theme'), '/') . '/' .
+        trim($path, '/'));
+}

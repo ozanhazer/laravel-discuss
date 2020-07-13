@@ -2,6 +2,11 @@
 
 return [
     /**
+     * Theme
+     */
+    'theme' => \Alfatron\Discuss\Discuss\Theme::BOOTSTRAP4_BOILERPLATE,
+
+    /**
      * Prefix for the urls.
      */
     'route_prefix' => 'discuss',

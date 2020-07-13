@@ -74,8 +74,8 @@ class DiscussServiceProvider extends ServiceProvider
 
         // Publishing assets.
         $this->publishes([
-            __DIR__ . '/../resources/assets' => public_path('vendor/discuss'),
-        ], 'assets');
+            __DIR__ . '/../resources/themes' => public_path('vendor/discuss'),
+        ], 'themes');
 
         // Publishing the translation files.
         $this->publishes([
