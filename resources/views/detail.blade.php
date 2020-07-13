@@ -63,7 +63,7 @@
     @if ($posts->count() > 0)
       @foreach($posts as $post)
         <div class="media mt-4">
-          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="mr-3 rounded-circle"
+          <img src="{{$post->author->discussAvatar()}}" class="mr-3 rounded-circle"
                style="width: 50px;" alt="...">
           <div class="media-body">
             <h5 class="mt-0">{{$post->title}}</h5>
